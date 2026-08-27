@@ -5,219 +5,166 @@
 <h1 align="center">Synapse-AG</h1>
 
 <p align="center">
-  <b>Google Antigravity 2.0 için Otonom, Kendi Kendine Gelişen 3D İkinci Beyin ve Mekânsal Bilgi Motoru</b>
+  <b>Google Antigravity 2.0 için Otonom, Kendini Geliştiren 3D İkinci Beyin ve Uzamsal Bilgi Motoru</b>
 </p>
 
 <p align="center">
-  <a href="README.md">🇺🇸 <b>Click here for English Documentation</b></a>
+  <a href="README.md">🌐 <b>Click for English Documentation</b></a>
 </p>
 
 <p align="center">
-  <a href="#-lisans--at%C4%B1flar"><img src="https://img.shields.io/badge/Lisans-MIT-pink.svg?style=for-the-badge" alt="Lisans MIT"></a>
-  <a href="#-h%C4%B1zl%C4%B1-kurulum-tek-prompt"><img src="https://img.shields.io/badge/Motor-Antigravity_2.0-blue.svg?style=for-the-badge&logo=google" alt="Antigravity 2.0"></a>
-  <a href="#-3d-mek%C3%A2nsal-bilgi-evreni"><img src="https://img.shields.io/badge/G%C3%B6rselle%C5%9Ftirici-Three.js-emerald.svg?style=for-the-badge&logo=threedotjs" alt="Three.js"></a>
-  <a href="#-temel-mimari"><img src="https://img.shields.io/badge/Depolama-100%25_Markdown-purple.svg?style=for-the-badge" alt="Markdown"></a>
+  <a href="#-lisans"><img src="https://img.shields.io/badge/Lisans-MIT-pink.svg?style=for-the-badge" alt="Lisans MIT"></a>
+  <a href="#-h%C4%B1zl%C4%B1-ba%C5%9Flang%C4%B1%C3%A7"><img src="https://img.shields.io/badge/Motor-Antigravity_2.0-blue.svg?style=for-the-badge&logo=google" alt="Antigravity 2.0"></a>
+  <a href="#-1-3d-uzamsal-bilgi-evreni-threejs"><img src="https://img.shields.io/badge/G%C3%B6rselle%C5%9Ftirici-Three.js-emerald.svg?style=for-the-badge&logo=threedotjs" alt="Three.js"></a>
+  <a href="#-kasa-mimarisi"><img src="https://img.shields.io/badge/Depolama-%25100_Markdown-purple.svg?style=for-the-badge" alt="Markdown"></a>
+  <a href="https://github.com/MertAlii/Synapse-AG"><img src="https://img.shields.io/badge/Geli%C5%9Ftirici-Mert_Ali_Alkan-cyan.svg?style=for-the-badge&logo=github" alt="Geliştirici"></a>
 </p>
 
 <p align="center">
-  <img src="docs/assets/preview-3d-graph.png" alt="Synapse-AG 3D Bilgi Evreni" width="100%" style="border-radius: 14px; box-shadow: 0 25px 60px rgba(0,0,0,0.85); border: 1px solid rgba(255,255,255,0.08);" />
+  <img src="assets/images/3d-graph-universe.png" alt="Synapse-AG 3D Uzamsal Bilgi Grafiği" width="100%" style="border-radius: 14px; box-shadow: 0 25px 60px rgba(0,0,0,0.85); border: 1px solid rgba(255,255,255,0.08);" />
 </p>
 
 ---
 
 ## 💡 Genel Bakış
 
-**Synapse-AG**, Google Antigravity 2.0 için geliştirilmiş otonom bir yapay zeka ikinci beyin motorudur. Oturumlar arası kalıcı hafızayı, otomatik bilgi grafiği derlemesini ve etkileşimli 3D görselleştirmeyi yerel tabanlı tek bir çalışma alanında birleştirir.
+**Synapse-AG**, Google Antigravity 2.0 için geliştirilmiş otonom bir yapay zeka ikinci beyin ve uzamsal bilgi motorudur. Oturumlar arası kalıcı hafızayı, otomatik çift yönlü bilgi grafiği derlemesini ve Three.js tabanlı 3D uzamsal görselleştirmeyi, Obsidian tarzı hiyerarşik bir not çalışma alanıyla tek ve yerel bir ekosistemde birleştirir.
 
-* **Kalıcı Hafıza:** Oturum kapanışlarını otomatik yakalayan kancalar, elle not alma zorunluluğu olmadan oturum özetlerini ve öğrenilen kuralları kaydeder.
-* **Otonom Bilgi Grafiği:** Günlük loglar, otomatik derleme mimarisiyle birbirine bağlı kalıcı kavram makalelerine dönüştürülür.
-* **%100 Yerel & Obsidian Uyumlu:** Tamamen sizin bilgisayarınızda yaşayan, Git ile sürümlenmiş saf `.md` dosyaları.
-* **3D Mekânsal Gezinme:** Fikirlerinizi, projelerinizi ve bağlantılarınızı gerçek zamanlı bir WebGL/Three.js evreninde keşfedin.
+* **Kalıcı Hafıza & Yaşam Döngüsü Kancaları:** Deterministik `PreInvocation` ve `Stop` kancaları oturum özetlerini kaydeder, öğrenilen kullanıcı kurallarını otomatik günceller ve yapay zeka asistanına her çağrıda hafızayı enjekte eder.
+* **3D Uzamsal Bilgi Evreni (Three.js):** Gerçek zamanlı WebGL kuvvet yönelimli grafik, sinematik otomatik galaksi dönüşü, parıldayan düğümler, enerji partikül akışı ve aktivite ısı haritası.
+* **Obsidian Tarzı Hiyerarşik Not Gezgini (Not Görünümü):** Canlı dosya ağacı, doküman içi tam metin araması, anlık alıntı önizlemeleri ve doküman içi kelime vurgulama (`<mark>`).
+* **AMOLED Doküman Okuyucu Modalı:** YAML frontmatter ayrıştırma motoru, `#etiket` rozetleri, tıklanabilir GitHub deposu butonları ve interaktif `[[çift yönlü bağlantılar]]`.
+* **Tek Tıkla Bilgisayar Taşıma & Yedekleme:** Bilgisayar değiştirdiğinde tüm hafızayı, 47 projeyi ve kuralları sıfır veri kaybıyla yeni sisteme aktaran taşınabilir paket motoru (`Beyin-Yedekle.bat` / `migrate_brain.py`).
+* **%100 Yerel ve Git Uyumlu:** Düz Markdown (`.md`) dosyalarıyla tamamen senin bilgisayarında çalışır.
 
 ---
 
-### 🌌 1. 3D Mekânsal Bilgi Evreni
-* **Gerçek Zamanlı 3D Fizik Simülasyonu:** Fikirler, projeler ve kavramlar arasındaki semantik bağları görselleştirir.
-* **Akıllı Komşu Vurgulama:** Bir düğümün üzerine geldiğinizde doğrudan bağlı olduğu komşular parlar, ilgisiz notlar arka plana çekilir.
-* **İnteraktif Not Müfettişi:** Tıklanan nota kamerayla yumuşak uçuş, özet bilgisi ve tıklanabilir <code>[[backlinks]]</code> listesi.
-* **Tek Tıkla HTML İndirme:** 3D evreninizi harici bağımlılığı olmayan bağımsız bir <code>.html</code> dosyası olarak indirme.
+## 🌟 Öne Çıkan Özellikler ve Ekran Görüntüleri
+
+### 🌌 1. 3D Uzamsal Bilgi Evreni (WebGL / Three.js)
+* **Canlı Semantik Topoloji:** Projeler, temel bilgi sütunları, günlük notlar ve hafıza düğümleri arasındaki ilişkileri uzayda gerçek zamanlı kuvvet simülasyonuyla modeller.
+* **Sinematik Galaksi Dönüşü:** Fareyle etkileşime girdiğinde nazikçe duraklayan, etkileşimi bıraktığında uzayda akıcı ve dalgalı dönüşüne devam eden yörünge motoru.
+* **Kozmik Enerji Akışı:** Bağlantılar üzerinden akan yönlü mor enerji partikülleri, notlar arasındaki anlamsal bağları canlı olarak gösterir.
+* **Aktivite Isı Haritası:** Düğümleri son düzenlenme ve kullanım sıklığına göre mavi (arşiv) ile neon gül kırmızısı (canlı oturum) arasında renklendirir.
 
 <p align="center">
-  <img src="docs/assets/preview-inspector.png" alt="Müfettiş ve Çift Yönlü Bağlantılar" width="90%" style="border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);" />
+  <img src="assets/images/3d-graph-universe.png" alt="3D Bilgi Evreni" width="95%" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);" />
 </p>
 
 ---
 
-### 🔥 2. Dinamik Aktivite Isı Haritası (Heatmap Mode)
-Tek tıkla notların güncellik ve kullanım sıklığına göre parlamasını sağlar:
-* 🔴 **%90+ (Neon Kırmızı):** Bugün aktif çalışılan canlı oturumlar.
-* 🟠 **%75 - %89 (Sıcak Kehribar):** Yüksek öncelikli aktif projeler ve kurallar.
-* 🟢 **%60 - %74 (Zümrüt Yeşili):** Düzenli başvurulan kalıcı bilgi notları.
-* 🔵 **<%60 (Sakin Mavi):** Arşiv veya referans notları.
+### 📑 2. Hiyerarşik Not Gezgini (Not Görünümü)
+* **Obsidian Tarzı Sol Kenar Çubuğu:** Daraltılabilir klasör ağacı (`🔮 850-Companion`, `🏰 300-Projects`, `🧠 500-Knowledge`, `🎯 100-Command-Center`, `daily`, `000-Inbox`), sayaçlar ve dosya simgeleri.
+* **İçerik İçi Tam Metin Arama:** Yalnızca dosya isimlerini değil, **notların gövde metinlerini** arar ve eşleşen cümle alıntılarını (`snippet`) sol panelde canlı gösterir.
+* **Canlı Doküman İçi Vurgulama:** Arama sonucundaki bir nota tıklandığında doküman açılır ve aradığın tüm kelimeler **`<mark>` altın rengi parlama** ile vurgulanır.
+* **Çift Yönlü Bağlantılar:** Açık olan nota referans veren tüm diğer notları listeleyen gerçek zamanlı bağlantı paneli.
 
 <p align="center">
-  <img src="docs/assets/preview-heatmap.png" alt="Dinamik Lejantlı Isı Haritası Modu" width="90%" style="border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);" />
+  <img src="assets/images/vault-note-explorer.png" alt="Obsidian Tarzı Not Gezgini" width="95%" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);" />
 </p>
 
 ---
 
-### 🪝 3. Deterministik Yaşam Döngüsü Kancaları (`.agents/hooks.json`)
-* **`PreInvocation` (`inject_context.py`):** Siz her yeni prompt yazdığınızda arka planda `🔮 850-Companion/` altındaki son oturumu, kurallarınızı ve aktif hedeflerinizi bağlama otomatik yükler.
-* **`Stop` (`flush_daily.py`):** Oturum kapandığında arka planda çalışarak özeti `daily/YYYY-MM-DD.md` içine ekler.
+### 🔍 3. Canlı Alıntılı ve Vurgulu Tam Metin Arama
+Onlarca proje ve teknik not arasında milisaniyeler içinde arama yapabilir, ilgili cümle parçacığını önizleyebilirsin:
+
+<p align="center">
+  <img src="assets/images/fulltext-search-highlight.png" alt="Tam Metin Arama ve Vurgulama" width="95%" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);" />
+</p>
 
 ---
 
-### ⏰ 4. Doğal Dil ile Zamanlama (Cron & Scheduler)
-Karmaşık cron sözdizimleriyle uğraşmadan doğal dille görev tanımlayın:
-* 🗣️ *"Her gün saat 12:00'de dünün loglarını derle ve bana bir brifing hazırla."*
-  * ⚙️ **Arka Planda:** Antigravity `schedule` aracını `CronExpression: "0 12 * * *"` ve `IsDaemon: true` ile başlatır.
+### 📖 4. Dahili AMOLED Not Okuyucu Modalı
+* **Temiz YAML Frontmatter Motoru:** Ham metin şeklindeki YAML başlıkları temizlenerek interaktif `#etiket` haplarına ve doğrudan `[🐙 GitHub Deposu ↗]` butonlarına dönüştürülür.
+* **Tıklanabilir Obsidian `[[WikiLink]]` Bağlantıları:** Okuyucu içindeyken bağlantılı bir nota tıkladığında 3D kamera yumuşakça o nota uçar ve yeni doküman ekrana gelir.
+* **Hızlı Araçlar:** Not içeriğini kopyalama, dosya yolunu alma veya tek tıkla tam Not Görünümüne geçme imkanı.
+
+<p align="center">
+  <img src="assets/images/reader-modal-view.png" alt="AMOLED Not Okuyucu Modalı" width="90%" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);" />
+</p>
 
 ---
 
-### ⏳ 5. Git Zaman Yolcusu (`zaman-yolcusu`)
-* Vault ilk günden itibaren Git ile sürüm kontrolü altındadır.
-* *"2 hafta önce bu mimari kararı neden aldık, hangi dosyaları değiştirdik?"* diye sorun; geçmiş commit ve diff'leri tarayarak kanıtlarıyla yanıtlasın.
+### 🚀 5. Bilgisayar Değişimi & Taşınabilir Beyin Yedekleme
+İkinci beynini yeni bir bilgisayara taşımak için iki yöntem sunulur:
+
+* **Tek Tıkla Paketleme (`Beyin-Yedekle.bat`):** Bilgi grafiğini derler ve tüm hafıza, proje, kural ve görselleştirici dosyalarını tek bir `.zip` paketi haline getirir.
+* **Git ile Bulut Eşitleme:** Depoya push edildikten sonra yeni bilgisayarda `git clone https://github.com/MertAlii/Synapse-AG.git` çalıştırmak yeterlidir.
+* **Otomatik Kurulum:** Yeni bilgisayarda `Yeni-Bilgisayara-Kur.bat` veya `3D-Beyin.bat` dosyasına basarak tüm hafızanı saniyeler içinde ayağa kaldırabilirsin.
 
 ---
 
-### 🧪 6. Hata & Başarısızlık Laboratuvarı (`Lessons.md`)
-* Hataları kalıcı kurallara dönüştürür.
-* Beklenmeyen bir sorun çıktığında `post-mortem` yeteneğini çalıştırın; 5-Whys kök neden analizi yapılarak çıkarılan ders `500-Knowledge/Lessons.md` içine, önleyici kural ise `Kurallar.md` içine işlensin.
+## 🏛️ Kasa Mimarisi
 
----
-
-## 🚀 Hızlı Kurulum (Tek Prompt)
-
-Antigravity 2.0 çalışma alanınızda asistana şu komutu vermeniz yeterlidir:
-
-```markdown
-beyin-antigravity.md dosyasını oku ve tarif edilen ikinci beyin sistemini bu çalışma alanına kur.
-Bitince kurduğun tüm bileşenleri listele.
 ```
-
-Synapse; sizinle 1 dakikalık kısa bir mülakat yapacak (İsim, Uzmanlık, Kapsam), klasör iskeletini kuracak, `.agents/` kancalarını bağlayacak ve Git sürüm kontrolünü başlatacaktır.
-
----
-
-## 🏗️ Temel Mimari
-
-```mermaid
-flowchart TD
-    subgraph Antigravity ["🧠 Antigravity 2.0 Döngüsü"]
-        UserPrompt["Kullanıcı Promptu"] --> PreHook["PreInvocation Hook\n(inject_context.py)"]
-        PreHook --> Model["Model & Companion Persona"]
-        Model --> StopHook["Stop Hook\n(flush_daily.py)"]
-    end
-
-    subgraph MemoryVault ["📁 Yerel Vault (%100 Markdown)"]
-        Core["🔮 850-Companion\n(Core, Kurallar, Threads, Last-Session)"]
-        Daily["📅 daily/YYYY-MM-DD.md"]
-        KB["🧠 knowledge/ & 500-Knowledge/\n(Concepts, Connections, Lessons)"]
-        Projects["🏰 300-Projects/"]
-    end
-
-    subgraph Compiler ["⚙️ Otonom Derleyici (Cron)"]
-        Nightly["compile_knowledge.py\n(Bilgi Derleyici)"]
-    end
-
-    subgraph UI ["🌐 3D Mekânsal Evren"]
-        Visualizer["visualizer/index.html\n(Three.js Spatial Graph)"]
-    end
-
-    PreHook -.->|Bağlamı Yükler| Core
-    StopHook -.->|Oturumu Kaydeder| Daily
-    Daily --> Nightly
-    Nightly -->|Makaleleri Derler| KB
-    MemoryVault -.->|Topolojiyi Görselleştirir| Visualizer
+Synapse-AG/
+├── 🔮 850-Companion/           # AI Asistan Kimliği, Çekirdek Hafıza ve Öğrenilen Kurallar
+│   ├── Core.md                 # Sistem kimliği ve yetenekleri
+│   ├── Kurallar.md             # Kullanıcıdan öğrenilen davranış kuralları
+│   ├── Last-Session.md         # Oturumlar arası devamlılık durumu
+│   └── Threads.md              # Aktif hedef ve proje takibi
+├── 🏰 300-Projects/            # Proje Merkezleri ve Amiral Gemisi AI/ML/IoT Kod Depoları
+│   ├── ThreatIntel-AI.md       # AI Tehdit İstihbarat Motoru (DeepSeek R1 + MITRE ATT&CK)
+│   ├── Crypto-Agent.md         # Otonom Kripto Ticaret Ajanı (DeepSeek + FastAPI)
+│   ├── VisionRAG.md            # Cihaz İçi Video Multimodal RAG (Microsoft AI Innovators)
+│   ├── ClarityAI.md            # Multimodal Video Anlama Platformu
+│   └── Full-Project-Catalog.md # 47 GitHub deposunun eksiksiz kataloğu
+├── 🧠 500-Knowledge/           # Temel Bilgi Sütunları ve Teknik Kavramlar
+│   ├── Agentic-AI.md           # Çoklu ajan mimarileri, ReAct döngüleri ve araç protokolleri
+│   ├── RAG-Architectures.md    # Gelişmiş RAG, HyDE, yeniden sıralama ve vektör indeksleri
+│   ├── Local-LLM-Ollama.md     # Yerel LLM çıkarımı ve kuantizasyon
+│   └── Mert-Ali-Alkan-CV-Profile.md # Geliştirici profili, eğitim ve yetkinlikler
+├── 🎯 100-Command-Center/      # Merkezi Komuta Paneli (Dashboard.md)
+├── 📥 000-Inbox/               # Gelen ham fikirler ve henüz sınıflandırılmamış notlar
+├── .agents/                    # Otonom Betikler, Kancalar ve Kurallar
+│   ├── hooks.json              # PreInvocation ve Stop yaşam döngüsü tanımları
+│   ├── rules/                  # Hafıza, mimari ve yönetim protokolleri
+│   └── scripts/                # Grafik derleyici, doktor ve taşıma motorları
+└── visualizer/                 # 3D Uzamsal Grafik ve Not Gezgini Web Arayüzü
+    ├── index.html              # Three.js 3D WebGL evreni ve Obsidian Vault UI
+    └── data.js                 # Otomatik derlenen düğümler, bağlantılar ve tam not içerikleri
 ```
 
 ---
 
-## 📂 Vault Dizin Yapısı
+## 🚀 Hızlı Başlangıç
 
-```text
-antigravity-beyin/
-├── LICENSE                         # MIT Lisansı
-├── README.md                       # İngilizce Ana Dokümantasyon
-├── README_TR.md                    # Türkçe Dokümantasyon
-├── beyin-antigravity.md            # Master Kurulum Şartnamesi (Build Spec)
-├── ROADMAP_LEVEL_UP.md             # Seviye Seviye Yol Haritası (L1 -> L4)
-│
-├── .agents/                        # Antigravity Kontrol Düzlemi
-│   ├── hooks.json                  # Yaşam Döngüsü Kancaları
-│   ├── rules/
-│   │   └── memory-protocol.md      # Otomatik Yüklenen Bellek Kuralları
-│   ├── skills/
-│   │   ├── beyin-doktor/           # Sistem Tanı & Sağlık Kontrolü
-│   │   ├── hafiza-derleyici/       # Bilgi Tabanı Derleyicisi
-│   │   ├── gecmis-import/          # Eski Sohbetleri İçe Aktarma
-│   │   ├── zamanlayici/            # Doğal Dil Cron & Zamanlayıcı
-│   │   ├── zaman-yolcusu/          # Git Geçmişi ve Zaman Yolculuğu
-│   │   ├── post-mortem/            # Kök Neden & Hata Analizi
-│   │   └── uzman-ajanlar/          # Çoklu Uzman Alt Ajanlar
-│   └── scripts/
-│       ├── inject_context.py       # PreInvocation Bağlam Enjektörü
-│       ├── flush_daily.py          # Oturum Sonu Günlük Log Yazarı
-│       ├── compile_knowledge.py    # Bilgi Tabanı Derleyicisi
-│       └── doctor.py               # 13 Noktalı Sağlık Denetim Motoru
-│
-├── visualizer/                     # 3D Mekânsal Bilgi Evreni
-│   ├── index.html                  # Three.js 3D Görselleştirici & Isı Haritası
-│   └── capture.py                  # Otomatik Ekran Görüntüsü Alma Scripti
-│
-├── docs/assets/                    # Ekran Görüntüleri ve Maskot Varlıkları
-├── 📥 000-Inbox/Dump/              # Ham Fikir Yakalama
-├── 🎯 100-Command-Center/          # Dashboard.md & Öncelikler
-├── 🏰 300-Projects/                # Aktif Proje Çalışma Alanları
-├── 🧠 500-Knowledge/               # Kalıcı Notlar & Lessons.md
-├── 🔮 850-Companion/               # Kalıcı Hafıza (Core, Kurallar, Threads, Last-Session)
-├── daily/                          # [Makine Yazar] Günlük Oturum Logları
-├── knowledge/                      # [Makine Yazar] Derlenmiş Kavramlar & Bağlantılar
-└── 📋 Templates/                   # Not, Proje ve Karar (ADR) Şablonları
-```
+### Gereksinimler
+* [Python 3.10+](https://www.python.org/)
+* WebGL destekli modern bir tarayıcı (Edge, Chrome, Brave, Firefox)
 
----
-
-## 🩺 Sağlık Kontrolü (`beyin doktor`)
-
-Sisteminizin sağlık durumunu dilediğiniz zaman denetleyin:
-
+### 1. Depoyu Klonlayın
 ```bash
-python .agents/scripts/doctor.py
-# veya sohbette: "beyin doktor"
+git clone https://github.com/MertAlii/Synapse-AG.git
+cd Synapse-AG
 ```
 
-```text
-=================================================================
-           ANTIGRAVITY BEYIN DOKTORU RAPORU
-=================================================================
-Bilesen                                          | Durum       
------------------------------------------------------------------
-Kok Yonlendirici (GEMINI.md / beyin-antigravity.md) | [OK] Hazir  
-Antigravity Kancalari (.agents/hooks.json)       | [OK] Hazir  
-Baglam Enjektoru (inject_context.py)             | [OK] Hazir  
-Oturum Loglayici (flush_daily.py)                | [OK] Hazir  
-Bilgi Derleyici (compile_knowledge.py)           | [OK] Hazir  
-Web 3D Gorsellestirici (visualizer/index.html)   | [OK] Hazir  
-Sablon Kasasi (template/)                        | [OK] Hazir  
-Git Surum Kontrolu                               | [OK] Git Aktif
-=================================================================
-[OK] Sistem sapasaglam! Tum hafiza kancalari ve dosyalar hazir.
+### 2. 3D Beyin & Not Gezginini Başlatın
+Klasördeki:
+* **`3D-Beyin.bat`** dosyasına çift tıklayın (veya tarayıcınızda `visualizer/index.html` dosyasını açın).
+
+### 3. Not Ekledikten Sonra Grafiği Güncelleyin
+```bash
+python .agents/scripts/compile_graph.py
+```
+
+### 4. Taşınabilir Yedek Paketi Oluşturun
+```bash
+python .agents/scripts/migrate_brain.py
+# veya Beyin-Yedekle.bat dosyasına çift tıklayın
 ```
 
 ---
 
-## 📜 Lisans & Atıflar
+## 👨‍💻 Geliştirici & Yazar
 
-Bu proje **[MIT Lisansı](LICENSE)** ile lisanslanmıştır.
-
-### İlham & Teşekkür:
-* **[Avenox](https://avenox.lol)** ([github.com/avenoxai/avenoxbeyin](https://github.com/avenoxai/avenoxbeyin)): İkinci Beyin felsefesi ve kanca mimarisi.
-* **[Andrej Karpathy](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)**: LLM Bilgi Tabanı ve otomatik derleme konsepti.
-* **[Vasturiano](https://github.com/vasturiano/3d-force-graph)**: 3D Force-Directed Graph kütüphanesi.
+* **Geliştirici:** **Mert Ali Alkan**
+* **GitHub:** [@MertAlii](https://github.com/MertAlii)
+* **Hugging Face:** [@Mer1Alii](https://huggingface.co/Mer1Alii)
+* **Unvan:** Junior Software Developer & AI Systems Engineer
 
 ---
 
-<p align="center">
-  <b>Synapse-AG</b> — Yapay zekayı sizinle yaşayan bir bilişsel düşünme ortağına dönüştürün. 🚀
-</p>
+## 📄 Lisans
+
+Bu proje **MIT Lisansı** ile lisanslanmıştır. Detaylar için `LICENSE` dosyasına bakabilirsiniz.
