@@ -14,10 +14,10 @@
 
 <p align="center">
   <a href="#-license--attribution"><img src="https://img.shields.io/badge/License-MIT-pink.svg?style=for-the-badge" alt="License MIT"></a>
-  <a href="#-quickstart-guide"><img src="https://img.shields.io/badge/Engine-Antigravity_2.0-blue.svg?style=for-the-badge&logo=google" alt="Antigravity 2.0"></a>
-  <a href="#-3d-spatial-knowledge-universe"><img src="https://img.shields.io/badge/Visualizer-Three.js-emerald.svg?style=for-the-badge&logo=threedotjs" alt="Three.js"></a>
+  <a href="#-quickstart-single-prompt"><img src="https://img.shields.io/badge/Engine-Antigravity_2.0-blue.svg?style=for-the-badge&logo=google" alt="Antigravity 2.0"></a>
+  <a href="#-1-3d-spatial-knowledge-universe"><img src="https://img.shields.io/badge/Visualizer-Three.js-emerald.svg?style=for-the-badge&logo=threedotjs" alt="Three.js"></a>
   <a href="#-core-architecture"><img src="https://img.shields.io/badge/Storage-100%25_Markdown-purple.svg?style=for-the-badge" alt="Markdown"></a>
-  <a href="https://github.com/MertAlii/Synapse-AG"><img src="https://img.shields.io/badge/Author-Mert_Ali_Alkan-cyan.svg?style=for-the-badge&logo=github" alt="Author"></a>
+  <a href="https://github.com/MertAlii/Synapse-AG"><img src="https://img.shields.io/badge/PRs-Welcome-brightgreen.svg?style=for-the-badge" alt="PRs Welcome"></a>
 </p>
 
 <p align="center">
@@ -28,24 +28,20 @@
 
 ## 💡 Overview
 
-**Synapse-AG** is an autonomous AI second brain and spatial knowledge engine designed for Google Antigravity 2.0. It bridges persistent cross-session memory, automatic bidirectional knowledge graph compilation, and interactive 3D WebGL visualization with an Obsidian-style hierarchical workspace into a unified, local-first system.
+**Synapse-AG** is an autonomous AI second brain engine built for Google Antigravity 2.0. It bridges persistent cross-session memory, automatic knowledge graph compilation, and interactive 3D spatial visualization with an Obsidian-style hierarchical workspace into a unified, local-first system.
 
-* **Persistent Memory & Lifecycle Hooks:** Deterministic hooks capture session summaries, update learned behavioral rules, and inject companion persona before every invocation.
-* **3D Spatial Universe (Three.js):** Real-time WebGL force-directed graph with cinematic auto-rotation, glowing halos, particle energy flux, and activity heatmaps.
-* **Obsidian-Style Vault Workspace (Note View):** Hierarchical folder tree navigation with live full-text search across document contents and real-time snippet/keyword highlights.
-* **Distraction-Free AMOLED Reader Modal:** Clean YAML frontmatter parsing, tag chips, interactive GitHub repository links, and clickable `[[WikiLinks]]`.
-* **1-Click Computer Migration & Backup:** Portable brain packaging script (`Beyin-Yedekle.bat` / `migrate_brain.py`) to migrate all memories, projects, and rules across computers with zero data loss.
-* **100% Local & Git-Controlled:** Plain Markdown (`.md`) vault residing entirely on your machine.
+* **Persistent Memory:** Automatic lifecycle hooks capture session summaries and update learned behavioral rules without manual note-taking.
+* **Autonomous Knowledge Graph:** Daily logs are synthesized into connected evergreen articles using an automated compilation pattern.
+* **100% Local & Obsidian-Compatible:** Plain `.md` files residing entirely on your machine, fully version-controlled with Git.
+* **3D Spatial Navigation & Vault Explorer:** Explore, search, and traverse your thoughts and backlinks inside a real-time WebGL/Three.js universe or a full Obsidian-style note explorer.
 
 ---
 
-## 🌟 Visual Showcase & Key Features
-
-### 🌌 1. 3D Spatial Knowledge Universe (WebGL / Three.js)
-* **Real-time Force Simulation:** Live semantic topology displaying organic orbits between active projects, knowledge pillars, daily logs, and companion memory nodes.
-* **Cinematic Galaxy Auto-Rotation:** Smooth continuous orbital camera rotation that gracefully pauses during user interactions and resumes seamlessly.
-* **Energy Particle Flux:** Directional neon particles flow through links, visually representing relationship velocity and semantic connections.
-* **Activity Heatmap Mode:** Switch on the heatmap to dynamically color-code nodes from cool blue (archival) to neon rose (active session hot-nodes).
+### 🌌 1. 3D Spatial Knowledge Universe
+* **Real-time 3D Force-Directed Graph:** Visualizes live connections between inbox ideas, active projects, knowledge concepts, and companion memories.
+* **Cinematic Galaxy Auto-Rotation:** Continuous orbital camera rotation with smart pause on user drag and interaction.
+* **Smart Neighbor Highlighting:** Hovering or clicking a node illuminates connected 1-hop neighbors and directional neon particles while dimming unrelated nodes.
+* **Interactive Node Inspector:** Click any node to smoothly fly the camera to it, inspect metadata, and traverse `[[backlinks]]`.
 
 <p align="center">
   <img src="assets/images/3d-graph-universe.png" alt="3D Knowledge Universe" width="95%" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);" />
@@ -63,108 +59,193 @@
   <img src="assets/images/vault-note-explorer.png" alt="Obsidian-Style Vault Explorer" width="95%" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);" />
 </p>
 
----
-
-### 🔍 3. Real-Time Full-Text Search with Live Snippets
-Search across dozens of project files and technical pillars in milliseconds with contextual excerpt previews and in-situ highlights:
-
 <p align="center">
   <img src="assets/images/fulltext-search-highlight.png" alt="Full-Text Search with Highlights" width="95%" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);" />
 </p>
 
 ---
 
-### 📖 4. In-App AMOLED Reader Modal & Frontmatter Engine
+### 📖 3. Interactive In-App Document Reader
 * **Clean YAML Frontmatter Extraction:** Raw YAML frontmatter is automatically parsed into interactive `#tag` chips and direct `[🐙 GitHub Repository ↗]` action buttons.
 * **Clickable Obsidian `[[WikiLinks]]`:** Clicking any bidirectional link inside the reader smoothly flies the 3D camera to that node and updates the document view.
 * **One-Click Actions:** Copy entire note content, copy relative path, or jump straight into the full Vault Workspace.
 
 <p align="center">
-  <img src="assets/images/reader-modal-view.png" alt="AMOLED Document Reader Modal" width="90%" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);" />
+  <img src="assets/images/reader-modal-view.png" alt="In-App Document Reader Modal" width="90%" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);" />
 </p>
 
 ---
 
-### 🚀 5. Computer Migration & Portable Brain Packaging
-Move your entire second brain to a new machine in seconds:
-
-* **1-Click Packaging (`Beyin-Yedekle.bat`):** Compiles the latest knowledge graph and bundles all memories, projects, rules, and visualizer files into a timestamped `.zip` archive.
-* **Instant Cloud Sync via Git:** Push to your GitHub repository and run `git clone https://github.com/MertAlii/Synapse-AG.git` on your new computer.
-* **Auto-Restore Script:** Double-click `Yeni-Bilgisayara-Kur.bat` on your new machine to restore and launch the 3D visualizer instantly.
+### 🔥 4. Dynamic Activity Heatmap Mode
+Switch on Heatmap mode to instantly illuminate notes based on recent activity, connection density, and edit frequency:
+* 🔴 **90%+ (Neon Rose):** Live notes edited or created in the current/recent session.
+* 🟠 **75% - 89% (Warm Amber):** High-priority active projects and core behavioral rules.
+* 🟢 **60% - 74% (Emerald):** Frequently referenced evergreen knowledge concepts.
+* 🔵 **<60% (Cool Blue):** Foundational reference notes and archived threads.
 
 ---
 
-## 🏛️ Vault Architecture
+### 🪝 5. Deterministic Lifecycle Hooks (`.agents/hooks.json`)
+* **`PreInvocation` (`inject_context.py`):** Automatically injects your companion persona (`Core.md`), recent session context (`Last-Session.md`), active threads (`Threads.md`), and learned user rules (`Kurallar.md`) before the model responds.
+* **`Stop` (`flush_daily.py`):** Intercepts session termination and appends a structured summary to `daily/YYYY-MM-DD.md`.
 
+---
+
+### ⏰ 6. Natural Language Scheduling & Cron
+Execute autonomous background tasks without writing cron syntax:
+* 🗣️ *"Every day at 12:00, compile yesterday's logs and give me a briefing."*
+  * ⚙️ **Antigravity Action:** Deploys a background daemon with `CronExpression: "0 12 * * *"` and `IsDaemon: true`.
+* 🗣️ *"Remind me to review this project status in 45 minutes."*
+  * ⚙️ **Antigravity Action:** Sets a one-shot timer with `DurationSeconds: 2700`.
+
+---
+
+### ⏳ 7. Git Time-Travel Memory (`zaman-yolcusu`)
+* The entire vault is version-controlled from day one.
+* Ask: *"Why did we change this architecture decision two weeks ago?"*
+* The model queries Git logs and diffs to extract the exact rationale and code changes.
+
+---
+
+### 🧪 8. Post-Mortem & Failures Lab (`Lessons.md`)
+* Automatically turns mistakes into permanent systemic rules.
+* When an unexpected bug occurs, run `post-mortem` to perform a 5-Whys analysis, record the takeaway in `500-Knowledge/Lessons.md`, and add an invariant guardrail to `Kurallar.md`.
+
+---
+
+## 🚀 Quickstart (Single-Prompt)
+
+In your Antigravity 2.0 workspace, provide the master build specification:
+
+```markdown
+Read beyin-antigravity.md and build the second brain system in this workspace.
+When finished, report all installed components.
 ```
+
+The installer conducts a brief 1-minute onboarding, constructs the vault tree, connects `.agents/` hooks, and initializes Git versioning.
+
+---
+
+## 🏗️ Core Architecture
+
+```mermaid
+flowchart TD
+    subgraph Antigravity ["🧠 Antigravity 2.0 Lifecycle"]
+        UserPrompt["User Prompt"] --> PreHook["PreInvocation Hook\n(inject_context.py)"]
+        PreHook --> Model["Model & Companion Persona"]
+        Model --> StopHook["Stop Hook\n(flush_daily.py)"]
+    end
+
+    subgraph MemoryVault ["📁 Local Vault (%100 Markdown)"]
+        Core["🔮 850-Companion\n(Core, Kurallar, Threads, Last-Session)"]
+        Daily["📅 daily/YYYY-MM-DD.md"]
+        KB["🧠 knowledge/ & 500-Knowledge/\n(Concepts, Connections, Lessons)"]
+        Projects["🏰 300-Projects/"]
+    end
+
+    subgraph Compiler ["⚙️ Autonomous Compiler (Cron)"]
+        Nightly["compile_knowledge.py\n(Knowledge Synthesizer)"]
+    end
+
+    subgraph UI ["🌐 3D Spatial Universe & Vault"]
+        Visualizer["visualizer/index.html\n(Three.js Spatial Graph & Note Workspace)"]
+    end
+
+    PreHook -.->|Auto-Injects Context| Core
+    StopHook -.->|Appends Session Log| Daily
+    Daily --> Nightly
+    Nightly -->|Synthesizes Articles| KB
+    MemoryVault -.->|Renders Topology| Visualizer
+```
+
+---
+
+## 📂 Vault Hierarchy
+
+```text
 Synapse-AG/
-├── 🔮 850-Companion/           # AI Companion Persona, Core Identity & Learned Rules
-│   ├── Core.md                 # System identity & capabilities
-│   ├── Kurallar.md             # Auto-learned user rules & behavioral invariants
-│   ├── Last-Session.md         # Cross-session continuity state
-│   └── Threads.md              # Active goal & project tracking
-├── 🏰 300-Projects/            # Project Hubs & Flagship AI/ML/IoT Repositories
-│   ├── ThreatIntel-AI.md       # AI Threat Intelligence Engine (DeepSeek R1 + MITRE ATT&CK)
-│   ├── Crypto-Agent.md         # Autonomous Crypto Trading Agent (DeepSeek + FastAPI)
-│   ├── VisionRAG.md            # On-Device Video Multimodal RAG (Microsoft AI Innovators)
-│   ├── ClarityAI.md            # Multimodal Video Understanding Platform
-│   └── Full-Project-Catalog.md # Complete index of all 47 GitHub repositories
-├── 🧠 500-Knowledge/           # Evergreen Knowledge Pillars & Core Tech Concepts
-│   ├── Agentic-AI.md           # Multi-agent systems, ReAct loops & tool protocols
-│   ├── RAG-Architectures.md    # Advanced RAG, HyDE, reranking & vector indices
-│   ├── Local-LLM-Ollama.md     # On-device LLM inference & quantization
-│   └── Mert-Ali-Alkan-CV-Profile.md # Full developer profile, education & skills
-├── 🎯 100-Command-Center/      # Central Command Dashboard & Flagship Index
-├── 📥 000-Inbox/               # Scratchpad for incoming thoughts and unclassified ideas
-├── .agents/                    # Autonomous Scripts, Hooks & Rules
-│   ├── hooks.json              # PreInvocation & Stop lifecycle definitions
-│   ├── rules/                  # Memory, architecture, and governance protocols
-│   └── scripts/                # Graph compiler, doctor & migration engines
-└── visualizer/                 # 3D Spatial Knowledge Graph & Vault Web Interface
-    ├── index.html              # Three.js 3D WebGL universe & Obsidian Vault UI
-    └── data.js                 # Auto-compiled graph nodes, links & full markdown content
+├── LICENSE                         # MIT License
+├── README.md                       # English Documentation
+├── README_TR.md                    # Turkish Documentation
+├── beyin-antigravity.md            # Master Build Specification
+├── ROADMAP_LEVEL_UP.md             # Capability Roadmap (L1 -> L4)
+│
+├── .agents/                        # Antigravity Control Plane
+│   ├── hooks.json                  # Lifecycle Hooks Configuration
+│   ├── rules/
+│   │   └── memory-protocol.md      # Auto-loaded Context Rules
+│   ├── skills/
+│   │   ├── beyin-doktor/           # System Diagnostics & Health Audit
+│   │   ├── hafiza-derleyici/       # Knowledge Base Compiler
+│   │   ├── gecmis-import/          # ChatGPT / Claude / Gemini Importer
+│   │   ├── zamanlayici/            # Natural Language Cron & Timer
+│   │   ├── zaman-yolcusu/          # Git Time-Travel Memory
+│   │   ├── post-mortem/            # Root Cause & Failures Lab
+│   │   └── uzman-ajanlar/          # Specialist Subagents
+│   └── scripts/
+│       ├── inject_context.py       # PreInvocation Context Injector
+│       ├── flush_daily.py          # Session End Daily Flusher
+│       ├── compile_knowledge.py    # Knowledge Graph Compiler
+│       ├── compile_graph.py        # 3D Visualizer & Vault Data Compiler
+│       └── doctor.py               # 13-Point Health Audit Engine
+│
+├── visualizer/                     # 3D Spatial Knowledge Universe & Note Workspace
+│   ├── index.html                  # Interactive Three.js Web App & Vault Explorer
+│   └── data.js                     # Auto-compiled graph nodes & note contents
+│
+├── assets/images/                  # High-Res Screenshots & Feature Previews
+├── 📥 000-Inbox/Dump/              # Quick Capture & Unprocessed Thoughts
+├── 🎯 100-Command-Center/          # Dashboard.md & Active Priorities
+├── 🏰 300-Projects/                # Project Workspaces & Repositories
+├── 🧠 500-Knowledge/               # Permanent Human Notes & Lessons.md
+├── 🔮 850-Companion/               # Companion Memory (Core, Rules, Threads, Sessions)
+├── daily/                          # [Machine-Written] Daily Session Logs
+├── knowledge/                      # [Machine-Compiled] Concepts & Connections
+└── 📋 Templates/                   # Note, Project, and Decision (ADR) Templates
 ```
 
 ---
 
-## 🚀 Quickstart Guide
+## 🩺 Diagnostics (`beyin doktor`)
 
-### Prerequisites
-* [Python 3.10+](https://www.python.org/)
-* Any modern web browser (Edge, Chrome, Brave, Firefox) with WebGL enabled
+Audit your second brain's health at any time:
 
-### 1. Clone the Repository
 ```bash
-git clone https://github.com/MertAlii/Synapse-AG.git
-cd Synapse-AG
+python .agents/scripts/doctor.py
+# Or in chat: "beyin doktor"
 ```
 
-### 2. Launch the 3D Brain & Vault Workspace
-Simply double-click:
-* **`3D-Beyin.bat`** (or open `visualizer/index.html` in your browser)
-
-### 3. Re-compile Knowledge Graph after Editing Notes
-```bash
-python .agents/scripts/compile_graph.py
-```
-
-### 4. Create a Portable Migration Backup
-```bash
-python .agents/scripts/migrate_brain.py
-# or double-click Beyin-Yedekle.bat
+```text
+=================================================================
+           ANTIGRAVITY BEYIN DOKTORU RAPORU
+=================================================================
+Bilesen                                          | Durum       
+-----------------------------------------------------------------
+Kok Yonlendirici (GEMINI.md / beyin-antigravity.md) | [OK] Hazir  
+Antigravity Kancalari (.agents/hooks.json)       | [OK] Hazir  
+Baglam Enjektoru (inject_context.py)             | [OK] Hazir  
+Oturum Loglayici (flush_daily.py)                | [OK] Hazir  
+Bilgi Derleyici (compile_knowledge.py)           | [OK] Hazir  
+Web 3D Gorsellestirici (visualizer/index.html)   | [OK] Hazir  
+Sablon Kasasi (template/)                        | [OK] Hazir  
+Git Surum Kontrolu                               | [OK] Git Aktif
+=================================================================
+[OK] Sistem sapasaglam! Tum hafiza kancalari ve dosyalar hazir.
 ```
 
 ---
 
-## 👨‍💻 Developer & Author
+## 📜 License & Attribution
 
-* **Developer:** **Mert Ali Alkan**
-* **GitHub:** [@MertAlii](https://github.com/MertAlii)
-* **Hugging Face:** [@Mer1Alii](https://huggingface.co/Mer1Alii)
-* **Role:** Junior Software Developer & AI Systems Engineer
+Distributed under the **[MIT License](LICENSE)**.
+
+### Inspirations & References:
+* **[Avenox](https://avenox.lol)** ([github.com/avenoxai/avenoxbeyin](https://github.com/avenoxai/avenoxbeyin)): Second Brain concept & hook-based workflow.
+* **[Andrej Karpathy](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)**: LLM Knowledge Base and autonomous article compilation pattern.
+* **[Vasturiano](https://github.com/vasturiano/3d-force-graph)**: 3D Force-Directed Graph WebGL library.
 
 ---
 
-## 📄 License
-
-Distributed under the **MIT License**. See `LICENSE` for more information.
+<p align="center">
+  <b>Synapse-AG</b> — An autonomous, spatial second brain that grows with you. 🚀
+</p>
