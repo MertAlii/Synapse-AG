@@ -95,6 +95,13 @@ type: daily-log
         with open(daily_file, "a", encoding="utf-8") as f:
             f.write("\n" + session_block.strip() + "\n")
 
+    # Auto-compile 3D graph data
+    try:
+        import subprocess
+        subprocess.run(["python", str(root / ".agents" / "scripts" / "compile_graph.py")], capture_output=True)
+    except Exception:
+        pass
+
     # Stop hook output
     print(json.dumps({"decision": "allow"}))
 

@@ -63,6 +63,13 @@ Bu indeks Antigravity Bilgi Derleyicisi tarafından otomatik güncellenir.
         with open(compile_log, "a", encoding="utf-8") as f:
             f.write(log_entry)
 
+    # Auto-compile 3D graph data
+    try:
+        import subprocess
+        subprocess.run(["python", str(root / ".agents" / "scripts" / "compile_graph.py")], capture_output=True)
+    except Exception:
+        pass
+
     print(f"[OK] Bilgi derlemesi tamamlandi: {len(existing_concepts)} kavram, {log_count} gunluk log tarandi.")
 
 if __name__ == "__main__":

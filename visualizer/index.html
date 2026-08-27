@@ -14,6 +14,7 @@
   <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
   <script src="https://unpkg.com/three-spritetext@1.8.2/dist/three-spritetext.min.js"></script>
   <script src="https://unpkg.com/3d-force-graph@1.73.4/dist/3d-force-graph.min.js"></script>
+  <script src="data.js"></script>
 
   <style>
     :root {
@@ -560,62 +561,7 @@
   </div>
 
   <script>
-    // --- Initial Graph Data ---
-    const rawData = {
-      nodes: [
-        { id: "Dashboard", name: "🎯 Dashboard.md", path: "100-Command-Center/Dashboard.md", group: "center", color: "#ffffff", val: 26, activity: 95, desc: "Tüm sistemin ana kumanda paneli, aktif hedefler ve hızlı bağlantılar." },
-        
-        // Companion
-        { id: "Core", name: "🔮 Core.md", path: "850-Companion/Core.md", group: "companion", color: "#a855f7", val: 19, activity: 88, desc: "AI Ortağının çekirdek kimliği, çalışma kuralları ve ilkeleri." },
-        { id: "Kurallar", name: "🔮 Kurallar.md", path: "850-Companion/Kurallar.md", group: "companion", color: "#a855f7", val: 15, activity: 82, desc: "Kullanıcının düzeltmelerinden öğrenilen dinamik davranış kuralları." },
-        { id: "LastSession", name: "🔮 Last-Session.md", path: "850-Companion/Last-Session.md", group: "companion", color: "#a855f7", val: 15, activity: 90, desc: "Son tamamlanan oturumun bağlamı ve devir notları." },
-        { id: "Threads", name: "🔮 Threads.md", path: "850-Companion/Threads.md", group: "companion", color: "#a855f7", val: 15, activity: 85, desc: "Devam eden ve kapatılmış iş parçacıkları tablosu." },
-        { id: "Journal", name: "🔮 Journal.md", path: "850-Companion/Journal.md", group: "companion", color: "#a855f7", val: 13, activity: 60, desc: "Ortağın kronolojik gözlem ve deneyim günlüğü." },
-        
-        // Projects
-        { id: "ProjectAlpha", name: "🏰 300-Projects/Alpha", path: "300-Projects/Alpha.md", group: "projects", color: "#06b6d4", val: 18, activity: 92, desc: "Birincil aktif geliştirme projesi." },
-        { id: "ProjectBeta", name: "🏰 300-Projects/Beta", path: "300-Projects/Beta.md", group: "projects", color: "#06b6d4", val: 14, activity: 50, desc: "İkinci araştırma ve test projesi." },
-        
-        // Knowledge
-        { id: "KarpathyKB", name: "🧠 LLM Knowledge Base", path: "500-Knowledge/Karpathy-KB.md", group: "knowledge", color: "#10b981", val: 19, activity: 75, desc: "Andrej Karpathy'nin otomatik derlenen bilgi tabanı mimarisi." },
-        { id: "AgenticEng", name: "🧠 Agentic Engineering", path: "500-Knowledge/Agentic-Eng.md", group: "knowledge", color: "#10b981", val: 17, activity: 80, desc: "Döngü tabanlı, araç kullanan otonom yapay zeka mühendisliği." },
-        { id: "HooksArchitecture", name: "🧠 Lifecycle Hooks", path: "500-Knowledge/Hooks.md", group: "knowledge", color: "#10b981", val: 15, activity: 70, desc: "PreInvocation ve Stop anlarında çalışan deterministik kancalar." },
-        { id: "LessonsPostMortem", name: "🧠 Lessons.md (Hata Lab)", path: "500-Knowledge/Lessons.md", group: "knowledge", color: "#10b981", val: 16, activity: 85, desc: "Karşılaşılan hataların kök neden analizi ve çıkarılan kalıcı dersler." },
-
-        // Daily Logs
-        { id: "DailyToday", name: "📅 daily/2026-08-27.md", path: "daily/2026-08-27.md", group: "daily", color: "#3b82f6", val: 16, activity: 100, desc: "Bugünün oturumlarında kaydedilen canlı oturum logları." },
-        { id: "DailyYesterday", name: "📅 daily/2026-08-26.md", path: "daily/2026-08-26.md", group: "daily", color: "#3b82f6", val: 13, activity: 65, desc: "Dünün tamamlanan oturum logları." },
-        
-        // Inbox
-        { id: "InboxDump", name: "📥 000-Inbox/Dump", path: "000-Inbox/Dump/", group: "inbox", color: "#f59e0b", val: 14, activity: 78, desc: "Ham fikirlerin ve hızlı notların ilk toplandığı geçici havuz." }
-      ],
-      links: [
-        { source: "Dashboard", target: "Core" },
-        { source: "Dashboard", target: "ProjectAlpha" },
-        { source: "Dashboard", target: "ProjectBeta" },
-        { source: "Dashboard", target: "DailyToday" },
-        { source: "Dashboard", target: "InboxDump" },
-        
-        { source: "Core", target: "Kurallar" },
-        { source: "Core", target: "LastSession" },
-        { source: "Core", target: "Threads" },
-        { source: "Core", target: "Journal" },
-        
-        { source: "ProjectAlpha", target: "Threads" },
-        { source: "ProjectAlpha", target: "AgenticEng" },
-        { source: "ProjectAlpha", target: "LessonsPostMortem" },
-        { source: "ProjectBeta", target: "InboxDump" },
-        
-        { source: "AgenticEng", target: "KarpathyKB" },
-        { source: "AgenticEng", target: "HooksArchitecture" },
-        { source: "HooksArchitecture", target: "LastSession" },
-        { source: "LessonsPostMortem", target: "Kurallar" },
-        
-        { source: "DailyToday", target: "LastSession" },
-        { source: "DailyToday", target: "ProjectAlpha" },
-        { source: "DailyYesterday", target: "KarpathyKB" }
-      ]
-    };
+    // rawData is loaded dynamically from data.js
 
     // State Variables
     let currentData = JSON.parse(JSON.stringify(rawData));

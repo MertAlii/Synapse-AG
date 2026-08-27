@@ -1,20 +1,20 @@
 ---
-title: MertOS Dashboard
+title: Alkan Dashboard
 created: 2026-08-27
 type: dashboard
 ---
-# 🧠 MertOS Kumanda Merkezi
+# 🧠 Alkan Kumanda Merkezi
 
-Hoş geldin Mert. Bu senin düşünen, hatırlayan ve her gün kendi hafızasını derleyen ikinci beynin.
+Hoş geldin Mert Ali Alkan. Bu senin düşünen, hatırlayan ve her gün kendi hafızasını derleyen ikinci beynin.
 
 ## 🚀 Hızlı Bağlantılar
 - 📥 [[📥 000-Inbox/Dump/|Fikir & Not Yakalama]]
 - 🎯 [[🎯 100-Command-Center/|Hedefler & Dashboard]]
 - 🏰 [[🏰 300-Projects/|Aktif Projeler]]
 - 🧠 [[🧠 500-Knowledge/|Kalıcı Bilgi Notları]]
-- 🔮 [[🔮 850-Companion/Core|Echo (Ortağın Hafızası)]]
+- 🔮 [[🔮 850-Companion/Core|Alkan (Ortağın Hafızası)]]
 - 📚 [[knowledge/index|Derlenmiş Bilgi Tabanı]]
-- 🌐 [3D Bilgi Evreni Visualizer](file:///c:/Users/merta/OneDrive/Desktop/aaa/sifirdan/antigravity-beyin/visualizer/index.html)
+- 🌐 [3D Bilgi Evreni Visualizer](file:///C:/Users/merta/.gemini/antigravity/scratch/synapse-ag/visualizer/index.html)
 
 ## 📌 Aktif Öncelikler
 - [x] İkinci beyin kurulumunu tamamla ve doğrula (`beyin doktor`)
