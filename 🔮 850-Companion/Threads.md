@@ -1,11 +1,9 @@
-# 🧵 İş Parçacıkları (Threads)
+# 🔮 Aktif İş Parçacıkları (Active Threads)
 
-## 🟢 Aktif İş Parçacıkları
-
-### Thread: Antigravity 2.0 İkinci Beyin Canlı Kullanımı
-- **Durum:** 🟢 Aktif, 2026-08-27
-- **Açıklama:** Sistem canlı olarak kuruldu, hafıza kancaları ve 3D görselleştirici aktif.
-
-## ⚪ Tamamlanan İş Parçacıkları
-- [x] İkinci Beyin v2 mimarisinin Antigravity 2.0'a uyarlanması
-- [x] 3D Bilgi Grafiği ve Isı Haritası geliştirmeleri
+| ID | Başlık | Kategori | İlgili Dosyalar / Notlar | Durum |
+| :--- | :--- | :--- | :--- | :--- |
+| **TH-001** | Tüm GitHub Repolarının Entegrasyonu | Portföy | [[Full-Project-Catalog]], [[Dashboard]] | 🟢 Tamamlandı |
+| **TH-002** | CV & Uzmanlık Hafıza Güncellemesi | Profil | [[Mert-Ali-Alkan-CV-Profile]], [[Core]] | 🟢 Tamamlandı |
+| **TH-003** | Agentic AI & RAG Bilgi Ağı | Bilgi | [[Agentic-AI]], [[RAG-Architectures]] | 🟢 Aktif / Bağlantılı |
+| **TH-004** | .NET 9 & Flutter Proje Ağları | Mimari | [[DotNet-Enterprise-Architecture]], [[Flutter-Riverpod]] | 🟢 Aktif / Bağlantılı |
+| **TH-005** | 3D Bilgi Evreni Topolojisi | Görselleştirici | `visualizer/data.js` | 🟢 Güncel |
