@@ -104,15 +104,22 @@ def main():
             
             val = max(10, min(30, int(file_path.stat().st_size / 200))) # Value sized by file content
             
+            try:
+                full_content = file_path.read_text(encoding="utf-8")
+            except Exception:
+                full_content = desc
+
             node = {
                 "id": node_id,
                 "name": clean_label(file_path.name, config["group"]),
                 "path": rel_path,
+                "full_path": file_path.as_posix(),
                 "group": config["group"],
                 "color": config["color"],
                 "val": val,
                 "activity": activity,
-                "desc": desc
+                "desc": desc,
+                "content": full_content
             }
             nodes.append(node)
             stem_to_id[stem.lower()] = node_id

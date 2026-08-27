@@ -10,10 +10,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-  <!-- Core 3D Libraries -->
+  <!-- Core 3D Libraries & Markdown Parser -->
   <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
   <script src="https://unpkg.com/three-spritetext@1.8.2/dist/three-spritetext.min.js"></script>
   <script src="https://unpkg.com/3d-force-graph@1.73.4/dist/3d-force-graph.min.js"></script>
+  <script src="https://unpkg.com/marked@9.1.6/marked.min.js"></script>
   <script src="data.js"></script>
 
   <style>
@@ -430,21 +431,300 @@
       transform: translateX(3px);
     }
 
-    /* Toast Notification */
-    #toast {
-      position: absolute;
-      top: 24px;
-      right: 50%;
-      transform: translateX(50%);
-      background: rgba(168, 85, 247, 0.9);
-      color: #fff;
-      font-size: 12.5px;
+    /* Inspector Action Buttons */
+    .inspector-btn-row {
+      display: flex;
+      gap: 8px;
+      margin: 12px 0 14px;
+    }
+
+    .action-btn-primary {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 12px;
       font-weight: 600;
-      padding: 8px 18px;
-      border-radius: 999px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      z-index: 100;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(168, 85, 247, 0.35);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .action-btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
+      background: linear-gradient(135deg, #b86bfc 0%, #7c7eff 100%);
+    }
+    .action-btn-primary:active {
+      transform: scale(0.96);
+    }
+
+    .action-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      color: #94a3b8;
+      border-radius: 12px;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .action-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .action-btn-secondary:active {
+      transform: scale(0.96);
+    }
+
+    /* Modal Overlay */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(2, 2, 6, 0.82);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      z-index: 200;
       display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes modalSlideUp {
+      from { opacity: 0; transform: translateY(20px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .reader-card {
+      background: rgba(9, 9, 16, 0.96) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      border-radius: 24px;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      width: min(860px, 94vw);
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: modalSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 0 !important;
+    }
+
+    .reader-header {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .reader-header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      overflow: hidden;
+    }
+
+    .reader-title {
+      font-size: 19px;
+      font-weight: 700;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .reader-path {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #64748b;
+    }
+
+    .reader-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .reader-tool-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #cbd5e1;
+      padding: 7px 12px;
+      border-radius: 10px;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .reader-tool-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .reader-tool-btn:active {
+      transform: scale(0.96);
+    }
+    .reader-tool-btn.close {
+      font-size: 15px;
+      padding: 7px 11px;
+      color: #94a3b8;
+    }
+    .reader-tool-btn.close:hover {
+      background: rgba(244, 63, 94, 0.2);
+      color: #f43f5e;
+      border-color: rgba(244, 63, 94, 0.4);
+    }
+
+    .reader-content-body {
+      padding: 24px 28px 36px;
+      overflow-y: auto;
+      color: #cbd5e1;
+      font-size: 13.5px;
+      line-height: 1.68;
+    }
+
+    .reader-content-body::-webkit-scrollbar {
+      width: 6px;
+    }
+    .reader-content-body::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 99px;
+    }
+
+    /* Markdown Elements inside Reader */
+    .reader-content-body h1 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 16px 0 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .reader-content-body h2 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #38bdf8;
+      margin: 18px 0 8px;
+    }
+    .reader-content-body h3 {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: #c084fc;
+      margin: 14px 0 6px;
+    }
+    .reader-content-body p {
+      margin-bottom: 12px;
+      color: #cbd5e1;
+    }
+    .reader-content-body ul, .reader-content-body ol {
+      margin: 8px 0 14px 20px;
+      color: #cbd5e1;
+    }
+    .reader-content-body li {
+      margin-bottom: 4px;
+    }
+    .reader-content-body code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      background: rgba(255, 255, 255, 0.07);
+      padding: 2px 6px;
+      border-radius: 5px;
+      color: #f472b6;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+    .reader-content-body pre {
+      background: #040408;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin: 12px 0 16px;
+      overflow-x: auto;
+    }
+    .reader-content-body pre code {
+      background: none;
+      padding: 0;
+      border: none;
+      color: #a5f3fc;
+      font-size: 12.5px;
+    }
+    .reader-content-body blockquote {
+      border-left: 3px solid #a855f7;
+      padding: 6px 14px;
+      background: rgba(168, 85, 247, 0.08);
+      border-radius: 0 8px 8px 0;
+      margin: 12px 0;
+      color: #e9d5ff;
+    }
+    .reader-content-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      font-size: 12.5px;
+    }
+    .reader-content-body th, .reader-content-body td {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 8px 12px;
+      text-align: left;
+    }
+    .reader-content-body th {
+      background: rgba(255, 255, 255, 0.04);
+      color: #ffffff;
+      font-weight: 600;
+    }
+    .reader-content-body tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.015);
+    }
+    .reader-content-body a {
+      color: #38bdf8;
+      text-decoration: none;
+    }
+    .reader-content-body a:hover {
+      text-decoration: underline;
+    }
+    .reader-content-body a.wiki-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(168, 85, 247, 0.15);
+      color: #d8b4fe;
+      padding: 2px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .reader-content-body a.wiki-link:hover {
+      background: rgba(168, 85, 247, 0.3);
+      color: #ffffff;
+      border-color: rgba(168, 85, 247, 0.6);
+      transform: translateY(-1px);
+      text-decoration: none;
     }
   </style>
 </head>
@@ -537,11 +817,47 @@
     <div id="insp-title" class="inspector-title">Not Başlığı</div>
     <div id="insp-path" class="inspector-path">path/to/note.md</div>
     
+    <!-- Action Buttons inside Inspector -->
+    <div class="inspector-btn-row">
+      <button class="action-btn-primary" onclick="openReader(selectedNode)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+        <span>Notu Oku & İncele</span>
+      </button>
+      <button class="action-btn-secondary" onclick="copyFilePath(selectedNode)" title="Dosya Yolunu Kopyala">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      </button>
+    </div>
+
     <div class="section-label">Özet & Bağlam</div>
     <div id="insp-desc" class="inspector-desc">Açıklama yükleniyor...</div>
 
     <div class="section-label">Bağlantılı Notlar (<span id="insp-link-count">0</span>)</div>
     <div id="insp-links" class="link-list"></div>
+  </div>
+
+  <!-- Modal: Full Note / Document Reader -->
+  <div id="reader-modal" class="modal-overlay" onclick="handleReaderOverlayClick(event)">
+    <div class="reader-card glass-panel" onclick="event.stopPropagation()">
+      <div class="reader-header">
+        <div class="reader-header-left">
+          <span id="reader-badge" class="inspector-badge">Kategori</span>
+          <h2 id="reader-title" class="reader-title">Not Başlığı</h2>
+          <div id="reader-path" class="reader-path">path/to/note.md</div>
+        </div>
+        <div class="reader-header-actions">
+          <button class="reader-tool-btn" onclick="copyReaderContent()" title="İçeriği Kopyala">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span>Kopyala</span>
+          </button>
+          <button class="reader-tool-btn close" onclick="closeReader()" title="Kapat (ESC)">✕</button>
+        </div>
+      </div>
+      
+      <!-- Rendered Markdown Body -->
+      <div id="reader-body" class="reader-content-body">
+        <!-- Rendered markdown is injected here -->
+      </div>
+    </div>
   </div>
 
   <!-- Bottom Floating Action Dock -->
@@ -910,6 +1226,143 @@
       toast.style.display = 'block';
       setTimeout(() => { toast.style.display = 'none'; }, 2200);
     }
+
+    // --- Full Document Reader Logic ---
+    let activeReaderNode = null;
+
+    function renderMarkdown(content) {
+      if (!content) return "<p><i>İçerik bulunamadı.</i></p>";
+
+      // 1. Process Obsidian [[WikiLinks]] and convert to clickable interactive links
+      let processed = content.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (match, target, alias) => {
+        const label = alias ? alias.trim() : target.trim();
+        const cleanTarget = target.trim();
+        return `<a class="wiki-link" onclick="handleWikiLinkClick('${cleanTarget.replace(/'/g, "\\'")}')"><span>🔮</span> ${label}</a>`;
+      });
+
+      // 2. Parse Markdown (using marked.js or fallback)
+      if (typeof marked !== 'undefined' && marked.parse) {
+        try {
+          return marked.parse(processed);
+        } catch (e) {
+          console.error("Marked parse error:", e);
+        }
+      }
+
+      // 3. Fallback Parser if marked is not available
+      return processed
+        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+        .replace(/^\> (.*$)/gim, '<blockquote>$1</blockquote>')
+        .replace(/\*\*(.*?)\*\*/gim, '<b>$1</b>')
+        .replace(/\*(.*?)\*/gim, '<i>$1</i>')
+        .replace(/`([^`]+)`/gim, '<code>$1</code>')
+        .replace(/^\- (.*$)/gim, '<ul><li>$1</li></ul>')
+        .replace(/<\/ul>\s?<ul>/gim, '')
+        .replace(/\n$/gim, '<br />')
+        .replace(/\n\n/gim, '</p><p>');
+    }
+
+    function openReader(node) {
+      if (!node) return;
+      activeReaderNode = node;
+
+      const modal = document.getElementById('reader-modal');
+      const badge = document.getElementById('reader-badge');
+      const title = document.getElementById('reader-title');
+      const pathEl = document.getElementById('reader-path');
+      const body = document.getElementById('reader-body');
+
+      title.innerText = node.name;
+      pathEl.innerText = node.path || `${node.name}.md`;
+
+      badge.innerText = (node.group || "GENEL").toUpperCase();
+      badge.style.backgroundColor = (node.color || '#a855f7') + '25';
+      badge.style.color = node.color || '#a855f7';
+      badge.style.border = `1px solid ${node.color || '#a855f7'}50`;
+
+      // Render content
+      const rawText = node.content || node.desc || "Bu dosya için içerik yüklenemedi.";
+      body.innerHTML = renderMarkdown(rawText);
+      body.scrollTop = 0;
+
+      modal.style.display = 'flex';
+      
+      if (tbControls) {
+        tbControls.enabled = false;
+      }
+    }
+
+    function closeReader() {
+      const modal = document.getElementById('reader-modal');
+      modal.style.display = 'none';
+      activeReaderNode = null;
+      if (tbControls) {
+        tbControls.enabled = true;
+      }
+    }
+
+    function handleReaderOverlayClick(e) {
+      if (e.target && e.target.id === 'reader-modal') {
+        closeReader();
+      }
+    }
+
+    function copyReaderContent() {
+      if (!activeReaderNode || !activeReaderNode.content) {
+        showToast("⚠️ Kopyalanacak içerik bulunamadı");
+        return;
+      }
+      navigator.clipboard.writeText(activeReaderNode.content).then(() => {
+        showToast("📋 Not içeriği panoya kopyalandı!");
+      }).catch(() => {
+        showToast("⚠️ Kopyalama başarısız oldu");
+      });
+    }
+
+    function copyFilePath(node) {
+      const target = node || selectedNode;
+      if (!target) return;
+      const full = target.full_path || target.path || target.name;
+      navigator.clipboard.writeText(full).then(() => {
+        showToast(`📋 Dosya yolu kopyalandı: ${target.path || target.name}`);
+      }).catch(() => {
+        showToast("⚠️ Kopyalama başarısız oldu");
+      });
+    }
+
+    function handleWikiLinkClick(targetName) {
+      if (!targetName) return;
+      const cleanSearch = targetName.toLowerCase().replace(/[\s\-_]/g, '');
+      const liveNodes = Graph.graphData().nodes;
+      
+      const found = liveNodes.find(n => {
+        const nIdClean = n.id.toLowerCase().replace(/[\s\-_]/g, '');
+        const nNameClean = n.name.toLowerCase().replace(/[\s\-_]/g, '');
+        const nPathClean = (n.path || '').toLowerCase().replace(/[\s\-_]/g, '');
+        return nIdClean === cleanSearch || nNameClean.includes(cleanSearch) || nPathClean.includes(cleanSearch);
+      });
+
+      if (found) {
+        openReader(found);
+        handleNodeClick(found);
+        showToast(`🔮 Bağlantılı not açıldı: ${found.name}`);
+      } else {
+        showToast(`⚠️ '${targetName}' notu bulunamadı`);
+      }
+    }
+
+    // Keyboard Shortcuts (ESC to close modals/inspectors)
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (document.getElementById('reader-modal').style.display === 'flex') {
+          closeReader();
+        } else if (selectedNode) {
+          closeInspector();
+        }
+      }
+    });
 
     // Initial Camera Placement
     Graph.cameraPosition({ x: 0, y: 30, z: 250 });
