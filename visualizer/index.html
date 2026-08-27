@@ -212,9 +212,9 @@
     /* Top Right Heatmap Legend */
     .heatmap-legend-card {
       position: absolute;
-      top: 20px;
+      top: 68px;
       right: 20px;
-      z-index: 10;
+      z-index: 25;
       display: none;
       max-width: 250px;
       padding: 14px 18px;
@@ -266,11 +266,11 @@
     /* Right Inspector HUD */
     .inspector-card {
       position: absolute;
-      top: 20px;
+      top: 68px;
       right: 20px;
       width: 380px;
-      max-height: calc(100vh - 120px);
-      z-index: 20;
+      max-height: calc(100vh - 90px);
+      z-index: 35;
       display: none;
       overflow-y: auto;
       border-radius: 20px;
@@ -436,132 +436,95 @@
       transform: translateX(3px);
     }
 
-    /* Bottom Floating Action Dock */
-    /* Floating Action Hub (Speed-Dial in Bottom-Right) */
-    .action-hub {
-      position: fixed;
-      bottom: 26px;
-      right: 26px;
-      z-index: 100;
-      display: flex;
-      flex-direction: column-reverse;
-      align-items: flex-end;
-      gap: 12px;
-      pointer-events: none;
-    }
-
-    .hub-trigger-btn {
-      pointer-events: auto;
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, rgba(168, 85, 247, 0.45) 0%, rgba(99, 102, 241, 0.45) 100%);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1.5px solid rgba(168, 85, 247, 0.55);
-      color: #ffffff;
-      font-size: 22px;
+    /* Top Right Mini Action Bar */
+    .top-action-bar {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 30;
       display: flex;
       align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 10px 35px rgba(168, 85, 247, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .hub-trigger-btn:hover {
-      transform: scale(1.08);
-      background: linear-gradient(135deg, rgba(168, 85, 247, 0.65) 0%, rgba(99, 102, 241, 0.65) 100%);
-      box-shadow: 0 14px 45px rgba(168, 85, 247, 0.7);
-    }
-
-    .hub-trigger-btn:active {
-      transform: scale(0.94);
-    }
-
-    .hub-trigger-btn.open {
-      background: rgba(244, 63, 94, 0.4);
-      border-color: rgba(244, 63, 94, 0.6);
-      box-shadow: 0 10px 35px rgba(244, 63, 94, 0.45);
-      transform: rotate(45deg);
-    }
-
-    .hub-menu {
-      pointer-events: auto;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 10px;
-      opacity: 0;
-      transform: translateY(15px) scale(0.92);
-      pointer-events: none;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .hub-menu.active {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      pointer-events: auto;
-    }
-
-    .hub-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(9, 9, 16, 0.9);
+      gap: 6px;
+      background: rgba(9, 9, 16, 0.85);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 999px;
-      padding: 6px 14px 6px 8px;
-      color: #e2e8f0;
-      font-size: 12.5px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 5px 7px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .top-bar-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      padding: 6px 11px;
+      border-radius: 8px;
+      font-size: 11.5px;
       font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
       white-space: nowrap;
     }
 
-    .hub-item:hover {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(255, 255, 255, 0.25);
-      color: #ffffff;
-      transform: translateX(-4px);
+    .top-bar-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
     }
 
-    .hub-item:active {
-      transform: scale(0.95);
-    }
-
-    .hub-item-icon {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.06);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-    }
-
-    .hub-item.active {
-      background: rgba(168, 85, 247, 0.22);
-      border-color: rgba(168, 85, 247, 0.5);
+    .top-bar-btn.active {
+      background: rgba(168, 85, 247, 0.2);
+      border-color: rgba(168, 85, 247, 0.4);
       color: #e9d5ff;
     }
-    .hub-item.active .hub-item-icon {
-      background: rgba(168, 85, 247, 0.4);
-    }
 
-    .hub-item.primary-mode {
+    .top-bar-btn.primary {
       background: linear-gradient(135deg, rgba(6, 182, 212, 0.25) 0%, rgba(168, 85, 247, 0.25) 100%);
-      border-color: rgba(6, 182, 212, 0.45);
+      border-color: rgba(6, 182, 212, 0.4);
       color: #a5f3fc;
     }
-    .hub-item.primary-mode:hover {
-      background: linear-gradient(135deg, rgba(6, 182, 212, 0.45) 0%, rgba(168, 85, 247, 0.45) 100%);
-      color: #ffffff;
+    .top-bar-btn.primary:hover {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.4) 0%, rgba(168, 85, 247, 0.4) 100%);
+      color: #fff;
+    }
+
+    .top-bar-btn:active {
+      transform: scale(0.96);
+    }
+
+    /* Search Highlight & Tree Snippets */
+    mark.search-highlight {
+      background: rgba(245, 158, 11, 0.35);
+      color: #fef08a;
+      padding: 1px 4px;
+      border-radius: 4px;
+      border: 1px solid rgba(245, 158, 11, 0.5);
+    }
+
+    .tree-snippet {
+      font-size: 10.5px;
+      color: #94a3b8;
+      line-height: 1.35;
+      padding: 2px 6px 4px 20px;
+      white-space: normal;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      cursor: pointer;
+      transition: color 0.15s ease;
+    }
+    .tree-snippet:hover {
+      color: #e2e8f0;
+    }
+    .tree-snippet mark {
+      background: rgba(245, 158, 11, 0.25);
+      color: #fef08a;
+      padding: 0 2px;
+      border-radius: 3px;
     }
 
     /* Modal Overlay (In-App Document Reader) */
@@ -1275,33 +1238,23 @@
     </div>
   </div>
 
-  <!-- Floating Action Hub (Speed-Dial in Bottom-Right) -->
-  <div class="action-hub" id="hud-dock">
-    <button id="hub-trigger" class="hub-trigger-btn" onclick="toggleActionHub()" title="Hızlı İşlem Menüsü (⚡)">
-      ⚡
+  <!-- Top Right Mini Action Bar (Yan yana mini butonlar) -->
+  <div class="top-action-bar" id="top-action-bar">
+    <button id="bar-view-mode-btn" class="top-bar-btn primary" onclick="toggleViewMode()" title="Not Defteri Görünümüne Geç">
+      <span>📑</span> Not Görünümü
     </button>
-    <div id="hub-menu" class="hub-menu">
-      <div class="hub-item primary-mode" onclick="toggleViewMode(); toggleActionHub();">
-        <div class="hub-item-icon">📑</div>
-        <span>Not Görünümü</span>
-      </div>
-      <div id="hub-btn-rotate" class="hub-item active" onclick="toggleAutoRotate()">
-        <div class="hub-item-icon">🔄</div>
-        <span>Otomatik Dönüş</span>
-      </div>
-      <div id="hub-btn-heatmap" class="hub-item" onclick="toggleHeatmap()">
-        <div class="hub-item-icon">🔥</div>
-        <span>Isı Haritası</span>
-      </div>
-      <div class="hub-item" onclick="resetCamera(); toggleActionHub();">
-        <div class="hub-item-icon">🎯</div>
-        <span>Merkeze Sıfırla</span>
-      </div>
-      <div class="hub-item" onclick="exportGraphHTML(); toggleActionHub();">
-        <div class="hub-item-icon">💾</div>
-        <span>Dışa Aktar (HTML)</span>
-      </div>
-    </div>
+    <button id="bar-rotate-btn" class="top-bar-btn active" onclick="toggleAutoRotate()" title="Kamera Otomatik Dönüşü">
+      <span>🔄</span> Dönüş
+    </button>
+    <button id="bar-heatmap-btn" class="top-bar-btn" onclick="toggleHeatmap()" title="Aktivite Isı Haritası">
+      <span>🔥</span> Isı Haritası
+    </button>
+    <button class="top-bar-btn" onclick="resetCamera()" title="Kamerayı Sıfırla">
+      <span>🎯</span> Sıfırla
+    </button>
+    <button class="top-bar-btn" onclick="exportGraphHTML()" title="Tek Parça HTML Olarak İndir">
+      <span>💾</span> Dışa Aktar
+    </button>
   </div>
 
   <!-- ========================================================= -->
@@ -1833,6 +1786,23 @@
       "inbox": { name: "📥 000-Inbox", icon: "📥", color: "#f59e0b" }
     };
 
+    function extractSearchSnippet(content, query) {
+      if (!content || !query) return "";
+      const qLower = query.toLowerCase();
+      const cLower = content.toLowerCase();
+      const idx = cLower.indexOf(qLower);
+      if (idx === -1) return "";
+
+      const start = Math.max(0, idx - 25);
+      const end = Math.min(content.length, idx + query.length + 45);
+      let snippet = content.slice(start, end).replace(/\r?\n/g, ' ').trim();
+      if (start > 0) snippet = "..." + snippet;
+      if (end < content.length) snippet = snippet + "...";
+
+      const regex = new RegExp(`(${query.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')})`, 'gi');
+      return snippet.replace(regex, '<mark>$1</mark>');
+    }
+
     function buildVaultTree(filterQuery = "") {
       const container = document.getElementById('vault-tree-container');
       container.innerHTML = "";
@@ -1845,15 +1815,23 @@
         const g = node.group || "knowledge";
         if (!groups[g]) groups[g] = [];
         
-        if (!q || node.name.toLowerCase().includes(q) || (node.path && node.path.toLowerCase().includes(q))) {
-          groups[g].push(node);
+        const nameMatch = node.name.toLowerCase().includes(q);
+        const pathMatch = node.path && node.path.toLowerCase().includes(q);
+        const descMatch = node.desc && node.desc.toLowerCase().includes(q);
+        const contentMatch = node.content && node.content.toLowerCase().includes(q);
+
+        if (!q || nameMatch || pathMatch || descMatch || contentMatch) {
+          groups[g].push({
+            node,
+            snippet: (!nameMatch && contentMatch && q) ? extractSearchSnippet(node.content, q) : ""
+          });
         }
       });
 
       // Render each folder group
       Object.keys(folderMeta).forEach(grpKey => {
-        const files = groups[grpKey] || [];
-        if (files.length === 0 && q) return; // Hide empty on search
+        const items = groups[grpKey] || [];
+        if (items.length === 0 && q) return; // Hide empty on search
 
         const meta = folderMeta[grpKey];
         const groupEl = document.createElement('div');
@@ -1866,14 +1844,18 @@
             <span class="folder-chevron" id="chev-${grpKey}">▼</span>
             <span>${meta.name}</span>
           </div>
-          <span class="folder-count">${files.length}</span>
+          <span class="folder-count">${items.length}</span>
         `;
 
         const filesContainer = document.createElement('div');
         filesContainer.className = 'folder-files';
         filesContainer.id = `files-${grpKey}`;
 
-        files.forEach(node => {
+        items.forEach(({ node, snippet }) => {
+          const itemWrap = document.createElement('div');
+          itemWrap.style.display = 'flex';
+          itemWrap.style.flexDirection = 'column';
+
           const item = document.createElement('div');
           item.className = `tree-file-item ${activeVaultNode && activeVaultNode.id === node.id ? 'active' : ''}`;
           item.id = `tree-item-${node.id}`;
@@ -1882,9 +1864,21 @@
             <span>${node.name.replace(/^[🔮🏰🧠🎯📅📥]\s*/, '')}</span>
           `;
           item.onclick = () => {
-            renderVaultDocument(node);
+            renderVaultDocument(node, q);
           };
-          filesContainer.appendChild(item);
+          itemWrap.appendChild(item);
+
+          if (snippet) {
+            const snipEl = document.createElement('div');
+            snipEl.className = 'tree-snippet';
+            snipEl.innerHTML = snippet;
+            snipEl.onclick = () => {
+              renderVaultDocument(node, q);
+            };
+            itemWrap.appendChild(snipEl);
+          }
+
+          filesContainer.appendChild(itemWrap);
         });
 
         header.onclick = () => {
@@ -1903,7 +1897,7 @@
       buildVaultTree(query);
     }
 
-    function renderVaultDocument(node) {
+    function renderVaultDocument(node, searchQuery = "") {
       if (!node) return;
       activeVaultNode = node;
 
@@ -1941,8 +1935,17 @@
       }
 
       // Body markdown
+      let renderedHtml = renderMarkdown(rawText);
+      
+      // If there is an active search query, highlight it inside the document!
+      const currentQuery = searchQuery || document.getElementById('vault-search').value.trim();
+      if (currentQuery && currentQuery.length >= 2) {
+        const regex = new RegExp(`(?![^<]*>)(${currentQuery.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')})`, 'gi');
+        renderedHtml = renderedHtml.replace(regex, '<mark class="search-highlight">$1</mark>');
+      }
+
       const body = document.getElementById('v-doc-body');
-      body.innerHTML = renderMarkdown(rawText);
+      body.innerHTML = renderedHtml;
       document.querySelector('.vault-doc-container').scrollTop = 0;
 
       // Backlinks
@@ -1980,7 +1983,7 @@
       isVaultViewOpen = !isVaultViewOpen;
       const vaultView = document.getElementById('vault-view');
       const hudHeader = document.getElementById('hud-header');
-      const hudDock = document.getElementById('hud-dock');
+      const topActionBar = document.getElementById('top-action-bar');
       const graphCanvas = document.getElementById('3d-graph');
 
       if (isVaultViewOpen) {
@@ -1994,13 +1997,13 @@
 
         vaultView.style.display = 'grid';
         hudHeader.style.display = 'none';
-        hudDock.style.display = 'none';
+        topActionBar.style.display = 'none';
         graphCanvas.style.opacity = '0';
-        showToast("📑 Obsidian Not Görünümüne Geçildi");
+        showToast("📑 Not Görünümüne Geçildi");
       } else {
         vaultView.style.display = 'none';
         hudHeader.style.display = 'flex';
-        hudDock.style.display = 'flex';
+        topActionBar.style.display = 'flex';
         graphCanvas.style.opacity = '1';
         showToast("🌌 3D Bilgi Evrenine Dönüldü");
       }
@@ -2036,18 +2039,6 @@
       }, 300);
     }
 
-    // --- Action Hub Speed-Dial Controller ---
-    let isActionHubOpen = false;
-    function toggleActionHub() {
-      isActionHubOpen = !isActionHubOpen;
-      const menu = document.getElementById('hub-menu');
-      const trigger = document.getElementById('hub-trigger');
-      if (menu && trigger) {
-        menu.classList.toggle('active', isActionHubOpen);
-        trigger.classList.toggle('open', isActionHubOpen);
-      }
-    }
-
     // --- Smooth Cinematic Auto-Rotation Engine ---
     let rotateAngle = 0;
     const rotateDistance = 250;
@@ -2078,16 +2069,16 @@
     // --- Controls & Toggles ---
     function toggleAutoRotate() {
       autoRotate = !autoRotate;
-      const btn = document.getElementById('hub-btn-rotate');
+      const btn = document.getElementById('bar-rotate-btn');
       if (btn) {
         btn.classList.toggle('active', autoRotate);
       }
-      showToast(autoRotate ? "🔄 Otomatik Galaksi Dönüşü Başlatıldı" : "⏸️ Otomatik Dönüş Durduruldu");
+      showToast(autoRotate ? "🔄 Otomatik Dönüş Başlatıldı" : "⏸️ Otomatik Dönüş Durduruldu");
     }
 
     function toggleHeatmap() {
       heatmapMode = !heatmapMode;
-      const btn = document.getElementById('hub-btn-heatmap');
+      const btn = document.getElementById('bar-heatmap-btn');
       const legend = document.getElementById('heatmap-legend');
 
       if (btn) btn.classList.toggle('active', heatmapMode);
