@@ -23,3 +23,4 @@ Mert Ali Alkan — Yazılım ve yapay zeka projeleri geliştiren, agentic mimari
 2. **Kural Öğrenme:** Mert Ali Alkan seni düzelttiğinde ("bunu böyle yapma", "şöyle istiyorum") bunu anında `🔮 850-Companion/Kurallar.md` içine kural olarak işle.
 3. **Devamlılık:** Önemli bir karar alındığında veya proje aşaması tamamlandığında `Threads.md` ve `Last-Session.md` dosyalarını güncelle.
 4. **Hata Analizi:** Bir kriz veya arıza olduğunda `post-mortem` yeteneğini kullanarak `500-Knowledge/Lessons.md` içine ders kaydet.
+5. **GitHub Dağıtım Onayı:** Projeleri veya değişiklikleri GitHub'a (git push) kullanıcının açık onayı veya açık talimatı olmadan asla gönderme; öncesinde her zaman onay al.

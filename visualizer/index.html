@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Antigravity 3D Bilgi Evreni (Spatial Graph)</title>
+  <title>Alkan 3D Bilgi Evreni & Obsidian Not Gezgini</title>
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Core 3D Libraries & Markdown Parser -->
   <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
@@ -20,7 +20,7 @@
   <style>
     :root {
       --bg-space: #020204;
-      --card-bg: rgba(9, 9, 15, 0.86);
+      --card-bg: rgba(9, 9, 16, 0.88);
       --card-border: rgba(255, 255, 255, 0.08);
       --accent-purple: #a855f7;
       --accent-cyan: #06b6d4;
@@ -49,6 +49,7 @@
       user-select: none;
     }
 
+    /* 3D Canvas Target */
     #3d-graph {
       position: absolute;
       top: 0;
@@ -57,9 +58,22 @@
       height: 100vh;
       z-index: 1;
       cursor: grab;
+      transition: opacity 0.3s ease;
     }
     #3d-graph:active {
       cursor: grabbing;
+    }
+
+    /* Glass Panels */
+    .glass-panel {
+      pointer-events: auto;
+      background: var(--card-bg);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 18px 22px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
 
     /* Left Control HUD */
@@ -73,17 +87,7 @@
       gap: 12px;
       max-width: 360px;
       pointer-events: none;
-    }
-
-    .glass-panel {
-      pointer-events: auto;
-      background: var(--card-bg);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 18px 22px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
     }
 
     .badge-wrap {
@@ -100,17 +104,16 @@
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #c084fc;
-      background: rgba(168, 85, 247, 0.15);
-      border: 1px solid rgba(168, 85, 247, 0.3);
+      color: var(--accent-purple);
+      background: rgba(168, 85, 247, 0.12);
       padding: 4px 10px;
-      border-radius: 999px;
+      border-radius: 8px;
+      border: 1px solid rgba(168, 85, 247, 0.25);
     }
 
     .node-counter {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
+      font-size: 12px;
+      font-weight: 600;
       color: var(--text-muted);
       background: rgba(255, 255, 255, 0.04);
       padding: 3px 8px;
@@ -118,37 +121,36 @@
     }
 
     h1 {
-      font-size: 19px;
+      font-size: 20px;
       font-weight: 700;
       letter-spacing: -0.02em;
-      color: #ffffff;
       margin-bottom: 4px;
+      color: #fff;
     }
 
-    p.subtitle {
+    .subtitle {
       font-size: 12px;
       color: var(--text-muted);
-      line-height: 1.45;
+      line-height: 1.4;
       margin-bottom: 14px;
     }
 
-    /* Search Input */
+    /* Search Box */
     .search-box {
       position: relative;
-      width: 100%;
       margin-bottom: 12px;
     }
 
     .search-box input {
       width: 100%;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.4);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 12px;
-      padding: 10px 14px 10px 36px;
+      padding: 10px 12px 10px 36px;
       color: #fff;
       font-size: 13px;
       outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      transition: all 0.2s ease;
     }
 
     .search-box input:focus {
@@ -163,25 +165,25 @@
       transform: translateY(-50%);
       width: 15px;
       height: 15px;
-      color: #64748b;
+      color: var(--text-muted);
+      pointer-events: none;
     }
 
-    /* Filter Pills */
+    /* Category Filter Buttons */
     .filter-group {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      margin-bottom: 10px;
     }
 
     .filter-btn {
       background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       color: var(--text-muted);
-      font-size: 11px;
-      font-weight: 500;
-      padding: 5px 9px;
+      padding: 6px 10px;
       border-radius: 8px;
+      font-size: 11.5px;
+      font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -189,40 +191,43 @@
       transition: all 0.2s ease;
     }
 
-    .filter-btn:hover, .filter-btn.active {
-      background: rgba(255, 255, 255, 0.12);
+    .filter-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
       color: #fff;
-      border-color: rgba(255, 255, 255, 0.25);
     }
 
-    .filter-btn .dot {
+    .filter-btn.active {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+      color: #fff;
+    }
+
+    .dot {
       width: 7px;
       height: 7px;
       border-radius: 50%;
+      display: inline-block;
     }
 
-    /* Top Right Heatmap Legend Card */
+    /* Top Right Heatmap Legend */
     .heatmap-legend-card {
       position: absolute;
       top: 20px;
       right: 20px;
-      width: 280px;
       z-index: 10;
       display: none;
-      animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
+      max-width: 250px;
+      padding: 14px 18px;
+      border-radius: 16px;
+      animation: fadeIn 0.2s ease-out;
     }
 
     .legend-title {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.06em;
-      color: #f43f5e;
-      margin-bottom: 12px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -230,9 +235,10 @@
 
     .scale-bar {
       height: 6px;
-      border-radius: 999px;
+      width: 100%;
+      border-radius: 3px;
       background: linear-gradient(to right, #3b82f6, #10b981, #f59e0b, #f43f5e);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .scale-labels {
@@ -240,77 +246,21 @@
       justify-content: space-between;
       font-size: 10px;
       color: var(--text-muted);
-      margin-bottom: 14px;
+      margin-bottom: 10px;
     }
 
     .legend-items {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 5px;
     }
 
     .legend-row {
       display: flex;
       align-items: center;
-      gap: 9px;
-      font-size: 11.5px;
-      color: #cbd5e1;
-    }
-
-    .legend-row .dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-    }
-
-    .legend-row b {
-      color: #fff;
-      font-weight: 600;
-    }
-
-    /* Bottom Action Dock */
-    .action-dock {
-      position: absolute;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      display: flex;
       gap: 8px;
-      background: var(--card-bg);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid var(--card-border);
-      border-radius: 999px;
-      padding: 6px 12px;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
-      pointer-events: auto;
-    }
-
-    .dock-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      padding: 7px 14px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s;
-    }
-
-    .dock-btn:hover {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .dock-btn.active {
-      color: #f43f5e;
-      background: rgba(244, 63, 94, 0.16);
-      border: 1px solid rgba(244, 63, 94, 0.3);
+      font-size: 11px;
+      color: #cbd5e1;
     }
 
     /* Right Inspector HUD */
@@ -318,24 +268,26 @@
       position: absolute;
       top: 20px;
       right: 20px;
-      width: 360px;
-      max-height: calc(100vh - 40px);
-      overflow-y: auto;
-      z-index: 12;
+      width: 380px;
+      max-height: calc(100vh - 120px);
+      z-index: 20;
       display: none;
-      animation: slideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow-y: auto;
+      border-radius: 20px;
+      padding: 22px;
+      animation: slideInRight 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateX(20px); }
-      to { opacity: 1; transform: translateX(0); }
+    @keyframes slideInRight {
+      from { transform: translateX(30px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
     }
 
     .inspector-header {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .inspector-badge {
@@ -343,8 +295,8 @@
       font-weight: 700;
       padding: 3px 8px;
       border-radius: 6px;
-      text-transform: uppercase;
       letter-spacing: 0.05em;
+      text-transform: uppercase;
     }
 
     .close-btn {
@@ -358,80 +310,32 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 14px;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
     }
 
     .close-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.15);
       color: #fff;
+      transform: rotate(90deg);
     }
 
     .inspector-title {
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 700;
       color: #fff;
-      margin-bottom: 6px;
-      word-break: break-word;
+      margin-bottom: 4px;
+      line-height: 1.3;
     }
 
     .inspector-path {
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
       color: #64748b;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       word-break: break-all;
     }
 
-    .inspector-desc {
-      font-size: 13px;
-      color: #cbd5e1;
-      line-height: 1.6;
-      margin-bottom: 16px;
-      background: rgba(0, 0, 0, 0.35);
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.04);
-    }
-
-    .section-label {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-    }
-
-    .link-list {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-bottom: 12px;
-    }
-
-    .link-chip {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 8px;
-      padding: 8px 12px;
-      font-size: 12px;
-      color: #93c5fd;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .link-chip:hover {
-      background: rgba(59, 130, 246, 0.2);
-      border-color: rgba(59, 130, 246, 0.4);
-      color: #bfdbfe;
-      transform: translateX(3px);
-    }
-
-    /* Inspector Action Buttons */
+    /* Action Buttons inside Inspector */
     .inspector-btn-row {
       display: flex;
       gap: 8px;
@@ -485,16 +389,122 @@
       transform: scale(0.96);
     }
 
-    /* Modal Overlay */
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .inspector-desc {
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.55;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .link-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .link-chip {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+      color: #93c5fd;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .link-chip:hover {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: rgba(59, 130, 246, 0.4);
+      color: #bfdbfe;
+      transform: translateX(3px);
+    }
+
+    /* Bottom Floating Action Dock */
+    .action-dock {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(9, 9, 16, 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      padding: 6px 10px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.85);
+    }
+
+    .dock-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .dock-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    .dock-btn.active {
+      background: rgba(168, 85, 247, 0.2);
+      color: #d8b4fe;
+      border: 1px solid rgba(168, 85, 247, 0.4);
+    }
+
+    .dock-btn.view-toggle-btn {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.25) 0%, rgba(168, 85, 247, 0.25) 100%);
+      border: 1px solid rgba(6, 182, 212, 0.4);
+      color: #a5f3fc;
+    }
+    .dock-btn.view-toggle-btn:hover {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.4) 0%, rgba(168, 85, 247, 0.4) 100%);
+      color: #fff;
+    }
+
+    .dock-btn:active {
+      transform: scale(0.96);
+    }
+
+    /* Modal Overlay (In-App Document Reader) */
     .modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(2, 2, 6, 0.82);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      background: rgba(2, 2, 6, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       z-index: 200;
       display: none;
       align-items: center;
@@ -514,11 +524,11 @@
     }
 
     .reader-card {
-      background: rgba(9, 9, 16, 0.96) !important;
+      background: rgba(9, 9, 16, 0.97) !important;
       border: 1px solid rgba(255, 255, 255, 0.12) !important;
       border-radius: 24px;
       box-shadow: 0 30px 90px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-      width: min(860px, 94vw);
+      width: min(880px, 94vw);
       max-height: 88vh;
       display: flex;
       flex-direction: column;
@@ -528,7 +538,7 @@
     }
 
     .reader-header {
-      padding: 20px 24px 16px;
+      padding: 22px 28px 18px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
       justify-content: space-between;
@@ -540,23 +550,58 @@
     .reader-header-left {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 6px;
       overflow: hidden;
     }
 
     .reader-title {
-      font-size: 19px;
+      font-size: 20px;
       font-weight: 700;
       color: #ffffff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      line-height: 1.3;
     }
 
     .reader-path {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
+      font-size: 11.5px;
       color: #64748b;
+    }
+
+    .reader-meta-pills {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .tag-pill {
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(59, 130, 246, 0.15);
+      color: #93c5fd;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+
+    .github-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.08);
+      color: #f1f5f9;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 2px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .github-link-btn:hover {
+      background: rgba(255, 255, 255, 0.18);
+      color: #fff;
     }
 
     .reader-header-actions {
@@ -600,11 +645,11 @@
     }
 
     .reader-content-body {
-      padding: 24px 28px 36px;
+      padding: 28px 32px 40px;
       overflow-y: auto;
       color: #cbd5e1;
-      font-size: 13.5px;
-      line-height: 1.68;
+      font-size: 14px;
+      line-height: 1.7;
     }
 
     .reader-content-body::-webkit-scrollbar {
@@ -617,39 +662,39 @@
 
     /* Markdown Elements inside Reader */
     .reader-content-body h1 {
-      font-size: 20px;
+      font-size: 21px;
       font-weight: 700;
       color: #ffffff;
-      margin: 16px 0 10px;
+      margin: 18px 0 10px;
       padding-bottom: 6px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
     .reader-content-body h2 {
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 700;
       color: #38bdf8;
-      margin: 18px 0 8px;
+      margin: 20px 0 8px;
     }
     .reader-content-body h3 {
-      font-size: 14.5px;
+      font-size: 15px;
       font-weight: 600;
       color: #c084fc;
-      margin: 14px 0 6px;
+      margin: 16px 0 6px;
     }
     .reader-content-body p {
       margin-bottom: 12px;
       color: #cbd5e1;
     }
     .reader-content-body ul, .reader-content-body ol {
-      margin: 8px 0 14px 20px;
+      margin: 8px 0 14px 22px;
       color: #cbd5e1;
     }
     .reader-content-body li {
-      margin-bottom: 4px;
+      margin-bottom: 5px;
     }
     .reader-content-body code {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
+      font-size: 12.5px;
       background: rgba(255, 255, 255, 0.07);
       padding: 2px 6px;
       border-radius: 5px;
@@ -669,7 +714,7 @@
       padding: 0;
       border: none;
       color: #a5f3fc;
-      font-size: 12.5px;
+      font-size: 13px;
     }
     .reader-content-body blockquote {
       border-left: 3px solid #a855f7;
@@ -683,7 +728,7 @@
       width: 100%;
       border-collapse: collapse;
       margin: 14px 0;
-      font-size: 12.5px;
+      font-size: 13px;
     }
     .reader-content-body th, .reader-content-body td {
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -726,6 +771,303 @@
       transform: translateY(-1px);
       text-decoration: none;
     }
+
+    /* ========================================================= */
+    /* 📑 OBSIDIAN VAULT WORKSPACE UI (FULL EXPLORER VIEW)        */
+    /* ========================================================= */
+    #vault-view {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 50;
+      background: #020204;
+      display: none;
+      grid-template-columns: 310px 1fr 300px;
+      overflow: hidden;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    /* Left Vault Sidebar */
+    .vault-sidebar {
+      background: rgba(6, 6, 12, 0.95);
+      border-right: 1px solid rgba(255, 255, 255, 0.07);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .vault-sidebar-header {
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .vault-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      color: #fff;
+    }
+
+    .vault-search-box {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .vault-search-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 10px;
+      padding: 8px 12px 8px 32px;
+      color: #fff;
+      font-size: 12px;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .vault-search-input:focus {
+      border-color: var(--accent-purple);
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .vault-file-tree {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 10px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .vault-file-tree::-webkit-scrollbar {
+      width: 4px;
+    }
+    .vault-file-tree::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    .folder-group {
+      margin-bottom: 6px;
+    }
+
+    .folder-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #94a3b8;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .folder-header:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #f1f5f9;
+    }
+
+    .folder-title-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .folder-chevron {
+      font-size: 10px;
+      transition: transform 0.2s ease;
+      display: inline-block;
+    }
+    .folder-chevron.collapsed {
+      transform: rotate(-90deg);
+    }
+
+    .folder-count {
+      font-size: 10px;
+      opacity: 0.6;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .folder-files {
+      padding-left: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-top: 2px;
+    }
+    .folder-files.collapsed {
+      display: none;
+    }
+
+    .tree-file-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      color: #cbd5e1;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .tree-file-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: #ffffff;
+      transform: translateX(2px);
+    }
+    .tree-file-item.active {
+      background: rgba(168, 85, 247, 0.2);
+      color: #f3e8ff;
+      border-left: 2.5px solid #a855f7;
+      font-weight: 600;
+    }
+
+    /* Center Vault Document Viewer */
+    .vault-main {
+      background: #020204;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .vault-topbar {
+      height: 52px;
+      padding: 0 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(6, 6, 12, 0.6);
+      backdrop-filter: blur(12px);
+    }
+
+    .vault-breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #64748b;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .vault-breadcrumbs span.active {
+      color: #e2e8f0;
+      font-weight: 600;
+    }
+
+    .vault-topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .vault-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .vault-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+    .vault-btn:active {
+      transform: scale(0.96);
+    }
+    .vault-btn.primary {
+      background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+      color: #fff;
+      border: none;
+    }
+
+    .vault-doc-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 36px 48px 64px;
+      max-width: 960px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .vault-doc-container::-webkit-scrollbar {
+      width: 6px;
+    }
+    .vault-doc-container::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 99px;
+    }
+
+    .vault-doc-header {
+      margin-bottom: 24px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .vault-doc-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    /* Right Vault Mentions Sidebar */
+    .vault-right-sidebar {
+      background: rgba(6, 6, 12, 0.85);
+      border-left: 1px solid rgba(255, 255, 255, 0.07);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .sidebar-section-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(168, 85, 247, 0.92);
+      backdrop-filter: blur(12px);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 22px;
+      border-radius: 999px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+      z-index: 9999;
+      display: none;
+      animation: fadeIn 0.2s ease-out;
+    }
   </style>
 </head>
 <body>
@@ -736,7 +1078,7 @@
   <div id="3d-graph"></div>
 
   <!-- Left Control HUD -->
-  <div class="header-bar">
+  <div class="header-bar" id="hud-header">
     <div class="glass-panel">
       <div class="badge-wrap">
         <span class="badge">🧠 ANTIGRAVITY 2.0</span>
@@ -840,11 +1182,17 @@
     <div class="reader-card glass-panel" onclick="event.stopPropagation()">
       <div class="reader-header">
         <div class="reader-header-left">
-          <span id="reader-badge" class="inspector-badge">Kategori</span>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span id="reader-badge" class="inspector-badge">Kategori</span>
+            <span id="reader-path" class="reader-path">path/to/note.md</span>
+          </div>
           <h2 id="reader-title" class="reader-title">Not Başlığı</h2>
-          <div id="reader-path" class="reader-path">path/to/note.md</div>
+          <div id="reader-meta-pills" class="reader-meta-pills"></div>
         </div>
         <div class="reader-header-actions">
+          <button class="reader-tool-btn" onclick="openInVaultView(activeReaderNode)" title="Obsidian Görünümünde Aç">
+            <span>📑</span> Obsidian Görünümü
+          </button>
           <button class="reader-tool-btn" onclick="copyReaderContent()" title="İçeriği Kopyala">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
             <span>Kopyala</span>
@@ -854,14 +1202,15 @@
       </div>
       
       <!-- Rendered Markdown Body -->
-      <div id="reader-body" class="reader-content-body">
-        <!-- Rendered markdown is injected here -->
-      </div>
+      <div id="reader-body" class="reader-content-body"></div>
     </div>
   </div>
 
   <!-- Bottom Floating Action Dock -->
-  <div class="action-dock">
+  <div class="action-dock" id="hud-dock">
+    <button id="view-mode-btn" class="dock-btn view-toggle-btn" onclick="toggleViewMode()">
+      <span>📑</span> Obsidian Not Görünümü
+    </button>
     <button id="rotate-btn" class="dock-btn active" onclick="toggleAutoRotate()">
       <span>🔄</span> Otomatik Dönüş
     </button>
@@ -876,6 +1225,85 @@
     </button>
   </div>
 
+  <!-- ========================================================= -->
+  <!-- 📑 OBSIDIAN VAULT WORKSPACE UI (FULL EXPLORER VIEW)        -->
+  <!-- ========================================================= -->
+  <div id="vault-view">
+    <!-- Left Sidebar: Vault File Explorer -->
+    <aside class="vault-sidebar">
+      <div class="vault-sidebar-header">
+        <div class="vault-brand">
+          <span>🔮</span>
+          <span>Alkan Vault Explorer</span>
+        </div>
+        <button class="vault-btn" onclick="toggleViewMode()" title="3D Haritaya Dön">
+          <span>🌌</span> 3D Harita
+        </button>
+      </div>
+
+      <div class="vault-search-box">
+        <div style="position:relative;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:#64748b;">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="vault-search" class="vault-search-input" placeholder="Dosyalarda ara..." oninput="filterVaultFiles(this.value)">
+        </div>
+      </div>
+
+      <!-- Hierarchical Tree View Container -->
+      <div class="vault-file-tree" id="vault-tree-container">
+        <!-- Rendered dynamically by buildVaultTree() -->
+      </div>
+    </aside>
+
+    <!-- Center Main Document Viewer -->
+    <main class="vault-main">
+      <div class="vault-topbar">
+        <div class="vault-breadcrumbs" id="vault-breadcrumbs">
+          <span>Alkan</span> &gt; <span id="v-crumb-group">300-Projects</span> &gt; <span id="v-crumb-file" class="active">ThreatIntel-AI.md</span>
+        </div>
+        <div class="vault-topbar-actions">
+          <button class="vault-btn" onclick="copyVaultDocContent()" title="İçeriği Kopyala">
+            <span>📋</span> Kopyala
+          </button>
+          <button class="vault-btn" onclick="focusActiveIn3D()" title="3D Evrende Bu Notu Göster">
+            <span>🎯</span> 3D'de Bul
+          </button>
+          <button class="vault-btn primary" onclick="toggleViewMode()">
+            <span>🌌</span> 3D Haritaya Geç
+          </button>
+        </div>
+      </div>
+
+      <div class="vault-doc-container">
+        <div class="vault-doc-header">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+            <span id="v-doc-badge" class="inspector-badge">Kategori</span>
+            <span id="v-doc-path" class="reader-path">path/to/note.md</span>
+          </div>
+          <h1 id="v-doc-title" class="vault-doc-title">Not Başlığı</h1>
+          <div id="v-doc-meta" class="reader-meta-pills"></div>
+        </div>
+
+        <div id="v-doc-body" class="reader-content-body" style="padding:0;">
+          <!-- Markdown injected here -->
+        </div>
+      </div>
+    </main>
+
+    <!-- Right Sidebar: Backlinks & Linked Mentions -->
+    <aside class="vault-right-sidebar">
+      <div class="sidebar-section-title">🔮 Çift Yönlü Bağlantılar</div>
+      <div id="vault-backlinks-list" class="link-list">
+        <!-- Backlinks injected here -->
+      </div>
+
+      <div class="sidebar-section-title" style="margin-top:20px;">ℹ️ Not Bilgileri</div>
+      <div id="vault-note-info" class="inspector-desc" style="margin-bottom:0;"></div>
+    </aside>
+  </div>
+
   <script>
     // rawData is loaded dynamically from data.js
 
@@ -887,6 +1315,8 @@
     let autoRotate = true;
     let heatmapMode = false;
     let selectedNode = null;
+    let activeVaultNode = null;
+    let isVaultViewOpen = false;
 
     // Cross-link connections for fast neighbor lookup
     const neighborMap = new Map();
@@ -961,66 +1391,66 @@
           group.add(new THREE.Mesh(glowGeo, glowMat));
         }
 
-        // 3. Crisp Text Label
-        if (showLabels) {
+        // 3. Crisp Text Sprite
+        if (showLabels && (!isDimmed || highlightNodes.has(node.id))) {
           const sprite = new SpriteText(node.name);
-          sprite.color = isDimmed ? 'rgba(100, 100, 120, 0.15)' : '#f1f5f9';
-          sprite.textHeight = Math.max(1.9, radius * 0.52);
-          sprite.position.y = radius + 2.0;
-          sprite.fontFamily = 'Plus Jakarta Sans, sans-serif';
+          sprite.color = isDimmed ? '#475569' : '#ffffff';
+          sprite.textHeight = Math.max(2.8, Math.min(4.8, radius * 1.05));
+          sprite.position.set(0, -radius - 3.2, 0);
+          sprite.fontFace = 'Plus Jakarta Sans';
           sprite.fontWeight = '600';
-          sprite.backgroundColor = isDimmed ? 'transparent' : 'rgba(6, 6, 10, 0.78)';
-          sprite.padding = 2;
+          sprite.backgroundColor = 'rgba(0, 0, 0, 0.6)';
+          sprite.padding = [1.2, 3];
           sprite.borderRadius = 3;
           group.add(sprite);
         }
 
         return group;
       })
-
+      
       // Link Styling
-      .linkWidth(link => {
-        const s = typeof link.source === 'object' ? link.source.id : link.source;
-        const t = typeof link.target === 'object' ? link.target.id : link.target;
-        return (highlightLinks.has(`${s}->${t}`) || highlightLinks.has(`${t}->${s}`)) ? 2.2 : 0.8;
-      })
-      .linkOpacity(0.35)
       .linkColor(link => {
         const s = typeof link.source === 'object' ? link.source.id : link.source;
         const t = typeof link.target === 'object' ? link.target.id : link.target;
-        if (highlightLinks.has(`${s}->${t}`) || highlightLinks.has(`${t}->${s}`)) {
-          return '#c084fc';
+        const isConnected = highlightLinks.has(`${s}->${t}`) || highlightLinks.has(`${t}->${s}`);
+        
+        if (highlightNodes.size > 0) {
+          return isConnected ? '#c084fc' : 'rgba(255, 255, 255, 0.02)';
         }
-        return highlightNodes.size > 0 ? 'rgba(255, 255, 255, 0.02)' : '#2e3e53';
+        return 'rgba(255, 255, 255, 0.12)';
+      })
+      .linkWidth(link => {
+        const s = typeof link.source === 'object' ? link.source.id : link.source;
+        const t = typeof link.target === 'object' ? link.target.id : link.target;
+        return (highlightLinks.has(`${s}->${t}`) || highlightLinks.has(`${t}->${s}`)) ? 2.2 : 0.6;
       })
       .linkDirectionalParticles(link => {
         const s = typeof link.source === 'object' ? link.source.id : link.source;
         const t = typeof link.target === 'object' ? link.target.id : link.target;
-        return (highlightLinks.has(`${s}->${t}`) || highlightLinks.has(`${t}->${s}`)) ? 4 : 1;
+        return (highlightLinks.has(`${s}->${t}`) || highlightLinks.has(`${t}->${s}`)) ? 3 : 0;
       })
-      .linkDirectionalParticleWidth(1.5)
-      .linkDirectionalParticleSpeed(0.007)
+      .linkDirectionalParticleWidth(2.4)
+      .linkDirectionalParticleSpeed(0.008)
       .linkDirectionalParticleColor(() => '#a855f7')
 
-      // Interaction Events
+      // Interactions
       .onNodeHover(handleNodeHover)
       .onNodeClick(handleNodeClick)
       .onBackgroundClick(handleBackgroundClick);
 
-    // --- Configure OrbitControls ---
+    // Setup Trackball Controls
     const tbControls = Graph.controls();
     if (tbControls) {
+      tbControls.dynamicDampingFactor = 0.16;
+      tbControls.rotateSpeed = 1.2;
+      tbControls.zoomSpeed = 1.2;
       tbControls.autoRotate = autoRotate;
-      tbControls.autoRotateSpeed = 0.5;
-      tbControls.enableDamping = true;
-      tbControls.dampingFactor = 0.08;
+      tbControls.autoRotateSpeed = 0.55;
     }
 
-    Graph.d3Force('charge').strength(-120);
-
-    // --- Event Handlers ---
+    // --- Hover & Selection Handlers ---
     function handleNodeHover(node) {
-      if (selectedNode) return;
+      if (selectedNode) return; // Keep clicked state focused
 
       highlightNodes.clear();
       highlightLinks.clear();
@@ -1040,7 +1470,6 @@
     }
 
     function handleNodeClick(rawTarget) {
-      // Find the LIVE node with valid x,y,z coordinates
       const node = getLiveNode(rawTarget);
       if (!node) return;
 
@@ -1110,7 +1539,7 @@
       badge.style.color = node.color;
       badge.style.border = `1px solid ${node.color}50`;
 
-      // Render connected backlinks (Clicking them now SAFELY flies to live node!)
+      // Render connected backlinks
       const linkList = document.getElementById('insp-links');
       linkList.innerHTML = '';
       document.getElementById('insp-link-count').innerText = neighbors.length;
@@ -1126,7 +1555,6 @@
           `;
           item.onclick = (e) => {
             e.stopPropagation();
-            // Call handleNodeClick with the verified live node!
             handleNodeClick(neighborNode);
           };
           linkList.appendChild(item);
@@ -1134,6 +1562,399 @@
       });
 
       inspector.style.display = 'block';
+    }
+
+    // --- Robust YAML Frontmatter & Markdown Parser ---
+    function parseFrontmatter(rawMarkdown) {
+      if (!rawMarkdown) return { meta: {}, cleanContent: "" };
+
+      let meta = {};
+      let cleanContent = rawMarkdown;
+
+      const fmRegex = /^---\s*\r?\n([\s\S]*?)\r?\n---\s*\r?\n/;
+      const match = rawMarkdown.match(fmRegex);
+
+      if (match) {
+        cleanContent = rawMarkdown.replace(fmRegex, "").trim();
+        const yamlLines = match[1].split("\n");
+        
+        yamlLines.forEach(line => {
+          const colonIdx = line.indexOf(":");
+          if (colonIdx > 0) {
+            const key = line.slice(0, colonIdx).trim().toLowerCase();
+            let val = line.slice(colonIdx + 1).trim();
+            
+            // Parse tags array e.g. [a, b, c]
+            if (key === "tags" && val.startsWith("[") && val.endsWith("]")) {
+              val = val.slice(1, -1).split(",").map(t => t.trim()).filter(Boolean);
+            }
+            meta[key] = val;
+          }
+        });
+      }
+
+      return { meta, cleanContent };
+    }
+
+    function renderMarkdown(rawMarkdown) {
+      if (!rawMarkdown) return "<p><i>İçerik bulunamadı.</i></p>";
+
+      // 1. Extract Frontmatter so raw YAML is NEVER displayed in body
+      const { cleanContent } = parseFrontmatter(rawMarkdown);
+
+      // 2. Process Obsidian [[WikiLinks]] and convert to clickable interactive spans
+      let processed = cleanContent.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (match, target, alias) => {
+        const label = alias ? alias.trim() : target.trim();
+        const cleanTarget = target.trim();
+        return `<a class="wiki-link" onclick="handleWikiLinkClick('${cleanTarget.replace(/'/g, "\\'")}')"><span>🔮</span> ${label}</a>`;
+      });
+
+      // 3. Parse Markdown (using marked.js or fallback)
+      if (typeof marked !== 'undefined' && marked.parse) {
+        try {
+          return marked.parse(processed);
+        } catch (e) {
+          console.error("Marked parse error:", e);
+        }
+      }
+
+      // 4. Fallback Parser
+      return processed
+        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+        .replace(/^\> (.*$)/gim, '<blockquote>$1</blockquote>')
+        .replace(/\*\*(.*?)\*\*/gim, '<b>$1</b>')
+        .replace(/\*(.*?)\*/gim, '<i>$1</i>')
+        .replace(/`([^`]+)`/gim, '<code>$1</code>')
+        .replace(/^\- (.*$)/gim, '<ul><li>$1</li></ul>')
+        .replace(/<\/ul>\s?<ul>/gim, '')
+        .replace(/\n$/gim, '<br />')
+        .replace(/\n\n/gim, '</p><p>');
+    }
+
+    // --- Modal Document Reader Logic ---
+    let activeReaderNode = null;
+
+    function openReader(node) {
+      if (!node) return;
+      activeReaderNode = node;
+
+      const modal = document.getElementById('reader-modal');
+      const badge = document.getElementById('reader-badge');
+      const title = document.getElementById('reader-title');
+      const pathEl = document.getElementById('reader-path');
+      const metaPills = document.getElementById('reader-meta-pills');
+      const body = document.getElementById('reader-body');
+
+      title.innerText = node.name;
+      pathEl.innerText = node.path || `${node.name}.md`;
+
+      badge.innerText = (node.group || "GENEL").toUpperCase();
+      badge.style.backgroundColor = (node.color || '#a855f7') + '25';
+      badge.style.color = node.color || '#a855f7';
+      badge.style.border = `1px solid ${node.color || '#a855f7'}50`;
+
+      // Parse metadata for pills
+      const rawText = node.content || node.desc || "";
+      const { meta } = parseFrontmatter(rawText);
+      
+      metaPills.innerHTML = '';
+      if (meta.tags && Array.isArray(meta.tags)) {
+        meta.tags.forEach(tag => {
+          metaPills.innerHTML += `<span class="tag-pill">#${tag}</span>`;
+        });
+      }
+      if (meta.github) {
+        metaPills.innerHTML += `<a href="${meta.github}" target="_blank" class="github-link-btn"><span>🐙</span> GitHub Deposu ↗</a>`;
+      }
+
+      body.innerHTML = renderMarkdown(rawText);
+      body.scrollTop = 0;
+
+      modal.style.display = 'flex';
+      
+      if (tbControls) {
+        tbControls.enabled = false;
+      }
+    }
+
+    function closeReader() {
+      const modal = document.getElementById('reader-modal');
+      modal.style.display = 'none';
+      activeReaderNode = null;
+      if (tbControls) {
+        tbControls.enabled = true;
+      }
+    }
+
+    function handleReaderOverlayClick(e) {
+      if (e.target && e.target.id === 'reader-modal') {
+        closeReader();
+      }
+    }
+
+    function copyReaderContent() {
+      if (!activeReaderNode || !activeReaderNode.content) {
+        showToast("⚠️ Kopyalanacak içerik bulunamadı");
+        return;
+      }
+      navigator.clipboard.writeText(activeReaderNode.content).then(() => {
+        showToast("📋 Not içeriği panoya kopyalandı!");
+      }).catch(() => {
+        showToast("⚠️ Kopyalama başarısız oldu");
+      });
+    }
+
+    function copyFilePath(node) {
+      const target = node || selectedNode;
+      if (!target) return;
+      const full = target.full_path || target.path || target.name;
+      navigator.clipboard.writeText(full).then(() => {
+        showToast(`📋 Dosya yolu kopyalandı`);
+      }).catch(() => {
+        showToast("⚠️ Kopyalama başarısız oldu");
+      });
+    }
+
+    function handleWikiLinkClick(targetName) {
+      if (!targetName) return;
+      const cleanSearch = targetName.toLowerCase().replace(/[\s\-_]/g, '');
+      const liveNodes = Graph.graphData().nodes;
+      
+      const found = liveNodes.find(n => {
+        const nIdClean = n.id.toLowerCase().replace(/[\s\-_]/g, '');
+        const nNameClean = n.name.toLowerCase().replace(/[\s\-_]/g, '');
+        const nPathClean = (n.path || '').toLowerCase().replace(/[\s\-_]/g, '');
+        return nIdClean === cleanSearch || nNameClean.includes(cleanSearch) || nPathClean.includes(cleanSearch);
+      });
+
+      if (found) {
+        if (isVaultViewOpen) {
+          renderVaultDocument(found);
+        } else {
+          openReader(found);
+          handleNodeClick(found);
+        }
+        showToast(`🔮 Açıldı: ${found.name}`);
+      } else {
+        showToast(`⚠️ '${targetName}' notu bulunamadı`);
+      }
+    }
+
+    // =========================================================
+    // 📑 OBSIDIAN VAULT WORKSPACE CONTROLLER
+    // =========================================================
+    const folderMeta = {
+      "companion": { name: "🔮 850-Companion", icon: "🔮", color: "#a855f7" },
+      "projects": { name: "🏰 300-Projects", icon: "🏰", color: "#06b6d4" },
+      "knowledge": { name: "🧠 500-Knowledge", icon: "🧠", color: "#10b981" },
+      "center": { name: "🎯 100-Command-Center", icon: "🎯", color: "#ffffff" },
+      "daily": { name: "📅 daily", icon: "📅", color: "#3b82f6" },
+      "inbox": { name: "📥 000-Inbox", icon: "📥", color: "#f59e0b" }
+    };
+
+    function buildVaultTree(filterQuery = "") {
+      const container = document.getElementById('vault-tree-container');
+      container.innerHTML = "";
+
+      const q = filterQuery.trim().toLowerCase();
+      
+      // Group nodes by their folder
+      const groups = {};
+      rawData.nodes.forEach(node => {
+        const g = node.group || "knowledge";
+        if (!groups[g]) groups[g] = [];
+        
+        if (!q || node.name.toLowerCase().includes(q) || (node.path && node.path.toLowerCase().includes(q))) {
+          groups[g].push(node);
+        }
+      });
+
+      // Render each folder group
+      Object.keys(folderMeta).forEach(grpKey => {
+        const files = groups[grpKey] || [];
+        if (files.length === 0 && q) return; // Hide empty on search
+
+        const meta = folderMeta[grpKey];
+        const groupEl = document.createElement('div');
+        groupEl.className = 'folder-group';
+
+        const header = document.createElement('div');
+        header.className = 'folder-header';
+        header.innerHTML = `
+          <div class="folder-title-left">
+            <span class="folder-chevron" id="chev-${grpKey}">▼</span>
+            <span>${meta.name}</span>
+          </div>
+          <span class="folder-count">${files.length}</span>
+        `;
+
+        const filesContainer = document.createElement('div');
+        filesContainer.className = 'folder-files';
+        filesContainer.id = `files-${grpKey}`;
+
+        files.forEach(node => {
+          const item = document.createElement('div');
+          item.className = `tree-file-item ${activeVaultNode && activeVaultNode.id === node.id ? 'active' : ''}`;
+          item.id = `tree-item-${node.id}`;
+          item.innerHTML = `
+            <span style="font-size:11px; opacity:0.8;">📄</span>
+            <span>${node.name.replace(/^[🔮🏰🧠🎯📅📥]\s*/, '')}</span>
+          `;
+          item.onclick = () => {
+            renderVaultDocument(node);
+          };
+          filesContainer.appendChild(item);
+        });
+
+        header.onclick = () => {
+          filesContainer.classList.toggle('collapsed');
+          const chev = document.getElementById(`chev-${grpKey}`);
+          chev.classList.toggle('collapsed');
+        };
+
+        groupEl.appendChild(header);
+        groupEl.appendChild(filesContainer);
+        container.appendChild(groupEl);
+      });
+    }
+
+    function filterVaultFiles(query) {
+      buildVaultTree(query);
+    }
+
+    function renderVaultDocument(node) {
+      if (!node) return;
+      activeVaultNode = node;
+
+      // Update Active class in tree
+      document.querySelectorAll('.tree-file-item').forEach(el => el.classList.remove('active'));
+      const activeEl = document.getElementById(`tree-item-${node.id}`);
+      if (activeEl) activeEl.classList.add('active');
+
+      // Breadcrumbs & Header
+      document.getElementById('v-crumb-group').innerText = node.group ? (folderMeta[node.group] ? folderMeta[node.group].name : node.group) : "Vault";
+      document.getElementById('v-crumb-file').innerText = node.path ? node.path.split('/').pop() : node.name;
+      
+      const badge = document.getElementById('v-doc-badge');
+      badge.innerText = (node.group || "GENEL").toUpperCase();
+      badge.style.backgroundColor = (node.color || '#a855f7') + '25';
+      badge.style.color = node.color || '#a855f7';
+      badge.style.border = `1px solid ${node.color || '#a855f7'}50`;
+
+      document.getElementById('v-doc-path').innerText = node.path || `${node.name}.md`;
+      document.getElementById('v-doc-title').innerText = node.name;
+
+      // Parse metadata for pills
+      const rawText = node.content || node.desc || "";
+      const { meta } = parseFrontmatter(rawText);
+      
+      const metaPills = document.getElementById('v-doc-meta');
+      metaPills.innerHTML = '';
+      if (meta.tags && Array.isArray(meta.tags)) {
+        meta.tags.forEach(tag => {
+          metaPills.innerHTML += `<span class="tag-pill">#${tag}</span>`;
+        });
+      }
+      if (meta.github) {
+        metaPills.innerHTML += `<a href="${meta.github}" target="_blank" class="github-link-btn"><span>🐙</span> GitHub Deposu ↗</a>`;
+      }
+
+      // Body markdown
+      const body = document.getElementById('v-doc-body');
+      body.innerHTML = renderMarkdown(rawText);
+      document.querySelector('.vault-doc-container').scrollTop = 0;
+
+      // Backlinks
+      const neighbors = neighborMap.get(node.id) || new Set();
+      const bList = document.getElementById('vault-backlinks-list');
+      bList.innerHTML = '';
+
+      if (neighbors.size === 0) {
+        bList.innerHTML = '<span style="font-size:11.5px; color:#64748b; font-style:italic;">Bu nota bağlı başka bir bağlantı yok.</span>';
+      } else {
+        neighbors.forEach(nId => {
+          const nNode = getLiveNode(nId);
+          if (nNode) {
+            const chip = document.createElement('div');
+            chip.className = 'link-chip';
+            chip.innerHTML = `
+              <span>${nNode.name}</span>
+              <span style="font-size:10px; opacity:0.6; text-transform:uppercase;">${nNode.group}</span>
+            `;
+            chip.onclick = () => renderVaultDocument(nNode);
+            bList.appendChild(chip);
+          }
+        });
+      }
+
+      // Info box
+      document.getElementById('vault-note-info').innerHTML = `
+        <div style="margin-bottom:4px;"><b>Düğüm Boyutu:</b> ${node.val}</div>
+        <div style="margin-bottom:4px;"><b>Aktivite Skoru:</b> %${node.activity}</div>
+        <div><b>Dosya Yolu:</b> ${node.path}</div>
+      `;
+    }
+
+    function toggleViewMode() {
+      isVaultViewOpen = !isVaultViewOpen;
+      const vaultView = document.getElementById('vault-view');
+      const hudHeader = document.getElementById('hud-header');
+      const hudDock = document.getElementById('hud-dock');
+      const graphCanvas = document.getElementById('3d-graph');
+
+      if (isVaultViewOpen) {
+        closeReader();
+        closeInspector();
+        buildVaultTree();
+        
+        // Open selected or dashboard
+        const target = selectedNode || activeReaderNode || rawData.nodes.find(n => n.id === 'Dashboard') || rawData.nodes[0];
+        renderVaultDocument(target);
+
+        vaultView.style.display = 'grid';
+        hudHeader.style.display = 'none';
+        hudDock.style.display = 'none';
+        graphCanvas.style.opacity = '0';
+        showToast("📑 Obsidian Not Görünümüne Geçildi");
+      } else {
+        vaultView.style.display = 'none';
+        hudHeader.style.display = 'flex';
+        hudDock.style.display = 'flex';
+        graphCanvas.style.opacity = '1';
+        showToast("🌌 3D Bilgi Evrenine Dönüldü");
+      }
+    }
+
+    function openInVaultView(node) {
+      if (!isVaultViewOpen) {
+        toggleViewMode();
+      }
+      if (node) {
+        renderVaultDocument(node);
+      }
+    }
+
+    function copyVaultDocContent() {
+      if (!activeVaultNode || !activeVaultNode.content) {
+        showToast("⚠️ Kopyalanacak içerik bulunamadı");
+        return;
+      }
+      navigator.clipboard.writeText(activeVaultNode.content).then(() => {
+        showToast("📋 Not içeriği kopyalandı!");
+      }).catch(() => {
+        showToast("⚠️ Kopyalama başarısız oldu");
+      });
+    }
+
+    function focusActiveIn3D() {
+      if (!activeVaultNode) return;
+      const target = activeVaultNode;
+      toggleViewMode();
+      setTimeout(() => {
+        handleNodeClick(target);
+      }, 300);
     }
 
     // --- Controls & Toggles ---
@@ -1210,147 +2031,44 @@
       closeInspector();
     }
 
+    // --- Standalone Self-Contained HTML Exporter ---
     function exportGraphHTML() {
-      const htmlContent = document.documentElement.outerHTML;
-      const blob = new Blob([htmlContent], { type: 'text/html' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `antigravity-knowledge-universe-${new Date().toISOString().slice(0,10)}.html`;
-      a.click();
-      showToast("💾 3D Bilgi Evreni İndirildi!");
+      try {
+        const cloneDoc = document.documentElement.cloneNode(true);
+        
+        // Embed rawData inline so exported file needs NO external data.js!
+        const scriptTags = cloneDoc.querySelectorAll('script');
+        scriptTags.forEach(s => {
+          if (s.getAttribute('src') === 'data.js') {
+            s.removeAttribute('src');
+            s.textContent = `const rawData = ${JSON.stringify(rawData)};`;
+          }
+        });
+
+        const fullHtml = "<!DOCTYPE html>\n" + cloneDoc.outerHTML;
+        const blob = new Blob([fullHtml], { type: 'text/html;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Alkan-Second-Brain-${new Date().toISOString().slice(0, 10)}.html`;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }, 250);
+        showToast("💾 3D Bilgi Evreni Tek Parça HTML Olarak İndirildi!");
+      } catch (err) {
+        console.error("Export error:", err);
+        showToast("⚠️ Dışa aktarma sırasında bir hata oluştu");
+      }
     }
 
     function showToast(msg) {
       const toast = document.getElementById('toast');
       toast.innerText = msg;
       toast.style.display = 'block';
-      setTimeout(() => { toast.style.display = 'none'; }, 2200);
-    }
-
-    // --- Full Document Reader Logic ---
-    let activeReaderNode = null;
-
-    function renderMarkdown(content) {
-      if (!content) return "<p><i>İçerik bulunamadı.</i></p>";
-
-      // 1. Process Obsidian [[WikiLinks]] and convert to clickable interactive links
-      let processed = content.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (match, target, alias) => {
-        const label = alias ? alias.trim() : target.trim();
-        const cleanTarget = target.trim();
-        return `<a class="wiki-link" onclick="handleWikiLinkClick('${cleanTarget.replace(/'/g, "\\'")}')"><span>🔮</span> ${label}</a>`;
-      });
-
-      // 2. Parse Markdown (using marked.js or fallback)
-      if (typeof marked !== 'undefined' && marked.parse) {
-        try {
-          return marked.parse(processed);
-        } catch (e) {
-          console.error("Marked parse error:", e);
-        }
-      }
-
-      // 3. Fallback Parser if marked is not available
-      return processed
-        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
-        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
-        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
-        .replace(/^\> (.*$)/gim, '<blockquote>$1</blockquote>')
-        .replace(/\*\*(.*?)\*\*/gim, '<b>$1</b>')
-        .replace(/\*(.*?)\*/gim, '<i>$1</i>')
-        .replace(/`([^`]+)`/gim, '<code>$1</code>')
-        .replace(/^\- (.*$)/gim, '<ul><li>$1</li></ul>')
-        .replace(/<\/ul>\s?<ul>/gim, '')
-        .replace(/\n$/gim, '<br />')
-        .replace(/\n\n/gim, '</p><p>');
-    }
-
-    function openReader(node) {
-      if (!node) return;
-      activeReaderNode = node;
-
-      const modal = document.getElementById('reader-modal');
-      const badge = document.getElementById('reader-badge');
-      const title = document.getElementById('reader-title');
-      const pathEl = document.getElementById('reader-path');
-      const body = document.getElementById('reader-body');
-
-      title.innerText = node.name;
-      pathEl.innerText = node.path || `${node.name}.md`;
-
-      badge.innerText = (node.group || "GENEL").toUpperCase();
-      badge.style.backgroundColor = (node.color || '#a855f7') + '25';
-      badge.style.color = node.color || '#a855f7';
-      badge.style.border = `1px solid ${node.color || '#a855f7'}50`;
-
-      // Render content
-      const rawText = node.content || node.desc || "Bu dosya için içerik yüklenemedi.";
-      body.innerHTML = renderMarkdown(rawText);
-      body.scrollTop = 0;
-
-      modal.style.display = 'flex';
-      
-      if (tbControls) {
-        tbControls.enabled = false;
-      }
-    }
-
-    function closeReader() {
-      const modal = document.getElementById('reader-modal');
-      modal.style.display = 'none';
-      activeReaderNode = null;
-      if (tbControls) {
-        tbControls.enabled = true;
-      }
-    }
-
-    function handleReaderOverlayClick(e) {
-      if (e.target && e.target.id === 'reader-modal') {
-        closeReader();
-      }
-    }
-
-    function copyReaderContent() {
-      if (!activeReaderNode || !activeReaderNode.content) {
-        showToast("⚠️ Kopyalanacak içerik bulunamadı");
-        return;
-      }
-      navigator.clipboard.writeText(activeReaderNode.content).then(() => {
-        showToast("📋 Not içeriği panoya kopyalandı!");
-      }).catch(() => {
-        showToast("⚠️ Kopyalama başarısız oldu");
-      });
-    }
-
-    function copyFilePath(node) {
-      const target = node || selectedNode;
-      if (!target) return;
-      const full = target.full_path || target.path || target.name;
-      navigator.clipboard.writeText(full).then(() => {
-        showToast(`📋 Dosya yolu kopyalandı: ${target.path || target.name}`);
-      }).catch(() => {
-        showToast("⚠️ Kopyalama başarısız oldu");
-      });
-    }
-
-    function handleWikiLinkClick(targetName) {
-      if (!targetName) return;
-      const cleanSearch = targetName.toLowerCase().replace(/[\s\-_]/g, '');
-      const liveNodes = Graph.graphData().nodes;
-      
-      const found = liveNodes.find(n => {
-        const nIdClean = n.id.toLowerCase().replace(/[\s\-_]/g, '');
-        const nNameClean = n.name.toLowerCase().replace(/[\s\-_]/g, '');
-        const nPathClean = (n.path || '').toLowerCase().replace(/[\s\-_]/g, '');
-        return nIdClean === cleanSearch || nNameClean.includes(cleanSearch) || nPathClean.includes(cleanSearch);
-      });
-
-      if (found) {
-        openReader(found);
-        handleNodeClick(found);
-        showToast(`🔮 Bağlantılı not açıldı: ${found.name}`);
-      } else {
-        showToast(`⚠️ '${targetName}' notu bulunamadı`);
-      }
+      setTimeout(() => { toast.style.display = 'none'; }, 2400);
     }
 
     // Keyboard Shortcuts (ESC to close modals/inspectors)
@@ -1358,6 +2076,8 @@
       if (e.key === 'Escape') {
         if (document.getElementById('reader-modal').style.display === 'flex') {
           closeReader();
+        } else if (isVaultViewOpen) {
+          toggleViewMode();
         } else if (selectedNode) {
           closeInspector();
         }

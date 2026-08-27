@@ -14,3 +14,7 @@ Bu çalışma alanında aşağıdaki hafıza kuralları zorunludur:
 
 4. **Gerçeklik İlkesi:**
    - Varsayımlarla konuşma. Bir bilgi gerekiyorsa önce `500-Knowledge/` veya `knowledge/` altındaki ilgili notları oku.
+
+5. **GitHub & Dış Dağıtım Onay Kuralı (Zorunlu):**
+   - Projeleri veya değişiklikleri GitHub'a (git push vb.) kendi inisiyatifinle asla gönderme.
+   - Herhangi bir şeyi GitHub'a veya uzak sunucuya göndermeden önce kullanıcıya "GitHub'a gönderelim mi?" diye sor veya kullanıcının açık "GitHub'a gönder" komutunu bekle.
