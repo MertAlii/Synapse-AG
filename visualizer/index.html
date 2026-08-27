@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Antigravity 3D Bilgi Evreni (Spatial Graph)</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Core 3D Libraries -->
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <script src="https://unpkg.com/three-spritetext@1.8.2/dist/three-spritetext.min.js"></script>
+  <script src="https://unpkg.com/3d-force-graph@1.73.4/dist/3d-force-graph.min.js"></script>
+
+  <style>
+    :root {
+      --bg-space: #020204;
+      --card-bg: rgba(9, 9, 15, 0.86);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent-purple: #a855f7;
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --accent-blue: #3b82f6;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--bg-space);
+      color: var(--text-main);
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      user-select: none;
+    }
+
+    #3d-graph {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      cursor: grab;
+    }
+    #3d-graph:active {
+      cursor: grabbing;
+    }
+
+    /* Left Control HUD */
+    .header-bar {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 360px;
+      pointer-events: none;
+    }
+
+    .glass-panel {
+      pointer-events: auto;
+      background: var(--card-bg);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 18px 22px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .badge-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #c084fc;
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .node-counter {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.04);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    h1 {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    p.subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin-bottom: 14px;
+    }
+
+    /* Search Input */
+    .search-box {
+      position: relative;
+      width: 100%;
+      margin-bottom: 12px;
+    }
+
+    .search-box input {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 10px 14px 10px 36px;
+      color: #fff;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-box input:focus {
+      border-color: var(--accent-purple);
+      box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2);
+    }
+
+    .search-box svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 15px;
+      height: 15px;
+      color: #64748b;
+    }
+
+    /* Filter Pills */
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .filter-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 500;
+      padding: 5px 9px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .filter-btn .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+    }
+
+    /* Top Right Heatmap Legend Card */
+    .heatmap-legend-card {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 280px;
+      z-index: 10;
+      display: none;
+      animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .legend-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: #f43f5e;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .scale-bar {
+      height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(to right, #3b82f6, #10b981, #f59e0b, #f43f5e);
+      margin-bottom: 6px;
+    }
+
+    .scale-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .legend-items {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .legend-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 11.5px;
+      color: #cbd5e1;
+    }
+
+    .legend-row .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+
+    .legend-row b {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* Bottom Action Dock */
+    .action-dock {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      gap: 8px;
+      background: var(--card-bg);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--card-border);
+      border-radius: 999px;
+      padding: 6px 12px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+      pointer-events: auto;
+    }
+
+    .dock-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .dock-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .dock-btn.active {
+      color: #f43f5e;
+      background: rgba(244, 63, 94, 0.16);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+    }
+
+    /* Right Inspector HUD */
+    .inspector-card {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 360px;
+      max-height: calc(100vh - 40px);
+      overflow-y: auto;
+      z-index: 12;
+      display: none;
+      animation: slideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .inspector-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .inspector-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .close-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .close-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    .inspector-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+      word-break: break-word;
+    }
+
+    .inspector-path {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #64748b;
+      margin-bottom: 14px;
+      word-break: break-all;
+    }
+
+    .inspector-desc {
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.6;
+      margin-bottom: 16px;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .link-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .link-chip {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+      color: #93c5fd;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .link-chip:hover {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: rgba(59, 130, 246, 0.4);
+      color: #bfdbfe;
+      transform: translateX(3px);
+    }
+
+    /* Toast Notification */
+    #toast {
+      position: absolute;
+      top: 24px;
+      right: 50%;
+      transform: translateX(50%);
+      background: rgba(168, 85, 247, 0.9);
+      color: #fff;
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 999px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      z-index: 100;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="toast"></div>
+
+  <!-- 3D Canvas Target -->
+  <div id="3d-graph"></div>
+
+  <!-- Left Control HUD -->
+  <div class="header-bar">
+    <div class="glass-panel">
+      <div class="badge-wrap">
+        <span class="badge">🧠 ANTIGRAVITY 2.0</span>
+        <span id="node-count" class="node-counter">0 Düğüm</span>
+      </div>
+      <h1>3D Bilgi Evreni</h1>
+      <p class="subtitle">İkinci beyninizdeki notlar, projeler ve kavramlar arasındaki canlı semantik topoloji.</p>
+
+      <!-- Search Input -->
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="search-input" placeholder="Not veya kavram ara..." oninput="handleSearch(this.value)">
+      </div>
+
+      <!-- Categories Filter -->
+      <div class="filter-group">
+        <button class="filter-btn active" onclick="filterCategory('all', this)">
+          Tümü
+        </button>
+        <button class="filter-btn" onclick="filterCategory('companion', this)">
+          <span class="dot" style="background:var(--accent-purple)"></span> Hafıza
+        </button>
+        <button class="filter-btn" onclick="filterCategory('projects', this)">
+          <span class="dot" style="background:var(--accent-cyan)"></span> Projeler
+        </button>
+        <button class="filter-btn" onclick="filterCategory('knowledge', this)">
+          <span class="dot" style="background:var(--accent-emerald)"></span> Bilgi
+        </button>
+        <button class="filter-btn" onclick="filterCategory('daily', this)">
+          <span class="dot" style="background:var(--accent-blue)"></span> Günlük
+        </button>
+        <button class="filter-btn" onclick="filterCategory('inbox', this)">
+          <span class="dot" style="background:var(--accent-amber)"></span> Inbox
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Right Heatmap Legend -->
+  <div id="heatmap-legend" class="glass-panel heatmap-legend-card">
+    <div class="legend-title">🔥 ISI HARİTASI RENK REHBERİ</div>
+    <div class="scale-bar"></div>
+    <div class="scale-labels">
+      <span>Düşük</span>
+      <span>Orta</span>
+      <span>Yüksek</span>
+      <span>Canlı</span>
+    </div>
+    <div class="legend-items">
+      <div class="legend-row">
+        <span class="dot" style="background:#f43f5e"></span>
+        <span><b>%90+</b> Canlı / Son Oturum</span>
+      </div>
+      <div class="legend-row">
+        <span class="dot" style="background:#f59e0b"></span>
+        <span><b>%75 - %89</b> Yüksek Aktivite</span>
+      </div>
+      <div class="legend-row">
+        <span class="dot" style="background:#10b981"></span>
+        <span><b>%60 - %74</b> Düzenli Kullanılan</span>
+      </div>
+      <div class="legend-row">
+        <span class="dot" style="background:#3b82f6"></span>
+        <span><b>&lt;%60</b> Düşük / Arşiv Not</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Inspector HUD -->
+  <div id="inspector" class="inspector-card glass-panel">
+    <div class="inspector-header">
+      <span id="insp-badge" class="inspector-badge">Kategori</span>
+      <button class="close-btn" onclick="closeInspector()">✕</button>
+    </div>
+    <div id="insp-title" class="inspector-title">Not Başlığı</div>
+    <div id="insp-path" class="inspector-path">path/to/note.md</div>
+    
+    <div class="section-label">Özet & Bağlam</div>
+    <div id="insp-desc" class="inspector-desc">Açıklama yükleniyor...</div>
+
+    <div class="section-label">Bağlantılı Notlar (<span id="insp-link-count">0</span>)</div>
+    <div id="insp-links" class="link-list"></div>
+  </div>
+
+  <!-- Bottom Floating Action Dock -->
+  <div class="action-dock">
+    <button id="rotate-btn" class="dock-btn active" onclick="toggleAutoRotate()">
+      <span>🔄</span> Otomatik Dönüş
+    </button>
+    <button id="heatmap-btn" class="dock-btn" onclick="toggleHeatmap()">
+      <span>🔥</span> Isı Haritası
+    </button>
+    <button class="dock-btn" onclick="resetCamera()">
+      <span>🎯</span> Sıfırla
+    </button>
+    <button class="dock-btn" onclick="exportGraphHTML()">
+      <span>💾</span> Dışa Aktar
+    </button>
+  </div>
+
+  <script>
+    // --- Initial Graph Data ---
+    const rawData = {
+      nodes: [
+        { id: "Dashboard", name: "🎯 Dashboard.md", path: "100-Command-Center/Dashboard.md", group: "center", color: "#ffffff", val: 26, activity: 95, desc: "Tüm sistemin ana kumanda paneli, aktif hedefler ve hızlı bağlantılar." },
+        
+        // Companion
+        { id: "Core", name: "🔮 Core.md", path: "850-Companion/Core.md", group: "companion", color: "#a855f7", val: 19, activity: 88, desc: "AI Ortağının çekirdek kimliği, çalışma kuralları ve ilkeleri." },
+        { id: "Kurallar", name: "🔮 Kurallar.md", path: "850-Companion/Kurallar.md", group: "companion", color: "#a855f7", val: 15, activity: 82, desc: "Kullanıcının düzeltmelerinden öğrenilen dinamik davranış kuralları." },
+        { id: "LastSession", name: "🔮 Last-Session.md", path: "850-Companion/Last-Session.md", group: "companion", color: "#a855f7", val: 15, activity: 90, desc: "Son tamamlanan oturumun bağlamı ve devir notları." },
+        { id: "Threads", name: "🔮 Threads.md", path: "850-Companion/Threads.md", group: "companion", color: "#a855f7", val: 15, activity: 85, desc: "Devam eden ve kapatılmış iş parçacıkları tablosu." },
+        { id: "Journal", name: "🔮 Journal.md", path: "850-Companion/Journal.md", group: "companion", color: "#a855f7", val: 13, activity: 60, desc: "Ortağın kronolojik gözlem ve deneyim günlüğü." },
+        
+        // Projects
+        { id: "ProjectAlpha", name: "🏰 300-Projects/Alpha", path: "300-Projects/Alpha.md", group: "projects", color: "#06b6d4", val: 18, activity: 92, desc: "Birincil aktif geliştirme projesi." },
+        { id: "ProjectBeta", name: "🏰 300-Projects/Beta", path: "300-Projects/Beta.md", group: "projects", color: "#06b6d4", val: 14, activity: 50, desc: "İkinci araştırma ve test projesi." },
+        
+        // Knowledge
+        { id: "KarpathyKB", name: "🧠 LLM Knowledge Base", path: "500-Knowledge/Karpathy-KB.md", group: "knowledge", color: "#10b981", val: 19, activity: 75, desc: "Andrej Karpathy'nin otomatik derlenen bilgi tabanı mimarisi." },
+        { id: "AgenticEng", name: "🧠 Agentic Engineering", path: "500-Knowledge/Agentic-Eng.md", group: "knowledge", color: "#10b981", val: 17, activity: 80, desc: "Döngü tabanlı, araç kullanan otonom yapay zeka mühendisliği." },
+        { id: "HooksArchitecture", name: "🧠 Lifecycle Hooks", path: "500-Knowledge/Hooks.md", group: "knowledge", color: "#10b981", val: 15, activity: 70, desc: "PreInvocation ve Stop anlarında çalışan deterministik kancalar." },
+        { id: "LessonsPostMortem", name: "🧠 Lessons.md (Hata Lab)", path: "500-Knowledge/Lessons.md", group: "knowledge", color: "#10b981", val: 16, activity: 85, desc: "Karşılaşılan hataların kök neden analizi ve çıkarılan kalıcı dersler." },
+
+        // Daily Logs
+        { id: "DailyToday", name: "📅 daily/2026-08-27.md", path: "daily/2026-08-27.md", group: "daily", color: "#3b82f6", val: 16, activity: 100, desc: "Bugünün oturumlarında kaydedilen canlı oturum logları." },
+        { id: "DailyYesterday", name: "📅 daily/2026-08-26.md", path: "daily/2026-08-26.md", group: "daily", color: "#3b82f6", val: 13, activity: 65, desc: "Dünün tamamlanan oturum logları." },
+        
+        // Inbox
+        { id: "InboxDump", name: "📥 000-Inbox/Dump", path: "000-Inbox/Dump/", group: "inbox", color: "#f59e0b", val: 14, activity: 78, desc: "Ham fikirlerin ve hızlı notların ilk toplandığı geçici havuz." }
+      ],
+      links: [
+        { source: "Dashboard", target: "Core" },
+        { source: "Dashboard", target: "ProjectAlpha" },
+        { source: "Dashboard", target: "ProjectBeta" },
+        { source: "Dashboard", target: "DailyToday" },
+        { source: "Dashboard", target: "InboxDump" },
+        
+        { source: "Core", target: "Kurallar" },
+        { source: "Core", target: "LastSession" },
+        { source: "Core", target: "Threads" },
+        { source: "Core", target: "Journal" },
+        
+        { source: "ProjectAlpha", target: "Threads" },
+        { source: "ProjectAlpha", target: "AgenticEng" },
+        { source: "ProjectAlpha", target: "LessonsPostMortem" },
+        { source: "ProjectBeta", target: "InboxDump" },
+        
+        { source: "AgenticEng", target: "KarpathyKB" },
+        { source: "AgenticEng", target: "HooksArchitecture" },
+        { source: "HooksArchitecture", target: "LastSession" },
+        { source: "LessonsPostMortem", target: "Kurallar" },
+        
+        { source: "DailyToday", target: "LastSession" },
+        { source: "DailyToday", target: "ProjectAlpha" },
+        { source: "DailyYesterday", target: "KarpathyKB" }
+      ]
+    };
+
+    // State Variables
+    let currentData = JSON.parse(JSON.stringify(rawData));
+    let highlightNodes = new Set();
+    let highlightLinks = new Set();
+    let showLabels = true;
+    let autoRotate = true;
+    let heatmapMode = false;
+    let selectedNode = null;
+
+    // Cross-link connections for fast neighbor lookup
+    const neighborMap = new Map();
+    function buildNeighborMap() {
+      neighborMap.clear();
+      currentData.links.forEach(link => {
+        const s = typeof link.source === 'object' ? link.source.id : link.source;
+        const t = typeof link.target === 'object' ? link.target.id : link.target;
+        if (!neighborMap.has(s)) neighborMap.set(s, new Set());
+        if (!neighborMap.has(t)) neighborMap.set(t, new Set());
+        neighborMap.get(s).add(t);
+        neighborMap.get(t).add(s);
+      });
+    }
+    buildNeighborMap();
+
+    document.getElementById('node-count').innerText = `${currentData.nodes.length} Düğüm`;
+
+    function getHeatmapColor(activity) {
+      if (activity >= 90) return '#f43f5e';
+      if (activity >= 75) return '#f59e0b';
+      if (activity >= 60) return '#10b981';
+      return '#3b82f6';
+    }
+
+    // --- Helper to get Live Node from Graph Simulation ---
+    function getLiveNode(target) {
+      if (!target) return null;
+      const targetId = typeof target === 'object' ? target.id : target;
+      const liveNodes = (Graph && Graph.graphData && Graph.graphData().nodes) ? Graph.graphData().nodes : currentData.nodes;
+      return liveNodes.find(n => n.id === targetId) || (typeof target === 'object' ? target : null);
+    }
+
+    // --- Initialize 3D Force Graph ---
+    const elem = document.getElementById('3d-graph');
+    const Graph = ForceGraph3D()(elem)
+      .graphData(currentData)
+      .backgroundColor('#020204')
+      .showNavInfo(false)
+      .nodeRelSize(3.8)
+      .nodeVal(node => node.val)
+      
+      // Node 3D Object with Custom Glowing Spheres + Clean Labels
+      .nodeThreeObject(node => {
+        const group = new THREE.Group();
+
+        const isDimmed = highlightNodes.size > 0 && !highlightNodes.has(node.id);
+        const baseColorHex = heatmapMode ? getHeatmapColor(node.activity) : node.color;
+        const sphereColor = isDimmed ? 0x181824 : new THREE.Color(baseColorHex);
+        const radius = Math.cbrt(node.val) * 1.9;
+        
+        // 1. Core Sphere
+        const sphereMat = new THREE.MeshLambertMaterial({
+          color: sphereColor,
+          transparent: true,
+          opacity: isDimmed ? 0.12 : 0.95,
+          emissive: isDimmed ? 0x000000 : sphereColor,
+          emissiveIntensity: isDimmed ? 0 : (heatmapMode ? 0.65 : 0.35)
+        });
+        const sphereGeo = new THREE.SphereGeometry(radius, 24, 24);
+        const sphereMesh = new THREE.Mesh(sphereGeo, sphereMat);
+        group.add(sphereMesh);
+
+        // 2. Halo Glow
+        if (!isDimmed) {
+          const glowGeo = new THREE.SphereGeometry(radius * (heatmapMode ? 1.45 : 1.25), 16, 16);
+          const glowMat = new THREE.MeshBasicMaterial({
+            color: sphereColor,
+            transparent: true,
+            opacity: heatmapMode ? 0.25 : 0.12
+          });
+          group.add(new THREE.Mesh(glowGeo, glowMat));
+        }
+
+        // 3. Crisp Text Label
+        if (showLabels) {
+          const sprite = new SpriteText(node.name);
+          sprite.color = isDimmed ? 'rgba(100, 100, 120, 0.15)' : '#f1f5f9';
+          sprite.textHeight = Math.max(1.9, radius * 0.52);
+          sprite.position.y = radius + 2.0;
+          sprite.fontFamily = 'Plus Jakarta Sans, sans-serif';
+          sprite.fontWeight = '600';
+          sprite.backgroundColor = isDimmed ? 'transparent' : 'rgba(6, 6, 10, 0.78)';
+          sprite.padding = 2;
+          sprite.borderRadius = 3;
+          group.add(sprite);
+        }
+
+        return group;
+      })
+
+      // Link Styling
+      .linkWidth(link => {
+        const s = typeof link.source === 'object' ? link.source.id : link.source;
+        const t = typeof link.target === 'object' ? link.target.id : link.target;
+        return (highlightLinks.has(`${s}->${t}`) || highlightLinks.has(`${t}->${s}`)) ? 2.2 : 0.8;
+      })
+      .linkOpacity(0.35)
+      .linkColor(link => {
+        const s = typeof link.source === 'object' ? link.source.id : link.source;
+        const t = typeof link.target === 'object' ? link.target.id : link.target;
+        if (highlightLinks.has(`${s}->${t}`) || highlightLinks.has(`${t}->${s}`)) {
+          return '#c084fc';
+        }
+        return highlightNodes.size > 0 ? 'rgba(255, 255, 255, 0.02)' : '#2e3e53';
+      })
+      .linkDirectionalParticles(link => {
+        const s = typeof link.source === 'object' ? link.source.id : link.source;
+        const t = typeof link.target === 'object' ? link.target.id : link.target;
+        return (highlightLinks.has(`${s}->${t}`) || highlightLinks.has(`${t}->${s}`)) ? 4 : 1;
+      })
+      .linkDirectionalParticleWidth(1.5)
+      .linkDirectionalParticleSpeed(0.007)
+      .linkDirectionalParticleColor(() => '#a855f7')
+
+      // Interaction Events
+      .onNodeHover(handleNodeHover)
+      .onNodeClick(handleNodeClick)
+      .onBackgroundClick(handleBackgroundClick);
+
+    // --- Configure OrbitControls ---
+    const tbControls = Graph.controls();
+    if (tbControls) {
+      tbControls.autoRotate = autoRotate;
+      tbControls.autoRotateSpeed = 0.5;
+      tbControls.enableDamping = true;
+      tbControls.dampingFactor = 0.08;
+    }
+
+    Graph.d3Force('charge').strength(-120);
+
+    // --- Event Handlers ---
+    function handleNodeHover(node) {
+      if (selectedNode) return;
+
+      highlightNodes.clear();
+      highlightLinks.clear();
+
+      if (node) {
+        highlightNodes.add(node.id);
+        const neighbors = neighborMap.get(node.id);
+        if (neighbors) {
+          neighbors.forEach(nId => {
+            highlightNodes.add(nId);
+            highlightLinks.add(`${node.id}->${nId}`);
+          });
+        }
+      }
+
+      updateGraphVisuals();
+    }
+
+    function handleNodeClick(rawTarget) {
+      // Find the LIVE node with valid x,y,z coordinates
+      const node = getLiveNode(rawTarget);
+      if (!node) return;
+
+      selectedNode = node;
+      
+      highlightNodes.clear();
+      highlightLinks.clear();
+      highlightNodes.add(node.id);
+      
+      const neighbors = neighborMap.get(node.id) || new Set();
+      neighbors.forEach(nId => {
+        highlightNodes.add(nId);
+        highlightLinks.add(`${node.id}->${nId}`);
+      });
+      updateGraphVisuals();
+
+      // Safe Camera Fly-To (Guaranteed non-NaN coordinates)
+      const nx = typeof node.x === 'number' && !isNaN(node.x) ? node.x : 0;
+      const ny = typeof node.y === 'number' && !isNaN(node.y) ? node.y : 0;
+      const nz = typeof node.z === 'number' && !isNaN(node.z) ? node.z : 0;
+      
+      const dist = Math.hypot(nx, ny, nz) || 1;
+      const distance = 42;
+      const distRatio = 1 + distance / dist;
+      
+      if (!isNaN(distRatio) && isFinite(distRatio)) {
+        Graph.cameraPosition(
+          { x: nx * distRatio, y: ny * distRatio + 6, z: nz * distRatio },
+          { x: nx, y: ny, z: nz },
+          1200
+        );
+      }
+
+      showInspector(node, Array.from(neighbors));
+    }
+
+    function handleBackgroundClick() {
+      closeInspector();
+    }
+
+    function closeInspector() {
+      document.getElementById('inspector').style.display = 'none';
+      selectedNode = null;
+      highlightNodes.clear();
+      highlightLinks.clear();
+      updateGraphVisuals();
+      
+      if (tbControls) {
+        tbControls.enabled = true;
+      }
+    }
+
+    function updateGraphVisuals() {
+      Graph.refresh();
+    }
+
+    // --- Inspector HUD UI ---
+    function showInspector(node, neighbors) {
+      const inspector = document.getElementById('inspector');
+      document.getElementById('insp-title').innerText = node.name;
+      document.getElementById('insp-path').innerText = node.path || `${node.name}.md`;
+      document.getElementById('insp-desc').innerText = node.desc || "Açıklama bulunmuyor.";
+      
+      const badge = document.getElementById('insp-badge');
+      badge.innerText = (node.group || "GENEL").toUpperCase();
+      badge.style.backgroundColor = node.color + '25';
+      badge.style.color = node.color;
+      badge.style.border = `1px solid ${node.color}50`;
+
+      // Render connected backlinks (Clicking them now SAFELY flies to live node!)
+      const linkList = document.getElementById('insp-links');
+      linkList.innerHTML = '';
+      document.getElementById('insp-link-count').innerText = neighbors.length;
+
+      neighbors.forEach(neighborId => {
+        const neighborNode = getLiveNode(neighborId);
+        if (neighborNode) {
+          const item = document.createElement('div');
+          item.className = 'link-chip';
+          item.innerHTML = `
+            <span>${neighborNode.name}</span>
+            <span style="font-size:10px; opacity:0.6; text-transform:uppercase;">${neighborNode.group}</span>
+          `;
+          item.onclick = (e) => {
+            e.stopPropagation();
+            // Call handleNodeClick with the verified live node!
+            handleNodeClick(neighborNode);
+          };
+          linkList.appendChild(item);
+        }
+      });
+
+      inspector.style.display = 'block';
+    }
+
+    // --- Controls & Toggles ---
+    function toggleAutoRotate() {
+      autoRotate = !autoRotate;
+      if (tbControls) {
+        tbControls.autoRotate = autoRotate;
+      }
+      const btn = document.getElementById('rotate-btn');
+      btn.classList.toggle('active', autoRotate);
+    }
+
+    function toggleHeatmap() {
+      heatmapMode = !heatmapMode;
+      const btn = document.getElementById('heatmap-btn');
+      const legend = document.getElementById('heatmap-legend');
+
+      btn.classList.toggle('active', heatmapMode);
+
+      if (heatmapMode) {
+        legend.style.display = 'block';
+        showToast("🔥 Isı Haritası Açıldı (Renk Rehberi Sağ Üstte)");
+      } else {
+        legend.style.display = 'none';
+        showToast("🌈 Standart Kategori Renkleri");
+      }
+
+      Graph.refresh();
+    }
+
+    function resetCamera() {
+      closeInspector();
+      Graph.cameraPosition({ x: 0, y: 20, z: 250 }, { x: 0, y: 0, z: 0 }, 1400);
+      showToast("🎯 Kamera Merkeze Sıfırlandı");
+    }
+
+    function handleSearch(query) {
+      const q = query.trim().toLowerCase();
+      if (!q) {
+        highlightNodes.clear();
+        highlightLinks.clear();
+        updateGraphVisuals();
+        return;
+      }
+
+      const liveNodes = Graph.graphData().nodes;
+      const match = liveNodes.find(n => 
+        (n.name && n.name.toLowerCase().includes(q)) || 
+        (n.desc && n.desc.toLowerCase().includes(q)) || 
+        (n.path && n.path.toLowerCase().includes(q))
+      );
+
+      if (match) {
+        handleNodeClick(match);
+      }
+    }
+
+    function filterCategory(category, btnElement) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btnElement.classList.add('active');
+
+      if (category === 'all') {
+        currentData = JSON.parse(JSON.stringify(rawData));
+      } else {
+        const filteredNodes = rawData.nodes.filter(n => n.group === category || n.group === 'center');
+        const nodeIds = new Set(filteredNodes.map(n => n.id));
+        const filteredLinks = rawData.links.filter(l => nodeIds.has(l.source) && nodeIds.has(l.target));
+        currentData = { nodes: filteredNodes, links: filteredLinks };
+      }
+
+      buildNeighborMap();
+      Graph.graphData(currentData);
+      document.getElementById('node-count').innerText = `${currentData.nodes.length} Düğüm`;
+      closeInspector();
+    }
+
+    function exportGraphHTML() {
+      const htmlContent = document.documentElement.outerHTML;
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `antigravity-knowledge-universe-${new Date().toISOString().slice(0,10)}.html`;
+      a.click();
+      showToast("💾 3D Bilgi Evreni İndirildi!");
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.innerText = msg;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 2200);
+    }
+
+    // Initial Camera Placement
+    Graph.cameraPosition({ x: 0, y: 30, z: 250 });
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+# OS Metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Python & Environment
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.pytest_cache/
+
+# Local & Secrets
+.env
+*.local.json
+settings.local.json
+.yedek/
+*.bak
+
+# Antigravity State
+.agents/hooks/.state/*
+!.agents/hooks/.state/.gitkeep
+.agents/scripts/.state/*
+!.agents/scripts/.state/.gitkeep
+
+# Obsidian Cache & Workspace
+.obsidian/workspace*
+.obsidian/cache/
+
+# Temporary / Scratch
+scratch/
+tmp/
+*.tmp

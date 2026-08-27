@@ -1,0 +1,18 @@
+{
+  "second-brain-hooks": {
+    "PreInvocation": [
+      {
+        "type": "command",
+        "command": "python .agents/scripts/inject_context.py",
+        "timeout": 10
+      }
+    ],
+    "Stop": [
+      {
+        "type": "command",
+        "command": "python .agents/scripts/flush_daily.py",
+        "timeout": 15
+      }
+    ]
+  }
+}
