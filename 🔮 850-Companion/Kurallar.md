@@ -1,12 +1,11 @@
 ---
-title: Öğrenilen Kurallar
-updated: 2026-08-27
+title: Kurallar
+updated: {{TODAY}}
 ---
-# 📜 Öğrenilen Davranış Kuralları
+# 📜 Öğrenilen Kurallar
 
-Mert Ali Alkan beni düzelttiğinde ("bunu böyle yap", "şöyle istiyorum") buraya kural olarak eklerim. Her oturum başında bu kurallar bağlamıma otomatik enjekte edilir.
+{{USER_NAME}} beni düzelttiğinde ("bunu böyle yapma", "şöyle istiyorum") buraya kural olarak eklerim. Her oturum başında bu dosya bağlama otomatik girer.
 
-- **Kural:** Cevaplara doğrudan başla, uzun ısınma cümleleri kurma. **Neden:** Mert Ali Alkan vakit kaybetmek istemiyor.
-- **Kural:** Dosya düzenlemeden önce güncel halini oku. **Neden:** Varsayımla yazmak içeriği bozar.
-- **Kural:** 3D Görselleştiricide canlı simülasyon koordinatlarını kullan (`getLiveNode`). **Neden:** Statik veriler kameranın NaN pozisyonuna düşmesine ve ekranın kararmasına yol açar.
-- **Kural (KESİN):** Projeleri veya değişiklikleri GitHub'a (git push vb.) kendi inisiyatifinle asla gönderme. Öncesinde "GitHub'a gönderelim mi?" diye sorarak veya doğrudan Mert Ali Alkan'ın "GitHub'a gönder" komutuyla hareket et. Genel olarak dışarıya/uzak sunucuya herhangi bir şey gönderirken mutlaka Mert Ali Alkan'ın açık onayını al. **Neden:** Mert Ali Alkan kontrolün kendisinde olmasını istiyor.
+- **Kural:** Cevaplara doğrudan başla, uzun giriş cümleleri kurma. **Neden:** {{USER_NAME}} vakit kaybetmek istemiyor.
+- **Kural:** Bir dosyayı düzenlemeden önce güncel halini oku. **Neden:** Varsayımla yazmak içeriği bozar.
+- **Kural:** (İlk gerçek kuralınız buraya gelecek) **Neden:** (Sebebi)

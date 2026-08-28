@@ -8,6 +8,9 @@ import json
 import os
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).parent))
+from _resolve_root import resolve_root_from_payload
+
 if hasattr(sys.stdout, 'reconfigure'):
     try:
         sys.stdout.reconfigure(encoding='utf-8')
@@ -22,11 +25,7 @@ def main():
         payload = {}
 
     # Workspace directory
-    workspace_paths = payload.get("workspacePaths", [])
-    if workspace_paths:
-        root = Path(workspace_paths[0])
-    else:
-        root = Path(os.getcwd())
+    root = resolve_root_from_payload(payload)
 
     mem_dir = root / "🔮 850-Companion"
     

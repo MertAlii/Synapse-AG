@@ -5,7 +5,7 @@
 <h1 align="center">Synapse-AG</h1>
 
 <p align="center">
-  <b>Autonomous, Self-Evolving 3D Second Brain & Spatial Knowledge Engine for Google Antigravity 2.0</b>
+  <b>Autonomous, Self-Evolving AI Second Brain & Knowledge Engine for Google Antigravity 2.0 & Obsidian</b>
 </p>
 
 <p align="center">
@@ -15,118 +15,81 @@
 <p align="center">
   <a href="#-license--attribution"><img src="https://img.shields.io/badge/License-MIT-pink.svg?style=for-the-badge" alt="License MIT"></a>
   <a href="#-quickstart-single-prompt"><img src="https://img.shields.io/badge/Engine-Antigravity_2.0-blue.svg?style=for-the-badge&logo=google" alt="Antigravity 2.0"></a>
-  <a href="#-1-3d-spatial-knowledge-universe"><img src="https://img.shields.io/badge/Visualizer-Three.js-emerald.svg?style=for-the-badge&logo=threedotjs" alt="Three.js"></a>
-  <a href="#-core-architecture"><img src="https://img.shields.io/badge/Storage-100%25_Markdown-purple.svg?style=for-the-badge" alt="Markdown"></a>
+  <a href="#-obsidian-integration"><img src="https://img.shields.io/badge/Obsidian-Native_Vault-purple.svg?style=for-the-badge&logo=obsidian" alt="Obsidian"></a>
+  <a href="#-system-architecture"><img src="https://img.shields.io/badge/Storage-100%25_Markdown-emerald.svg?style=for-the-badge" alt="Markdown"></a>
   <a href="https://github.com/MertAlii/Synapse-AG"><img src="https://img.shields.io/badge/PRs-Welcome-brightgreen.svg?style=for-the-badge" alt="PRs Welcome"></a>
 </p>
 
 <p align="center">
-  <img src="assets/images/3d-graph-universe.png" alt="Synapse-AG 3D Spatial Knowledge Graph" width="100%" style="border-radius: 14px; box-shadow: 0 25px 60px rgba(0,0,0,0.85); border: 1px solid rgba(255,255,255,0.08);" />
+  <img src="assets/images/obsidian-graph.png" alt="Synapse-AG Obsidian Knowledge Graph" width="100%" style="border-radius: 14px; box-shadow: 0 25px 60px rgba(0,0,0,0.85); border: 1px solid rgba(255,255,255,0.08);" />
 </p>
 
 ---
 
 ## 💡 Overview
 
-**Synapse-AG** is an autonomous AI second brain engine built for Google Antigravity 2.0. It bridges persistent cross-session memory, automatic knowledge graph compilation, and interactive 3D spatial visualization with an Obsidian-style hierarchical workspace into a unified, local-first system.
+**Synapse-AG** is an autonomous AI second brain engine built natively for **Google Antigravity 2.0** and **Obsidian**. It solves the AI amnesia problem by automatically capturing sessions, adapting to learned rules, and compiling daily logs into evergreen knowledge articles without manual overhead.
 
-* **Persistent Memory:** Automatic lifecycle hooks capture session summaries and update learned behavioral rules without manual note-taking.
-* **Autonomous Knowledge Graph:** Daily logs are synthesized into connected evergreen articles using an automated compilation pattern.
-* **100% Local & Obsidian-Compatible:** Plain `.md` files residing entirely on your machine, fully version-controlled with Git.
-* **3D Spatial Navigation & Vault Explorer:** Explore, search, and traverse your thoughts and backlinks inside a real-time WebGL/Three.js universe or a full Obsidian-style note explorer.
-
----
-
-### 🌌 1. 3D Spatial Knowledge Universe
-* **Real-time 3D Force-Directed Graph:** Visualizes live connections between inbox ideas, active projects, knowledge concepts, and companion memories.
-* **Cinematic Galaxy Auto-Rotation:** Continuous orbital camera rotation with smart pause on user drag and interaction.
-* **Smart Neighbor Highlighting:** Hovering or clicking a node illuminates connected 1-hop neighbors and directional neon particles while dimming unrelated nodes.
-* **Interactive Node Inspector:** Click any node to smoothly fly the camera to it, inspect metadata, and traverse `[[backlinks]]`.
-
-<p align="center">
-  <img src="assets/images/3d-graph-universe.png" alt="3D Knowledge Universe" width="95%" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);" />
-</p>
+* **🧠 Persistent Memory:** Lifecycle hooks (`PreInvocation`, `Stop`) automatically inject past session context and save structured logs into `daily/YYYY-MM-DD.md`.
+* **📚 Autonomous Knowledge Compilation:** Background compilers synthesize raw daily logs into connected knowledge concepts (`knowledge/concepts/`, `knowledge/connections/`) following Andrej Karpathy's LLM Knowledge Base pattern.
+* **💎 Obsidian Native & Pre-Configured:** Ready-to-use `.obsidian/` configuration with color-coded Graph View (`Ctrl+G`), Daily Notes, Templates, Canvas, and bi-directional `[[Wikilinks]]`.
+* **🛡️ Zero Data Loss Upgrades:** Built-in semantic version tracking (`.beyin-version`) and `scripts/upgrade.ps1` allows upgrading core scripts while preserving 100% of your notes and data.
+* **🔒 Concurrency & Safety:** Cross-platform file locking (`portalocker`) guarantees safe concurrent operations between subagents and background tasks.
 
 ---
 
-### 📑 2. Hierarchical Vault Workspace (Note View)
-* **Obsidian-Style Left Sidebar:** Collapsible folder tree (`🔮 850-Companion`, `🏰 300-Projects`, `🧠 500-Knowledge`, `🎯 100-Command-Center`, `daily`, `000-Inbox`) with folder counters and file icons.
-* **Full-Text Content Search:** Instant search querying both file metadata and **entire markdown bodies**, displaying matched text snippets directly in the sidebar.
-* **Live In-Document Keyword Highlighting:** Clicking search results automatically opens the note and illuminates all matched query keywords with `<mark>` gold glow.
-* **Linked Mentions & Backlinks:** Real-time bi-directional backlink explorer for deep non-linear knowledge navigation.
+## 🚀 Quickstart (Single Prompt Setup)
 
-<p align="center">
-  <img src="assets/images/vault-note-explorer.png" alt="Obsidian-Style Vault Explorer" width="95%" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);" />
-</p>
+In your Google Antigravity 2.0 workspace, run:
 
-<p align="center">
-  <img src="assets/images/fulltext-search-highlight.png" alt="Full-Text Search with Highlights" width="95%" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);" />
-</p>
-
----
-
-### 📖 3. Interactive In-App Document Reader
-* **Clean YAML Frontmatter Extraction:** Raw YAML frontmatter is automatically parsed into interactive `#tag` chips and direct `[🐙 GitHub Repository ↗]` action buttons.
-* **Clickable Obsidian `[[WikiLinks]]`:** Clicking any bidirectional link inside the reader smoothly flies the 3D camera to that node and updates the document view.
-* **One-Click Actions:** Copy entire note content, copy relative path, or jump straight into the full Vault Workspace.
-
-<p align="center">
-  <img src="assets/images/reader-modal-view.png" alt="In-App Document Reader Modal" width="90%" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);" />
-</p>
-
----
-
-### 🔥 4. Dynamic Activity Heatmap Mode
-Switch on Heatmap mode to instantly illuminate notes based on recent activity, connection density, and edit frequency:
-* 🔴 **90%+ (Neon Rose):** Live notes edited or created in the current/recent session.
-* 🟠 **75% - 89% (Warm Amber):** High-priority active projects and core behavioral rules.
-* 🟢 **60% - 74% (Emerald):** Frequently referenced evergreen knowledge concepts.
-* 🔵 **<60% (Cool Blue):** Foundational reference notes and archived threads.
-
----
-
-### 🪝 5. Deterministic Lifecycle Hooks (`.agents/hooks.json`)
-* **`PreInvocation` (`inject_context.py`):** Automatically injects your companion persona (`Core.md`), recent session context (`Last-Session.md`), active threads (`Threads.md`), and learned user rules (`Kurallar.md`) before the model responds.
-* **`Stop` (`flush_daily.py`):** Intercepts session termination and appends a structured summary to `daily/YYYY-MM-DD.md`.
-
----
-
-### ⏰ 6. Natural Language Scheduling & Cron
-Execute autonomous background tasks without writing cron syntax:
-* 🗣️ *"Every day at 12:00, compile yesterday's logs and give me a briefing."*
-  * ⚙️ **Antigravity Action:** Deploys a background daemon with `CronExpression: "0 12 * * *"` and `IsDaemon: true`.
-* 🗣️ *"Remind me to review this project status in 45 minutes."*
-  * ⚙️ **Antigravity Action:** Sets a one-shot timer with `DurationSeconds: 2700`.
-
----
-
-### ⏳ 7. Git Time-Travel Memory (`zaman-yolcusu`)
-* The entire vault is version-controlled from day one.
-* Ask: *"Why did we change this architecture decision two weeks ago?"*
-* The model queries Git logs and diffs to extract the exact rationale and code changes.
-
----
-
-### 🧪 8. Post-Mortem & Failures Lab (`Lessons.md`)
-* Automatically turns mistakes into permanent systemic rules.
-* When an unexpected bug occurs, run `post-mortem` to perform a 5-Whys analysis, record the takeaway in `500-Knowledge/Lessons.md`, and add an invariant guardrail to `Kurallar.md`.
-
----
-
-## 🚀 Quickstart (Single-Prompt)
-
-In your Antigravity 2.0 workspace, provide the master build specification:
-
-```markdown
-Read beyin-antigravity.md and build the second brain system in this workspace.
-When finished, report all installed components.
+```text
+Read beyin-antigravity.md and build the second brain system in this workspace. When finished, report all installed components.
 ```
 
-The installer conducts a brief 1-minute onboarding, constructs the vault tree, connects `.agents/` hooks, and initializes Git versioning.
+Or run the diagnostics command anytime:
+
+```bash
+python .agents/scripts/doctor.py
+# Or in Antigravity chat: "beyin doktor"
+```
 
 ---
 
-## 🏗️ Core Architecture
+## 🔄 Upgrading Synapse-AG
+
+When a new version is released on GitHub, update your system without losing any personal notes or memories:
+
+```powershell
+.\scripts\upgrade.ps1
+```
+
+* **Protected Data (Never Touched):** `daily/`, `knowledge/`, `📥 000-Inbox/`, `🏰 300-Projects/`, `🧠 500-Knowledge/`, `🔮 850-Companion/`, `📦 900-Archive/`
+* **Updated Files:** `.agents/scripts/`, `.agents/hooks.json`, `.obsidian/`, `beyin-antigravity.md`, `GEMINI.md`
+* **Automated Backup:** Automatically creates a `.bak-TIMESTAMP/` archive before applying updates.
+
+---
+
+## 💎 Obsidian Integration
+
+Open your second brain in **[Obsidian](https://obsidian.md)**:
+
+1. Open Obsidian -> Select **"Open folder as vault"**.
+2. Select your Synapse-AG folder (`~/.gemini/antigravity/scratch/synapse-ag/`).
+3. Press **`Ctrl+G`** to open the **Graph View**:
+   - 🔮 **Purple:** Companion & Core Memory (`🔮 850-Companion`)
+   - 🏰 **Cyan:** Active Projects (`🏰 300-Projects`)
+   - 🧠 **Emerald:** Permanent Knowledge & Lessons (`🧠 500-Knowledge`, `knowledge/`)
+   - 📅 **Blue:** Daily Logs (`daily/`)
+   - 📥 **Amber:** Unprocessed Inbox & Ideas (`📥 000-Inbox`)
+   - 🎯 **White:** Command Center & Dashboard (`🎯 100-Command-Center`)
+
+<p align="center">
+  <img src="assets/images/obsidian-graph.png" alt="Obsidian Semantic Graph" width="95%" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);" />
+</p>
+
+---
+
+## 🏗️ System Architecture
 
 ```mermaid
 flowchart TD
@@ -147,15 +110,16 @@ flowchart TD
         Nightly["compile_knowledge.py\n(Knowledge Synthesizer)"]
     end
 
-    subgraph UI ["🌐 3D Spatial Universe & Vault"]
-        Visualizer["visualizer/index.html\n(Three.js Spatial Graph & Note Workspace)"]
+    subgraph Obsidian ["💎 Obsidian Desktop"]
+        GraphView["Graph View (Ctrl+G)\nColor-Coded Semantic Network"]
+        Backlinks["Bi-directional [[Wikilinks]]"]
     end
 
     PreHook -.->|Auto-Injects Context| Core
     StopHook -.->|Appends Session Log| Daily
     Daily --> Nightly
     Nightly -->|Synthesizes Articles| KB
-    MemoryVault -.->|Renders Topology| Visualizer
+    MemoryVault -.->|Native Markdown & Graph| Obsidian
 ```
 
 ---
@@ -168,7 +132,16 @@ Synapse-AG/
 ├── README.md                       # English Documentation
 ├── README_TR.md                    # Turkish Documentation
 ├── beyin-antigravity.md            # Master Build Specification
-├── ROADMAP_LEVEL_UP.md             # Capability Roadmap (L1 -> L4)
+├── GEMINI.md                       # Root Companion Directive
+├── .beyin-version                  # Semantic Version Tracking (2.1.0)
+│
+├── .obsidian/                      # Pre-configured Obsidian Environment
+│   ├── app.json                    # Wikilinks & Attachment Rules
+│   ├── appearance.json             # Dark AMOLED Base
+│   ├── core-plugins.json           # Enabled Core Plugins
+│   ├── daily-notes.json            # Daily Log Routing
+│   ├── graph.json                  # Category Color-Coded Graph View
+│   └── templates.json              # Template Folder Config
 │
 ├── .agents/                        # Antigravity Control Plane
 │   ├── hooks.json                  # Lifecycle Hooks Configuration
@@ -180,20 +153,20 @@ Synapse-AG/
 │   │   ├── gecmis-import/          # ChatGPT / Claude / Gemini Importer
 │   │   ├── zamanlayici/            # Natural Language Cron & Timer
 │   │   ├── zaman-yolcusu/          # Git Time-Travel Memory
-│   │   ├── post-mortem/            # Root Cause & Failures Lab
+│   │   ├── post-mortem/            # Root Cause & Lessons Lab
 │   │   └── uzman-ajanlar/          # Specialist Subagents
 │   └── scripts/
+│       ├── _resolve_root.py        # Centralized Vault Root Resolver
 │       ├── inject_context.py       # PreInvocation Context Injector
 │       ├── flush_daily.py          # Session End Daily Flusher
 │       ├── compile_knowledge.py    # Knowledge Graph Compiler
-│       ├── compile_graph.py        # 3D Visualizer & Vault Data Compiler
-│       └── doctor.py               # 13-Point Health Audit Engine
+│       └── doctor.py               # Comprehensive Diagnostics Engine
 │
-├── visualizer/                     # 3D Spatial Knowledge Universe & Note Workspace
-│   ├── index.html                  # Interactive Three.js Web App & Vault Explorer
-│   └── data.js                     # Auto-compiled graph nodes & note contents
+├── scripts/
+│   └── upgrade.ps1                 # Safe Auto-Upgrade Script
+├── tests/
+│   └── test_scripts.py             # Pytest Unit Test Suite
 │
-├── assets/images/                  # High-Res Screenshots & Feature Previews
 ├── 📥 000-Inbox/Dump/              # Quick Capture & Unprocessed Thoughts
 ├── 🎯 100-Command-Center/          # Dashboard.md & Active Priorities
 ├── 🏰 300-Projects/                # Project Workspaces & Repositories
@@ -212,21 +185,21 @@ Audit your second brain's health at any time:
 
 ```bash
 python .agents/scripts/doctor.py
-# Or in chat: "beyin doktor"
 ```
 
 ```text
 =================================================================
-           ANTIGRAVITY BEYIN DOKTORU RAPORU
+     ANTIGRAVITY BEYIN DOKTORU RAPORU (v2.1.0)
 =================================================================
 Bilesen                                          | Durum       
 -----------------------------------------------------------------
 Kok Yonlendirici (GEMINI.md / beyin-antigravity.md) | [OK] Hazir  
+Versiyon Dosyasi (.beyin-version)                | [OK] Hazir  
 Antigravity Kancalari (.agents/hooks.json)       | [OK] Hazir  
 Baglam Enjektoru (inject_context.py)             | [OK] Hazir  
 Oturum Loglayici (flush_daily.py)                | [OK] Hazir  
 Bilgi Derleyici (compile_knowledge.py)           | [OK] Hazir  
-Web 3D Gorsellestirici (visualizer/index.html)   | [OK] Hazir  
+Obsidian Yapilandirmasi (.obsidian/)             | [OK] Hazir  
 Sablon Kasasi (template/)                        | [OK] Hazir  
 Git Surum Kontrolu                               | [OK] Git Aktif
 =================================================================
@@ -242,10 +215,10 @@ Distributed under the **[MIT License](LICENSE)**.
 ### Inspirations & References:
 * **[Avenox](https://avenox.lol)** ([github.com/avenoxai/avenoxbeyin](https://github.com/avenoxai/avenoxbeyin)): Second Brain concept & hook-based workflow.
 * **[Andrej Karpathy](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)**: LLM Knowledge Base and autonomous article compilation pattern.
-* **[Vasturiano](https://github.com/vasturiano/3d-force-graph)**: 3D Force-Directed Graph WebGL library.
+* **[Obsidian](https://obsidian.md)**: Local Markdown knowledge graph.
 
 ---
 
 <p align="center">
-  <b>Synapse-AG</b> — An autonomous, spatial second brain that grows with you. 🚀
+  <b>Synapse-AG</b> — An autonomous, persistent second brain that grows with you. 🚀
 </p>

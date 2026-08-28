@@ -1,0 +1,67 @@
+{
+  "collapse-filter": false,
+  "search": "",
+  "localJumps": 1,
+  "localBacklinks": true,
+  "localForelinks": true,
+  "localInterlinks": false,
+  "showTags": false,
+  "showAttachments": false,
+  "hideUnresolved": false,
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "path:\"🔮 850-Companion\"",
+      "color": {
+        "a": 1,
+        "rgb": 11032055
+      }
+    },
+    {
+      "query": "path:\"🏰 300-Projects\"",
+      "color": {
+        "a": 1,
+        "rgb": 439508
+      }
+    },
+    {
+      "query": "path:\"🧠 500-Knowledge\" OR path:knowledge",
+      "color": {
+        "a": 1,
+        "rgb": 1096065
+      }
+    },
+    {
+      "query": "path:daily",
+      "color": {
+        "a": 1,
+        "rgb": 3899894
+      }
+    },
+    {
+      "query": "path:\"📥 000-Inbox\"",
+      "color": {
+        "a": 1,
+        "rgb": 16096779
+      }
+    },
+    {
+      "query": "path:\"🎯 100-Command-Center\"",
+      "color": {
+        "a": 1,
+        "rgb": 16315132
+      }
+    }
+  ],
+  "collapse-display": false,
+  "showArrow": true,
+  "textFadeMultiplier": 0,
+  "nodeSizeMultiplier": 1.25,
+  "lineSizeMultiplier": 1,
+  "collapse-forces": false,
+  "centerStrength": 0.52,
+  "repulseStrength": 12,
+  "linkStrength": 1,
+  "linkDistance": 250,
+  "scale": 1
+}

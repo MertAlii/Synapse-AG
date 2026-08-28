@@ -18,6 +18,7 @@ env/
 settings.local.json
 .yedek/
 *.bak
+.bak-*/
 
 # Antigravity State
 .agents/hooks/.state/*
@@ -28,6 +29,7 @@ settings.local.json
 # Obsidian Cache & Workspace
 .obsidian/workspace*
 .obsidian/cache/
+.obsidian/graph-state.json
 
 # Temporary / Scratch
 scratch/

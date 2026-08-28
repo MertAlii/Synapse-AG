@@ -8,6 +8,9 @@ import sys
 import subprocess
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).parent))
+from _resolve_root import resolve_root, get_version
+
 # Fix Windows console UTF-8 encoding
 if hasattr(sys.stdout, 'reconfigure'):
     try:
@@ -31,20 +34,22 @@ def run_git_check():
         return "[X] Git Bulunamadi", "Kirmizi"
 
 def main():
-    root = Path(os.getcwd())
+    root = resolve_root()
     
     checks = [
         ("Kok Yonlendirici (GEMINI.md / beyin-antigravity.md)", root / "beyin-antigravity.md"),
+        ("Versiyon Dosyasi (.beyin-version)", root / ".beyin-version"),
         ("Antigravity Kancalari (.agents/hooks.json)", root / ".agents" / "hooks.json"),
         ("Baglam Enjektoru (inject_context.py)", root / ".agents" / "scripts" / "inject_context.py"),
         ("Oturum Loglayici (flush_daily.py)", root / ".agents" / "scripts" / "flush_daily.py"),
         ("Bilgi Derleyici (compile_knowledge.py)", root / ".agents" / "scripts" / "compile_knowledge.py"),
-        ("Web 3D Gorsellestirici (visualizer/index.html)", root / "visualizer" / "index.html"),
+        ("Obsidian Yapilandirmasi (.obsidian/)", root / ".obsidian" / "graph.json"),
         ("Sablon Kasasi (template/)", root / "template"),
     ]
 
+    version = get_version(root)
     print("\n" + "=" * 65)
-    print("           ANTIGRAVITY BEYIN DOKTORU RAPORU")
+    print(f"     ANTIGRAVITY BEYIN DOKTORU RAPORU (v{version})")
     print("=" * 65)
     print(f"{'Bilesen':<48} | {'Durum':<12}")
     print("-" * 65)

@@ -9,6 +9,9 @@ import re
 from datetime import datetime
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).parent))
+from _resolve_root import resolve_root, safe_write
+
 if hasattr(sys.stdout, 'reconfigure'):
     try:
         sys.stdout.reconfigure(encoding='utf-8')
@@ -16,7 +19,7 @@ if hasattr(sys.stdout, 'reconfigure'):
         pass
 
 def main():
-    root = Path(os.getcwd())
+    root = resolve_root()
     daily_dir = root / "daily"
     kb_dir = root / "knowledge"
     concepts_dir = kb_dir / "concepts"
@@ -51,24 +54,16 @@ Bu indeks Antigravity Bilgi Derleyicisi tarafından otomatik güncellenir.
 | :--- | :--- | :--- | :--- |
 {chr(10).join(table_rows)}
 """
-    index_file.write_text(index_content, encoding="utf-8")
+    safe_write(index_file, index_content, mode="w")
 
     # 3. Append to log.md
     compile_log = kb_dir / "log.md"
     log_entry = f"\n- **{today_str}**: Bilgi derlemesi tamamlandı. Toplam {log_count} günlük log dosyası tarandı. {len(existing_concepts)} kavram güncel.\n"
     
     if not compile_log.exists():
-        compile_log.write_text("# 📝 Bilgi Derleme Günlüğü\n\n" + log_entry, encoding="utf-8")
+        safe_write(compile_log, "# 📝 Bilgi Derleme Günlüğü\n\n" + log_entry, mode="w")
     else:
-        with open(compile_log, "a", encoding="utf-8") as f:
-            f.write(log_entry)
-
-    # Auto-compile 3D graph data
-    try:
-        import subprocess
-        subprocess.run(["python", str(root / ".agents" / "scripts" / "compile_graph.py")], capture_output=True)
-    except Exception:
-        pass
+        safe_write(compile_log, log_entry, mode="a")
 
     print(f"[OK] Bilgi derlemesi tamamlandi: {len(existing_concepts)} kavram, {log_count} gunluk log tarandi.")
 

@@ -9,6 +9,10 @@ import os
 from datetime import datetime
 from pathlib import Path
 
+# _resolve_root modülünü import et
+sys.path.insert(0, str(Path(__file__).parent))
+from _resolve_root import resolve_root_from_payload, safe_write, get_version
+
 if hasattr(sys.stdout, 'reconfigure'):
     try:
         sys.stdout.reconfigure(encoding='utf-8')
@@ -48,11 +52,7 @@ def main():
     except Exception:
         payload = {}
 
-    workspace_paths = payload.get("workspacePaths", [])
-    if workspace_paths:
-        root = Path(workspace_paths[0])
-    else:
-        root = Path(os.getcwd())
+    root = resolve_root_from_payload(payload)
 
     daily_dir = root / "daily"
     daily_dir.mkdir(parents=True, exist_ok=True)
@@ -74,7 +74,7 @@ def main():
                 snippet = snippet[:117] + "..."
             summary_bullets.append(f"- **{speaker}:** {snippet}")
     else:
-        summary_bullets.append("- *Oturum tamamlandı ve hafızaya kaydedildi.*")
+        summary_bullets.append(f"- *Oturum {now_time}'de tamamlandı.* (Transcript verisi alınamadı)")
 
     session_block = f"""
 ### Oturum: {now_time}
@@ -90,17 +90,9 @@ type: daily-log
 # 📅 {today_str} Günlük Loglar
 
 """
-        daily_file.write_text(header + session_block.strip() + "\n", encoding="utf-8")
+        safe_write(daily_file, header + session_block.strip() + "\n", mode="w")
     else:
-        with open(daily_file, "a", encoding="utf-8") as f:
-            f.write("\n" + session_block.strip() + "\n")
-
-    # Auto-compile 3D graph data
-    try:
-        import subprocess
-        subprocess.run(["python", str(root / ".agents" / "scripts" / "compile_graph.py")], capture_output=True)
-    except Exception:
-        pass
+        safe_write(daily_file, "\n" + session_block.strip() + "\n", mode="a")
 
     # Stop hook output
     print(json.dumps({"decision": "allow"}))

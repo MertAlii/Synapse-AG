@@ -19,11 +19,14 @@ Bu doküman, Antigravity İkinci Beyin projesini basit bir not tutucudan **kendi
 ## 🟡 Level 2: Görselleştirme & Zamansal Bellek (Time Travel)
 *Hedef: Geçmişi sorgulanabilir kılmak ve bilginin topolojisini görmek.*
 
-- [x] **Web Tabanlı 3D Bilgi Grafiği (`visualizer/`):** 
-  - Three.js & 3D Force-Graph tabanlı interaktif uzay.
-  - **🌌 Galaksi Kümeleme Modu (Force-Cluster):** Notların kategorilerine göre ayrı takımyıldızları gibi 3D uzayda kümelenmesi.
-  - **🔥 Isı Haritası (Heatmap Glow):** En son çalışılan veya yoğun bağlantılı notların sıcak neon renklerle parlaması.
-  - **💾 Tek Tıkla HTML Dışa Aktarma (Export):** Bilgi evrenini tek bir bağımsız HTML dosyası olarak kaydetme.
+- [x] **Obsidian Yerel İlişki Grafiği (`.obsidian/`):** 
+  - Renk kodlu kategorik ilişki grafiği (`Ctrl+G` / Graph View).
+  - **🔮 Mor:** Düşünme Ortağı & Çekirdek Hafıza (`🔮 850-Companion`)
+  - **🏰 Cyan:** Aktif Projeler (`🏰 300-Projects`)
+  - **🧠 Zümrüt Yeşili:** Kalıcı Bilgi & Hata Laboratuvarı (`🧠 500-Knowledge`, `knowledge/`)
+  - **📅 Mavi:** Günlük Oturum Logları (`daily/`)
+  - **📥 Kehribar:** Hızlı Notlar & Inbox (`📥 000-Inbox`)
+  - **🎯 Beyaz:** Kumanda Merkezi & Dashboard (`🎯 100-Command-Center`)
 - [x] **Git Zaman Yolcusu Yeteneği (`zaman-yolcusu` Skill):**
   - Ajanın geçmiş Git commit ve diff kayıtlarını sorgulayabilmesi:  
     *Örnek:* *"2 hafta önce bu mimari kararı neden aldık, hangi dosyaları değiştirdik?"*
