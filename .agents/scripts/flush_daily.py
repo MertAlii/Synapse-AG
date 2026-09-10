@@ -47,42 +47,43 @@ def parse_transcript(transcript_path):
 
 def main():
     try:
-        raw_input = sys.stdin.read()
-        payload = json.loads(raw_input) if raw_input.strip() else {}
-    except Exception:
-        payload = {}
+        try:
+            raw_input = sys.stdin.read()
+            payload = json.loads(raw_input) if raw_input.strip() else {}
+        except Exception:
+            payload = {}
 
-    root = resolve_root_from_payload(payload)
+        root = resolve_root_from_payload(payload)
 
-    daily_dir = root / "daily"
-    daily_dir.mkdir(parents=True, exist_ok=True)
+        daily_dir = root / "daily"
+        daily_dir.mkdir(parents=True, exist_ok=True)
 
-    today_str = datetime.now().strftime("%Y-%m-%d")
-    now_time = datetime.now().strftime("%H:%M")
-    daily_file = daily_dir / f"{today_str}.md"
+        today_str = datetime.now().strftime("%Y-%m-%d")
+        now_time = datetime.now().strftime("%H:%M")
+        daily_file = daily_dir / f"{today_str}.md"
 
-    # Transcript extraction
-    transcript_path = payload.get("transcriptPath", "")
-    entries = parse_transcript(transcript_path)
+        # Transcript extraction
+        transcript_path = payload.get("transcriptPath", "")
+        entries = parse_transcript(transcript_path)
 
-    summary_bullets = []
-    if entries:
-        for idx, entry in enumerate(entries[-6:], 1):
-            speaker = "Kullanıcı" if entry["type"] == "USER_INPUT" else "Asistan"
-            snippet = entry["content"].replace("\n", " ")
-            if len(snippet) > 120:
-                snippet = snippet[:117] + "..."
-            summary_bullets.append(f"- **{speaker}:** {snippet}")
-    else:
-        summary_bullets.append(f"- *Oturum {now_time}'de tamamlandı.* (Transcript verisi alınamadı)")
+        summary_bullets = []
+        if entries:
+            for idx, entry in enumerate(entries[-6:], 1):
+                speaker = "Kullanıcı" if entry["type"] == "USER_INPUT" else "Asistan"
+                snippet = entry["content"].replace("\n", " ")
+                if len(snippet) > 120:
+                    snippet = snippet[:117] + "..."
+                summary_bullets.append(f"- **{speaker}:** {snippet}")
+        else:
+            summary_bullets.append(f"- *Oturum {now_time}'de tamamlandı.* (Transcript verisi alınamadı)")
 
-    session_block = f"""
+        session_block = f"""
 ### Oturum: {now_time}
 {chr(10).join(summary_bullets)}
 """
 
-    if not daily_file.exists():
-        header = f"""---
+        if not daily_file.exists():
+            header = f"""---
 title: {today_str} Günlük Oturum Logları
 date: {today_str}
 type: daily-log
@@ -90,12 +91,17 @@ type: daily-log
 # 📅 {today_str} Günlük Loglar
 
 """
-        safe_write(daily_file, header + session_block.strip() + "\n", mode="w")
-    else:
-        safe_write(daily_file, "\n" + session_block.strip() + "\n", mode="a")
+            safe_write(daily_file, header + session_block.strip() + "\n", mode="w")
+        else:
+            safe_write(daily_file, "\n" + session_block.strip() + "\n", mode="a")
 
-    # Stop hook output
-    print(json.dumps({"decision": "allow"}))
+        # Stop hook output
+        print(json.dumps({"decision": "allow"}))
+    except Exception as e:
+        import traceback
+        with open("hook-error.log", "w", encoding="utf-8") as f:
+            f.write(traceback.format_exc())
+        print(json.dumps({"decision": "allow", "reason": str(e)}))
 
 if __name__ == "__main__":
     main()

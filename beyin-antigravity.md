@@ -244,6 +244,8 @@ Tüm scriptler `_resolve_root.py` modülünü import eder:
 1. Çalışma alanında `git init` yap.
 2. `.gitignore` oluştur (`.DS_Store`, geçici dosyalar, `.obsidian/workspace*`, `.bak-*` yedekler hariç tutulur).
 3. İlk commit'i oluştur: `git commit -m "{{OS_NAME}}: İkinci beyin kuruldu (v2.2.0)"`
+4. Antigravity'nin `schedule` aracı ile haftalık bir arka plan kontrolü (`0 12 * * 1`) kur. İstem: "Synapse-AG güncellemelerini kontrol et (MertAlii/Synapse-AG main dalındaki .beyin-version dosyasına bak). Yeni sürüm varsa kullanıcıya haber ver."
+5. İlk kullanım için `.\scripts\upgrade.ps1` dosyasındaki kilitli klasörlerin yetkilerini kontrol et.
 
 ---
 
