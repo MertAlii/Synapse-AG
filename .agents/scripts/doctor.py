@@ -44,7 +44,7 @@ def main():
         ("Oturum Loglayici (flush_daily.py)", root / ".agents" / "scripts" / "flush_daily.py"),
         ("Bilgi Derleyici (compile_knowledge.py)", root / ".agents" / "scripts" / "compile_knowledge.py"),
         ("Obsidian Yapilandirmasi (.obsidian/)", root / ".obsidian" / "graph.json"),
-        ("Sablon Kasasi (template/)", root / "template"),
+        ("Sablon Kasasi (Templates/)", root / "Templates"),
     ]
 
     version = get_version(root)

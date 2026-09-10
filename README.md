@@ -63,7 +63,7 @@ When a new version is released on GitHub, update your system without losing any 
 .\scripts\upgrade.ps1
 ```
 
-* **Protected Data (Never Touched):** `daily/`, `knowledge/`, `📥 000-Inbox/`, `🏰 300-Projects/`, `🧠 500-Knowledge/`, `🔮 850-Companion/`, `📦 900-Archive/`
+* **Protected Data (Never Touched):** `daily/`, `knowledge/`, `000-Inbox/`, `300-Projects/`, `500-Knowledge/`, `850-Companion/`, `900-Archive/`
 * **Updated Files:** `.agents/scripts/`, `.agents/hooks.json`, `.obsidian/`, `beyin-antigravity.md`, `GEMINI.md`
 * **Automated Backup:** Automatically creates a `.bak-TIMESTAMP/` archive before applying updates.
 
@@ -76,12 +76,12 @@ Open your second brain in **[Obsidian](https://obsidian.md)**:
 1. Open Obsidian -> Select **"Open folder as vault"**.
 2. Select your Synapse-AG folder (`~/.gemini/antigravity/scratch/synapse-ag/`).
 3. Press **`Ctrl+G`** to open the **Graph View**:
-   - 🔮 **Purple:** Companion & Core Memory (`🔮 850-Companion`)
-   - 🏰 **Cyan:** Active Projects (`🏰 300-Projects`)
-   - 🧠 **Emerald:** Permanent Knowledge & Lessons (`🧠 500-Knowledge`, `knowledge/`)
+   - 🔮 **Purple:** Companion & Core Memory (`850-Companion`)
+   - 🏰 **Cyan:** Active Projects (`300-Projects`)
+   - 🧠 **Emerald:** Permanent Knowledge & Lessons (`500-Knowledge`, `knowledge/`)
    - 📅 **Blue:** Daily Logs (`daily/`)
-   - 📥 **Amber:** Unprocessed Inbox & Ideas (`📥 000-Inbox`)
-   - 🎯 **White:** Command Center & Dashboard (`🎯 100-Command-Center`)
+   - 📥 **Amber:** Unprocessed Inbox & Ideas (`000-Inbox`)
+   - 🎯 **White:** Command Center & Dashboard (`100-Command-Center`)
 
 <p align="center">
   <img src="assets/images/obsidian-graph.png" alt="Obsidian Semantic Graph" width="95%" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);" />
@@ -100,10 +100,10 @@ flowchart TD
     end
 
     subgraph MemoryVault ["📁 Local Vault (%100 Markdown)"]
-        Core["🔮 850-Companion\n(Core, Kurallar, Threads, Last-Session)"]
+        Core["850-Companion\n(Core, Kurallar, Threads, Last-Session)"]
         Daily["📅 daily/YYYY-MM-DD.md"]
         KB["🧠 knowledge/ & 500-Knowledge/\n(Concepts, Connections, Lessons)"]
-        Projects["🏰 300-Projects/"]
+        Projects["300-Projects/"]
     end
 
     subgraph Compiler ["⚙️ Autonomous Compiler (Cron)"]
@@ -133,7 +133,7 @@ Synapse-AG/
 ├── README_TR.md                    # Turkish Documentation
 ├── beyin-antigravity.md            # Master Build Specification
 ├── GEMINI.md                       # Root Companion Directive
-├── .beyin-version                  # Semantic Version Tracking (2.1.0)
+├── .beyin-version                  # Semantic Version Tracking (2.2.0)
 │
 ├── .obsidian/                      # Pre-configured Obsidian Environment
 │   ├── app.json                    # Wikilinks & Attachment Rules
@@ -167,14 +167,14 @@ Synapse-AG/
 ├── tests/
 │   └── test_scripts.py             # Pytest Unit Test Suite
 │
-├── 📥 000-Inbox/Dump/              # Quick Capture & Unprocessed Thoughts
-├── 🎯 100-Command-Center/          # Dashboard.md & Active Priorities
-├── 🏰 300-Projects/                # Project Workspaces & Repositories
-├── 🧠 500-Knowledge/               # Permanent Human Notes & Lessons.md
-├── 🔮 850-Companion/               # Companion Memory (Core, Rules, Threads, Sessions)
+├── 000-Inbox/Dump/              # Quick Capture & Unprocessed Thoughts
+├── 100-Command-Center/          # Dashboard.md & Active Priorities
+├── 300-Projects/                # Project Workspaces & Repositories
+├── 500-Knowledge/               # Permanent Human Notes & Lessons.md
+├── 850-Companion/               # Companion Memory (Core, Rules, Threads, Sessions)
 ├── daily/                          # [Machine-Written] Daily Session Logs
 ├── knowledge/                      # [Machine-Compiled] Concepts & Connections
-└── 📋 Templates/                   # Note, Project, and Decision (ADR) Templates
+└── Templates/                   # Note, Project, and Decision (ADR) Templates
 ```
 
 ---
@@ -189,7 +189,7 @@ python .agents/scripts/doctor.py
 
 ```text
 =================================================================
-     ANTIGRAVITY BEYIN DOKTORU RAPORU (v2.1.0)
+     ANTIGRAVITY BEYIN DOKTORU RAPORU (v2.2.0)
 =================================================================
 Bilesen                                          | Durum       
 -----------------------------------------------------------------
@@ -200,7 +200,7 @@ Baglam Enjektoru (inject_context.py)             | [OK] Hazir
 Oturum Loglayici (flush_daily.py)                | [OK] Hazir  
 Bilgi Derleyici (compile_knowledge.py)           | [OK] Hazir  
 Obsidian Yapilandirmasi (.obsidian/)             | [OK] Hazir  
-Sablon Kasasi (template/)                        | [OK] Hazir  
+Sablon Kasasi (Templates/)                        | [OK] Hazir  
 Git Surum Kontrolu                               | [OK] Git Aktif
 =================================================================
 [OK] Sistem sapasaglam! Tum hafiza kancalari ve dosyalar hazir.

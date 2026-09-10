@@ -11,6 +11,8 @@ __pycache__/
 venv/
 env/
 .pytest_cache/
+.coverage
+htmlcov/
 
 # Local & Secrets
 .env

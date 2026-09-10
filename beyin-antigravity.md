@@ -4,7 +4,7 @@
 > Bu dosya senin eksiksiz, kendi kendine yeten kurulum şartnamendir (build spec). Baştan sona oku ve faz faz icra et.
 >
 > **Kaynak:** Avenox (avenox.lol / github.com/avenoxai/avenoxbeyin) & Andrej Karpathy LLM Knowledge Base mimarisi.
-> **Sürüm:** 2.1.0 (Antigravity 2.0 & Obsidian Native)
+> **Sürüm:** 2.2.0 (Antigravity 2.0 & Obsidian Native)
 
 ---
 
@@ -61,7 +61,7 @@
 9. **"Tercih ettiğiniz çalışma tarzı nedir?"** (derin odaklanma, çok görevli, sprint tabanlı)
 10. **"Bu beyin sizin için neyi çözmeli? En büyük sorun noktanız ne?"**
 
-> Bu cevapları `🔮 850-Companion/Core.md` dosyasına kullanıcı profili olarak işle.
+> Bu cevapları `850-Companion/Core.md` dosyasına kullanıcı profili olarak işle.
 > İleriki oturumlarda bu profili kullanarak proaktif önerilerde bulun.
 
 Bugünün tarihini al: `{{TODAY}}` (YYYY-MM-DD)
@@ -77,17 +77,17 @@ Seçilen hedef dizinde şu klasör hiyerarşisini oluştur:
 
 ```
 {{INSTALL_PATH}}/
-├── 📥 000-Inbox/Dump/          # Hızlı yakalama, ham fikirler
-├── 🎯 100-Command-Center/      # Dashboard ve aktif hedefler
-├── 🏰 300-Projects/            # Aktif projeler
-├── 🧠 500-Knowledge/           # Kullanıcının kendi yazdığı kalıcı notlar
-├── 🔮 850-Companion/           # Ortağın kalıcı hafızası
+├── 000-Inbox/Dump/          # Hızlı yakalama, ham fikirler
+├── 100-Command-Center/      # Dashboard ve aktif hedefler
+├── 300-Projects/            # Aktif projeler
+├── 500-Knowledge/           # Kullanıcının kendi yazdığı kalıcı notlar
+├── 850-Companion/           # Ortağın kalıcı hafızası
 ├── daily/                      # [Makine Yazar] Günlük oturum logları
 ├── knowledge/                  # [Makine Yazar] Derlenmiş bilgi tabanı
 │   ├── concepts/               # Kavram makaleleri
 │   └── connections/            # Bağlantı ve sentez makaleleri
-├── 📦 900-Archive/             # Arşiv
-├── 📋 Templates/               # Not ve proje şablonları
+├── 900-Archive/             # Arşiv
+├── Templates/               # Not ve proje şablonları
 ├── .obsidian/                  # Obsidian yerel ayarları ve Graph View
 │   ├── app.json
 │   ├── appearance.json
@@ -131,19 +131,19 @@ Tüm projelerden bağımsız olarak merkezi ve kalıcı İkinci Beyin deposu: `{
 
 | Görev | Konum |
 | :--- | :--- |
-| Hızlı Not / Ham Fikir | `{{INSTALL_PATH}}/📥 000-Inbox/Dump/` |
-| Proje Çalışması & Katalog | `{{INSTALL_PATH}}/🏰 300-Projects/` |
-| İnsan Eliyle Kalıcı Bilgi | `{{INSTALL_PATH}}/🧠 500-Knowledge/` |
-| Hata Laboratuvarı & Dersler | `{{INSTALL_PATH}}/🧠 500-Knowledge/Lessons.md` |
+| Hızlı Not / Ham Fikir | `{{INSTALL_PATH}}/000-Inbox/Dump/` |
+| Proje Çalışması & Katalog | `{{INSTALL_PATH}}/300-Projects/` |
+| İnsan Eliyle Kalıcı Bilgi | `{{INSTALL_PATH}}/500-Knowledge/` |
+| Hata Laboratuvarı & Dersler | `{{INSTALL_PATH}}/500-Knowledge/Lessons.md` |
 | Makine Derlemesi Bilgi | `{{INSTALL_PATH}}/knowledge/` |
 | Günlük Oturum Logları | `{{INSTALL_PATH}}/daily/` |
-| Kumanda Merkezi & Dashboard | `{{INSTALL_PATH}}/🎯 100-Command-Center/Dashboard.md` |
-| Kalıcı Hafıza, Kurallar & Kimlik | `{{INSTALL_PATH}}/🔮 850-Companion/` |
+| Kumanda Merkezi & Dashboard | `{{INSTALL_PATH}}/100-Command-Center/Dashboard.md` |
+| Kalıcı Hafıza, Kurallar & Kimlik | `{{INSTALL_PATH}}/850-Companion/` |
 | Obsidian Not Grafiği & Görünüm | `Obsidian'da Aç (Ctrl+G / Graph View)` |
 
 ## Hafıza & Öğrenme Protokolü
 1. **Oturum Başlangıcı:** `PreInvocation` kancası son oturumu ve kuralları otomatik enjekte eder.
-2. **Kural Öğrenme:** Kullanıcı seni düzelttiğinde bunu `🔮 850-Companion/Kurallar.md` dosyasına işle.
+2. **Kural Öğrenme:** Kullanıcı seni düzelttiğinde bunu `850-Companion/Kurallar.md` dosyasına işle.
 3. **Devamlılık:** Önemli bir karar alındığında `Threads.md` ve `Last-Session.md` dosyalarını güncelle.
 4. **Hata Analizi:** Bir kriz olduğunda `post-mortem` yeteneğini kullanarak `500-Knowledge/Lessons.md` içine ders kaydet.
 5. **GitHub Onayı:** Değişiklikleri GitHub'a kullanıcının açık onayı olmadan asla gönderme.
@@ -155,7 +155,7 @@ Tüm projelerden bağımsız olarak merkezi ve kalıcı İkinci Beyin deposu: `{
 # Çoklu Ajan ve Hafıza Protokolü
 
 Bu çalışma alanında çalışan tüm ajanlar ve alt ajanlar (subagents) aşağıdaki kurallara tabidir:
-1. **Tekil Kaynak İlkesi:** Tüm kalıcı hafıza `🔮 850-Companion/` klasöründedir.
+1. **Tekil Kaynak İlkesi:** Tüm kalıcı hafıza `850-Companion/` klasöründedir.
 2. **Kural Uyumu:** `Kurallar.md` içindeki kurallar her ajan için bağlayıcıdır.
 3. **Kendi Başına Varsayım Yapmama:** Bilgi gerekiyorsa önce `knowledge/` veya `500-Knowledge/` altındaki ilgili notu oku.
 4. **Merkezi Konum:** Tüm scriptler `SYNAPSE_AG_ROOT` ortam değişkenini veya `.beyin-version` dosyasını kullanarak doğru dizini bulur.
@@ -204,15 +204,15 @@ Tüm scriptler `_resolve_root.py` modülünü import eder:
 ```markdown
 # Hafıza ve Devamlılık Protokolü
 
-- Her anlamlı konuşmada önemli bir karar alındıysa `🔮 850-Companion/Threads.md` güncellenir.
-- Kullanıcı bir kural belirttiğinde `🔮 850-Companion/Kurallar.md` güncellenir.
+- Her anlamlı konuşmada önemli bir karar alındıysa `850-Companion/Threads.md` güncellenir.
+- Kullanıcı bir kural belirttiğinde `850-Companion/Kurallar.md` güncellenir.
 - Bilinmeyen veya eksik bilgi durumunda önce yerel notlar taranır.
 - GitHub'a dağıtım kullanıcının onayı ile yapılır.
 ```
 
 ---
 
-## 🧠 FAZ 4: Ortak Hafızasının Başlatılması (`🔮 850-Companion/`)
+## 🧠 FAZ 4: Ortak Hafızasının Başlatılması (`850-Companion/`)
 
 - **`Core.md`**: `{{COMPANION}}` kimliği, çalışma ilkeleri ve **kullanıcı profili** (FAZ 0'da toplanan cevaplar buraya yazılır).
 - **`Kurallar.md`**: Öğrenilen kurallar (başlangıçta varsayılan kurallarla doldurulur).
@@ -227,7 +227,7 @@ Tüm scriptler `_resolve_root.py` modülünü import eder:
 1. `.obsidian/` klasörünü hazır ayarlarıyla oluştur:
    - `graph.json`: Mor (Companion), Cyan (Projects), Yeşil (Knowledge), Mavi (Daily), Turuncu (Inbox), Beyaz (Center) renk grupları.
    - `daily-notes.json`: Otomatik günlük not yolu `daily/YYYY-MM-DD`.
-   - `templates.json`: Şablonlar dizini `📋 Templates`.
+   - `templates.json`: Şablonlar dizini `Templates`.
 2. `.agents/skills/` altına şu yetenekleri yerleştir:
    - **`beyin-doktor`**: Sistem tanı ve tamir yeteneği.
    - **`hafiza-derleyici`**: Karpathy mimarisiyle `daily/` notlarını `knowledge/` makalelerine derleyen yetenek.
@@ -243,7 +243,7 @@ Tüm scriptler `_resolve_root.py` modülünü import eder:
 
 1. Çalışma alanında `git init` yap.
 2. `.gitignore` oluştur (`.DS_Store`, geçici dosyalar, `.obsidian/workspace*`, `.bak-*` yedekler hariç tutulur).
-3. İlk commit'i oluştur: `git commit -m "{{OS_NAME}}: İkinci beyin kuruldu (v2.1.0)"`
+3. İlk commit'i oluştur: `git commit -m "{{OS_NAME}}: İkinci beyin kuruldu (v2.2.0)"`
 
 ---
 
@@ -263,7 +263,7 @@ veya
 ### Güncelleme Mantığı
 1. `.beyin-version` dosyasındaki mevcut sürüm GitHub'daki son sürümle karşılaştırılır.
 2. Yeni sürüm varsa:
-   - **Korunan dizinler** (kullanıcı verileri): `daily/`, `knowledge/`, `📥 000-Inbox/`, `🏰 300-Projects/`, `🧠 500-Knowledge/`, `🔮 850-Companion/`, `📦 900-Archive/`
+   - **Korunan dizinler** (kullanıcı verileri): `daily/`, `knowledge/`, `000-Inbox/`, `300-Projects/`, `500-Knowledge/`, `850-Companion/`, `900-Archive/`
    - **Güncellenen dizinler** (sistem): `.agents/scripts/`, `.agents/hooks.json`, `.obsidian/`, `beyin-antigravity.md`, `GEMINI.md`
 3. Güncelleme öncesi otomatik `.bak-TIMESTAMP` yedek oluşturulur.
 4. Güncelleme sonrası `compile_knowledge.py` çalıştırılarak bilgi tabanı yenilenir.
@@ -275,7 +275,7 @@ veya
 Kurulum tamamlandığında kullanıcıya şu formatta Türkçe özet sun:
 
 - ✅ **Kurulan Parçalar:** Klasörler, Antigravity kancaları, `{{COMPANION}}` kimliği, Obsidian Graph & Ayarları, Git sürümleme, güncelleme mekanizması.
-- 📌 **Sürüm:** v2.1.0
+- 📌 **Sürüm:** v2.2.0
 - 🚀 **Nasıl Kullanılır?**
   - Doğrudan sohbete başlayabilirsiniz, `{{COMPANION}}` her şeyi hatırlar.
   - Obsidian ile açmak için: Obsidian uygulamasında *"Open folder as vault"* seçeneğiyle `{{INSTALL_PATH}}` klasörünü açın.

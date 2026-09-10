@@ -27,7 +27,8 @@ def main():
     # Workspace directory
     root = resolve_root_from_payload(payload)
 
-    mem_dir = root / "🔮 850-Companion"
+    mem_dir = root / "850-Companion"
+    daily_dir = root / "daily"
     
     sections = []
 
@@ -77,6 +78,18 @@ def main():
             kb_content = kb_index.read_text(encoding="utf-8").strip()
             lines = kb_content.splitlines()[:20]
             sections.append(f"[Hafıza: Derlenmiş Bilgi İndeksi]\n" + "\n".join(lines))
+        except Exception:
+            pass
+
+    # 6. Recent Daily Logs
+    if daily_dir.is_dir():
+        try:
+            daily_files = sorted(daily_dir.glob("*.md"))
+            if daily_files:
+                latest_daily = daily_files[-1]
+                daily_content = latest_daily.read_text(encoding="utf-8").strip()
+                lines = daily_content.splitlines()[-30:] # Son 30 satır
+                sections.append(f"[Hafıza: Son Oturumlar ({latest_daily.name})]\n" + "\n".join(lines))
         except Exception:
             pass
 

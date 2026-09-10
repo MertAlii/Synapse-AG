@@ -63,7 +63,7 @@ Yeni bir sürüm yayınlandığında kişisel notlarınızı veya hafızanızı 
 .\scripts\upgrade.ps1
 ```
 
-* **Korunan Dizinler (Asla Dokunulmaz):** `daily/`, `knowledge/`, `📥 000-Inbox/`, `🏰 300-Projects/`, `🧠 500-Knowledge/`, `🔮 850-Companion/`, `📦 900-Archive/`
+* **Korunan Dizinler (Asla Dokunulmaz):** `daily/`, `knowledge/`, `000-Inbox/`, `300-Projects/`, `500-Knowledge/`, `850-Companion/`, `900-Archive/`
 * **Güncellenen Dosyalar:** `.agents/scripts/`, `.agents/hooks.json`, `.obsidian/`, `beyin-antigravity.md`, `GEMINI.md`
 * **Otomatik Yedekleme:** Güncelleme öncesi otomatik `.bak-TIMESTAMP/` yedeği alınır.
 
@@ -76,12 +76,12 @@ Yeni bir sürüm yayınlandığında kişisel notlarınızı veya hafızanızı 
 1. Obsidian uygulamasını açın -> **"Open folder as vault"** seçin.
 2. Synapse-AG klasörünüzü (`~/.gemini/antigravity/scratch/synapse-ag/`) seçin.
 3. **`Ctrl+G`** tuşuna basarak **İlişki Grafiğini (Graph View)** açın:
-   - 🔮 **Mor:** Düşünme Ortağı & Çekirdek Hafıza (`🔮 850-Companion`)
-   - 🏰 **Cyan:** Aktif Projeler (`🏰 300-Projects`)
-   - 🧠 **Zümrüt Yeşili:** Kalıcı Bilgi & Hata Laboratuvarı (`🧠 500-Knowledge`, `knowledge/`)
+   - 🔮 **Mor:** Düşünme Ortağı & Çekirdek Hafıza (`850-Companion`)
+   - 🏰 **Cyan:** Aktif Projeler (`300-Projects`)
+   - 🧠 **Zümrüt Yeşili:** Kalıcı Bilgi & Hata Laboratuvarı (`500-Knowledge`, `knowledge/`)
    - 📅 **Mavi:** Günlük Oturum Logları (`daily/`)
-   - 📥 **Kehribar:** Hızlı Notlar & Inbox (`📥 000-Inbox`)
-   - 🎯 **Beyaz:** Kumanda Merkezi & Dashboard (`🎯 100-Command-Center`)
+   - 📥 **Kehribar:** Hızlı Notlar & Inbox (`000-Inbox`)
+   - 🎯 **Beyaz:** Kumanda Merkezi & Dashboard (`100-Command-Center`)
 
 <p align="center">
   <img src="assets/images/obsidian-graph.png" alt="Obsidian Semantik Ağ Grafiği" width="95%" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);" />
@@ -100,10 +100,10 @@ flowchart TD
     end
 
     subgraph MemoryVault ["📁 Yerel Kasa (%100 Markdown)"]
-        Core["🔮 850-Companion\n(Core, Kurallar, Threads, Last-Session)"]
+        Core["850-Companion\n(Core, Kurallar, Threads, Last-Session)"]
         Daily["📅 daily/YYYY-MM-DD.md"]
         KB["🧠 knowledge/ & 500-Knowledge/\n(Kavramlar, Bağlantılar, Dersler)"]
-        Projects["🏰 300-Projects/"]
+        Projects["300-Projects/"]
     end
 
     subgraph Compiler ["⚙️ Otonom Derleyici (Cron)"]
@@ -133,7 +133,7 @@ Synapse-AG/
 ├── README_TR.md                    # Türkçe Dokümantasyon
 ├── beyin-antigravity.md            # Ana Kurulum Şartnamesi
 ├── GEMINI.md                       # Kök Yönlendirici Kural Dosyası
-├── .beyin-version                  # Semantik Sürüm Takibi (2.1.0)
+├── .beyin-version                  # Semantik Sürüm Takibi (2.2.0)
 │
 ├── .obsidian/                      # Hazır Obsidian Ayarları
 │   ├── app.json                    # Wikilinks ve Ek Kuralları
@@ -167,14 +167,14 @@ Synapse-AG/
 ├── tests/
 │   └── test_scripts.py             # Pytest Birim Test Paketi
 │
-├── 📥 000-Inbox/Dump/              # Hızlı Yakalama & Ham Fikirler
-├── 🎯 100-Command-Center/          # Dashboard.md & Aktif Öncelikler
-├── 🏰 300-Projects/                # Proje Çalışma Alanları
-├── 🧠 500-Knowledge/               # Kalıcı Notlar & Lessons.md
-├── 🔮 850-Companion/               # Ortak Hafızası (Core, Kurallar, Threads, Last-Session)
+├── 000-Inbox/Dump/              # Hızlı Yakalama & Ham Fikirler
+├── 100-Command-Center/          # Dashboard.md & Aktif Öncelikler
+├── 300-Projects/                # Proje Çalışma Alanları
+├── 500-Knowledge/               # Kalıcı Notlar & Lessons.md
+├── 850-Companion/               # Ortak Hafızası (Core, Kurallar, Threads, Last-Session)
 ├── daily/                          # [Makine Yazar] Günlük Oturum Logları
 ├── knowledge/                      # [Makine Yazar] Kavramlar ve Bağlantılar
-└── 📋 Templates/                   # Not, Proje ve Karar Şablonları
+└── Templates/                   # Not, Proje ve Karar Şablonları
 ```
 
 ---
@@ -189,7 +189,7 @@ python .agents/scripts/doctor.py
 
 ```text
 =================================================================
-     ANTIGRAVITY BEYIN DOKTORU RAPORU (v2.1.0)
+     ANTIGRAVITY BEYIN DOKTORU RAPORU (v2.2.0)
 =================================================================
 Bilesen                                          | Durum       
 -----------------------------------------------------------------
@@ -200,7 +200,7 @@ Baglam Enjektoru (inject_context.py)             | [OK] Hazir
 Oturum Loglayici (flush_daily.py)                | [OK] Hazir  
 Bilgi Derleyici (compile_knowledge.py)           | [OK] Hazir  
 Obsidian Yapilandirmasi (.obsidian/)             | [OK] Hazir  
-Sablon Kasasi (template/)                        | [OK] Hazir  
+Sablon Kasasi (Templates/)                        | [OK] Hazir  
 Git Surum Kontrolu                               | [OK] Git Aktif
 =================================================================
 [OK] Sistem sapasaglam! Tum hafiza kancalari ve dosyalar hazir.

@@ -14,10 +14,12 @@ $PROTECTED_PATTERNS = @(
     "daily",
     "knowledge",
     "*000-Inbox*",
+    "*100-Command-Center*",
     "*300-Projects*",
     "*500-Knowledge*",
     "*850-Companion*",
-    "*900-Archive*"
+    "*900-Archive*",
+    "*Templates*"
 )
 
 # Sistem dosyalari - Guncellenir
@@ -37,7 +39,8 @@ $SYSTEM_FILES = @(
     ".obsidian/appearance.json",
     "beyin-antigravity.md",
     "GEMINI.md",
-    ".beyin-version"
+    ".beyin-version",
+    "requirements.txt"
 )
 
 function Get-SynapseRoot {
@@ -153,6 +156,18 @@ function Invoke-PostUpdate {
         }
         catch {
             Write-Host "  [!] Bilgi tabani derlenemedi." -ForegroundColor Yellow
+        }
+    }
+    
+    $reqFile = Join-Path $Root "requirements.txt"
+    if (Test-Path $reqFile) {
+        Write-Host "Bagimliliklar kuruluyor (portalocker)..." -ForegroundColor Cyan
+        try {
+            & python -m pip install -q -r $reqFile
+            Write-Host "  [OK] Bagimliliklar kuruldu." -ForegroundColor Green
+        }
+        catch {
+            Write-Host "  [!] Bagimliliklar kurulamadi." -ForegroundColor Yellow
         }
     }
 }
