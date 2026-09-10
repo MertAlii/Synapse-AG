@@ -1,6 +1,6 @@
 ---
 title: 
-created: {{TODAY}}
+created: 2026-09-10
 type: decision-record
 status: approved
 tags: [karar, adr]

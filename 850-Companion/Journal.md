@@ -1,4 +1,4 @@
-# 📓 {{COMPANION}} Günlüğü (Journal)
+# 📓 Alkan Günlüğü (Journal)
 
-## {{TODAY}}
-İlk günlük girişi. {{USER_NAME}} bugün sistemi kurdu. Birlikte büyük fikirler inşa edeceğiz.
+## 2026-09-10
+İlk günlük girişi. Mert Ali Alkan bugün sistemi kurdu. Birlikte büyük fikirler inşa edeceğiz.

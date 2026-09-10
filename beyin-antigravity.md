@@ -24,7 +24,7 @@
 3. **Mevcut Veriyi Asla Ezme:** Hedef klasörde eski notlar varsa silme, birleştir veya sor.
 4. **Tüm `{{PLACEHOLDER}}` Alanlarını Çöz:** Dosyalara asla ham `{{...}}` bırakma.
 5. **Git İle Güvenceye Al:** Kurulum tamamlandığında ilk commit'i at.
-6. **Sabit Kurulum Hedefi:** Sistem her zaman `{{INSTALL_PATH}}` altına kurulur — o anki proje klasörüne DEĞİL.
+6. **Sabit Kurulum Hedefi:** Sistem her zaman `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag` altına kurulur — o anki proje klasörüne DEĞİL.
 7. **GitHub Onayı:** Projeleri veya değişiklikleri GitHub'a kullanıcının açık onayı olmadan asla gönderme.
 
 ---
@@ -36,16 +36,16 @@
 
 ### Zorunlu Sorular
 
-1. **"İsminiz nedir?"** → `{{USER_NAME}}`
-2. **"Ne iş yapıyorsunuz ve bu beyni en çok hangi alanda kullanacaksınız?"** (detay iste) → `{{USER_BIO}}`
-3. **"AI düşünme ortağınıza ne isim vermek istersiniz?"** (Örn: *Echo, Atlas, Nova, Orion, Alkan*) → `{{COMPANION}}`
-4. **"İkinci beyniniz için bir çalışma alanı adı seçelim mi?"** (Örn: *MertOS, NovaBrain, Synapse*) → `{{OS_NAME}}`
+1. **"İsminiz nedir?"** → `Mert Ali Alkan`
+2. **"Ne iş yapıyorsunuz ve bu beyni en çok hangi alanda kullanacaksınız?"** (detay iste) → `Mert Ali Alkan — Yazılım ve yapay zeka projeleri geliştiren, agentic mimariler inşa eden geliştirici.`
+3. **"AI düşünme ortağınıza ne isim vermek istersiniz?"** (Örn: *Echo, Atlas, Nova, Orion, Alkan*) → `Alkan`
+4. **"İkinci beyniniz için bir çalışma alanı adı seçelim mi?"** (Örn: *MertOS, NovaBrain, Synapse*) → `Synapse-AG`
 
 ### Kurulum Konumu
 
 5. **"İkinci beyninizi nereye kuralım?"**
    - Varsayılan (önerilen): `~/.gemini/antigravity/scratch/synapse-ag/`
-   - Özel konum: Kullanıcı belirtirse → `{{INSTALL_PATH}}`
+   - Özel konum: Kullanıcı belirtirse → `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag`
    - **Uyarı:** "O anki çalışma alanı" seçilmemeli — beyin merkezi ve bağımsızdır.
 
 ### Kapsam Seçimi
@@ -64,19 +64,19 @@
 > Bu cevapları `850-Companion/Core.md` dosyasına kullanıcı profili olarak işle.
 > İleriki oturumlarda bu profili kullanarak proaktif önerilerde bulun.
 
-Bugünün tarihini al: `{{TODAY}}` (YYYY-MM-DD)
+Bugünün tarihini al: `2026-09-10` (YYYY-MM-DD)
 
 ---
 
 ## 🛠️ FAZ 1: Dizin İskeletinin Kurulması
 
-> **HEDEF DİZİN:** `{{INSTALL_PATH}}` — Varsayılan: `~/.gemini/antigravity/scratch/synapse-ag/`
+> **HEDEF DİZİN:** `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag` — Varsayılan: `~/.gemini/antigravity/scratch/synapse-ag/`
 > Asla o anki proje klasörüne kurma!
 
 Seçilen hedef dizinde şu klasör hiyerarşisini oluştur:
 
 ```
-{{INSTALL_PATH}}/
+C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/
 ├── 000-Inbox/Dump/          # Hızlı yakalama, ham fikirler
 ├── 100-Command-Center/      # Dashboard ve aktif hedefler
 ├── 300-Projects/            # Aktif projeler
@@ -114,31 +114,31 @@ Seçilen hedef dizinde şu klasör hiyerarşisini oluştur:
 
 ## 📄 FAZ 2: `GEMINI.md` ve `AGENTS.md` (Kök Yönlendiriciler)
 
-### `{{INSTALL_PATH}}/GEMINI.md`
+### `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/GEMINI.md`
 
 ```markdown
-# {{OS_NAME}}: {{USER_NAME}}'in İkinci Beyni
+# Synapse-AG: Mert Ali Alkan'in İkinci Beyni
 
-Sen {{COMPANION}}'sun, {{USER_NAME}}'in düşünme ortağı ve ikinci beynisin.
+Sen Alkan'sun, Mert Ali Alkan'in düşünme ortağı ve ikinci beynisin.
 Genel bir yapay zeka asistanı değil; hatırlayan, devamlılık sağlayan ve proaktif bir ekip arkadaşısın.
 Doğrudan, samimi ve net Türkçe konuşursun.
 
 ## Kullanıcı Hakkında
-{{USER_BIO}}
+Mert Ali Alkan — Yazılım ve yapay zeka projeleri geliştiren, agentic mimariler inşa eden geliştirici.
 
 ## 🧠 Merkezi İkinci Beyin Konumu
-Tüm projelerden bağımsız olarak merkezi ve kalıcı İkinci Beyin deposu: `{{INSTALL_PATH}}`
+Tüm projelerden bağımsız olarak merkezi ve kalıcı İkinci Beyin deposu: `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag`
 
 | Görev | Konum |
 | :--- | :--- |
-| Hızlı Not / Ham Fikir | `{{INSTALL_PATH}}/000-Inbox/Dump/` |
-| Proje Çalışması & Katalog | `{{INSTALL_PATH}}/300-Projects/` |
-| İnsan Eliyle Kalıcı Bilgi | `{{INSTALL_PATH}}/500-Knowledge/` |
-| Hata Laboratuvarı & Dersler | `{{INSTALL_PATH}}/500-Knowledge/Lessons.md` |
-| Makine Derlemesi Bilgi | `{{INSTALL_PATH}}/knowledge/` |
-| Günlük Oturum Logları | `{{INSTALL_PATH}}/daily/` |
-| Kumanda Merkezi & Dashboard | `{{INSTALL_PATH}}/100-Command-Center/Dashboard.md` |
-| Kalıcı Hafıza, Kurallar & Kimlik | `{{INSTALL_PATH}}/850-Companion/` |
+| Hızlı Not / Ham Fikir | `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/000-Inbox/Dump/` |
+| Proje Çalışması & Katalog | `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/300-Projects/` |
+| İnsan Eliyle Kalıcı Bilgi | `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/500-Knowledge/` |
+| Hata Laboratuvarı & Dersler | `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/500-Knowledge/Lessons.md` |
+| Makine Derlemesi Bilgi | `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/knowledge/` |
+| Günlük Oturum Logları | `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/daily/` |
+| Kumanda Merkezi & Dashboard | `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/100-Command-Center/Dashboard.md` |
+| Kalıcı Hafıza, Kurallar & Kimlik | `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/850-Companion/` |
 | Obsidian Not Grafiği & Görünüm | `Obsidian'da Aç (Ctrl+G / Graph View)` |
 
 ## Hafıza & Öğrenme Protokolü
@@ -149,7 +149,7 @@ Tüm projelerden bağımsız olarak merkezi ve kalıcı İkinci Beyin deposu: `{
 5. **GitHub Onayı:** Değişiklikleri GitHub'a kullanıcının açık onayı olmadan asla gönderme.
 ```
 
-### `{{INSTALL_PATH}}/AGENTS.md`
+### `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/AGENTS.md`
 
 ```markdown
 # Çoklu Ajan ve Hafıza Protokolü
@@ -214,9 +214,9 @@ Tüm scriptler `_resolve_root.py` modülünü import eder:
 
 ## 🧠 FAZ 4: Ortak Hafızasının Başlatılması (`850-Companion/`)
 
-- **`Core.md`**: `{{COMPANION}}` kimliği, çalışma ilkeleri ve **kullanıcı profili** (FAZ 0'da toplanan cevaplar buraya yazılır).
+- **`Core.md`**: `Alkan` kimliği, çalışma ilkeleri ve **kullanıcı profili** (FAZ 0'da toplanan cevaplar buraya yazılır).
 - **`Kurallar.md`**: Öğrenilen kurallar (başlangıçta varsayılan kurallarla doldurulur).
-- **`Last-Session.md`**: `{{TODAY}} (Genesis)` oturum başlangıç kaydı.
+- **`Last-Session.md`**: `2026-09-10 (Genesis)` oturum başlangıç kaydı.
 - **`Threads.md`**: Açık ve aktif iş parçacıkları tablosu.
 - **`Journal.md`**: Ortak günlüğü ilk girişi.
 
@@ -243,7 +243,7 @@ Tüm scriptler `_resolve_root.py` modülünü import eder:
 
 1. Çalışma alanında `git init` yap.
 2. `.gitignore` oluştur (`.DS_Store`, geçici dosyalar, `.obsidian/workspace*`, `.bak-*` yedekler hariç tutulur).
-3. İlk commit'i oluştur: `git commit -m "{{OS_NAME}}: İkinci beyin kuruldu (v2.2.0)"`
+3. İlk commit'i oluştur: `git commit -m "Synapse-AG: İkinci beyin kuruldu (v2.2.0)"`
 4. Antigravity'nin `schedule` aracı ile haftalık bir arka plan kontrolü (`0 12 * * 1`) kur. İstem: "Synapse-AG güncellemelerini kontrol et (MertAlii/Synapse-AG main dalındaki .beyin-version dosyasına bak). Yeni sürüm varsa kullanıcıya haber ver."
 5. İlk kullanım için `.\scripts\upgrade.ps1` dosyasındaki kilitli klasörlerin yetkilerini kontrol et.
 
@@ -276,11 +276,11 @@ veya
 
 Kurulum tamamlandığında kullanıcıya şu formatta Türkçe özet sun:
 
-- ✅ **Kurulan Parçalar:** Klasörler, Antigravity kancaları, `{{COMPANION}}` kimliği, Obsidian Graph & Ayarları, Git sürümleme, güncelleme mekanizması.
+- ✅ **Kurulan Parçalar:** Klasörler, Antigravity kancaları, `Alkan` kimliği, Obsidian Graph & Ayarları, Git sürümleme, güncelleme mekanizması.
 - 📌 **Sürüm:** v2.2.0
 - 🚀 **Nasıl Kullanılır?**
-  - Doğrudan sohbete başlayabilirsiniz, `{{COMPANION}}` her şeyi hatırlar.
-  - Obsidian ile açmak için: Obsidian uygulamasında *"Open folder as vault"* seçeneğiyle `{{INSTALL_PATH}}` klasörünü açın.
+  - Doğrudan sohbete başlayabilirsiniz, `Alkan` her şeyi hatırlar.
+  - Obsidian ile açmak için: Obsidian uygulamasında *"Open folder as vault"* seçeneğiyle `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag` klasörünü açın.
   - Grafiği görmek için: Obsidian'da `Ctrl+G` tuşlarına basın (Kategoriler otomatik renk kodludur).
   - Zamanlama için: *"Her gün 12:00'de dünü derle"* demeniz yeterlidir.
   - Sağlık kontrolü için: `beyin doktor`.

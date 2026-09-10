@@ -1,6 +1,6 @@
 ---
 title: 
-created: {{TODAY}}
+created: 2026-09-10
 type: project
 status: active
 priority: high

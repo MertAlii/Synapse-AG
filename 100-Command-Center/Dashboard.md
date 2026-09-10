@@ -1,18 +1,18 @@
 ---
-title: {{OS_NAME}} Dashboard
-created: {{TODAY}}
+title: Synapse-AG Dashboard
+created: 2026-09-10
 type: dashboard
 ---
-# 🧠 {{OS_NAME}} Kumanda Merkezi
+# 🧠 Synapse-AG Kumanda Merkezi
 
-Hoş geldin {{USER_NAME}}. Bu senin düşünen, hatırlayan ve derleyen ikinci beynin.
+Hoş geldin Mert Ali Alkan. Bu senin düşünen, hatırlayan ve derleyen ikinci beynin.
 
 ## 🚀 Hızlı Bağlantılar
 - 📥 [[📥 000-Inbox/Dump/|Fikir & Not Yakalama]]
 - 🎯 [[🎯 100-Command-Center/|Hedefler & Dashboard]]
 - 🏰 [[🏰 300-Projects/|Aktif Projeler]]
 - 🧠 [[🧠 500-Knowledge/|Kalıcı Bilgi Notları]]
-- 🔮 [[🔮 850-Companion/Core|{{COMPANION}} Hafızası]]
+- 🔮 [[🔮 850-Companion/Core|Alkan Hafızası]]
 - 📚 [[knowledge/index|Derlenmiş Bilgi Tabanı]]
 
 ## 📌 Aktif Öncelikler
@@ -21,4 +21,4 @@ Hoş geldin {{USER_NAME}}. Bu senin düşünen, hatırlayan ve derleyen ikinci b
 - [ ] İlk kalıcı notunu ekle (`🧠 500-Knowledge/`)
 
 ## 💡 Nasıl Kullanılır?
-Antigravity sohbet penceresini açıp doğrudan konuşun. {{COMPANION}} oturum bittiğinde notları otomatik düşecek, geceleri bilgiyi derleyecektir.
+Antigravity sohbet penceresini açıp doğrudan konuşun. Alkan oturum bittiğinde notları otomatik düşecek, geceleri bilgiyi derleyecektir.
