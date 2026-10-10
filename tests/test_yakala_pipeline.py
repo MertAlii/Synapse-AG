@@ -7,12 +7,18 @@ from pathlib import Path
 SCRIPTS_DIR = Path(__file__).parent.parent / ".agents" / "scripts"
 sys.path.insert(0, str(SCRIPTS_DIR))
 
-from yakala import capture_source, process_captured_cards, slugify
+from yakala import capture_source, fetch_youtube_content, process_captured_cards, slugify
 
 class TestYakalaPipeline:
     def test_slugify(self):
         assert slugify("Mert Ali Alkan İkinci Beyin") == "mert-ali-alkan-ikinci-beyin"
         assert slugify("Türkçe Karakterler: ÇĞİÖŞÜ") == "turkce-karakterler-cgiosu"
+
+    def test_fetch_youtube_fallback(self):
+        # Geçersiz / offline bir video ID verildiğinde hatasız fallback sağlamalı
+        title, clean_text = fetch_youtube_content("https://www.youtube.com/watch?v=invalid_id_00")
+        assert "YouTube Video" in title or "invalid_id_00" in title
+        assert "invalid_id_00" in clean_text
 
     def test_capture_text_and_process(self, tmp_path):
         card_file, ham_file, title = capture_source(

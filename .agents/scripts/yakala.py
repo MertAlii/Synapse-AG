@@ -77,32 +77,84 @@ def fetch_youtube_content(url):
     video_id_match = re.search(r"(?:v=|\/|youtu\.be\/)([0-9A-Za-z_-]{11})", url)
     video_id = video_id_match.group(1) if video_id_match else "video"
 
-    # Önce yt-dlp ile altyazı denemesi (eğer sistemde yüklüyse)
-    clean_text = ""
     title = f"YouTube Video ({video_id})"
+    author = "Bilinmeyen Kanal"
+    author_url = ""
+    transcript_text = ""
 
+    # 1. YouTube oEmbed API ile resmi ve temiz meta veri alımı
     try:
-        # yt-dlp meta veri kontrolü
-        meta_res = subprocess.run(
-            ["yt-dlp", "--skip-download", "--print", "%(title)s", "--print", "%(description)s", url],
-            capture_output=True, text=True, timeout=15
-        )
-        if meta_res.returncode == 0:
-            lines = meta_res.stdout.splitlines()
-            if lines:
-                title = lines[0]
-                clean_text = f"**Açıklama:**\n" + "\n".join(lines[1:])
+        oembed_url = f"https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v={video_id}&format=json"
+        req = urllib.request.Request(oembed_url, headers={"User-Agent": "Mozilla/5.0 SynapseAG/3.0"})
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            title = data.get("title", title)
+            author = data.get("author_name", "Bilinmeyen Kanal")
+            author_url = data.get("author_url", "")
     except Exception:
         pass
 
-    # yt-dlp yoksa standart web scraping fallback
-    if not clean_text:
+    # 2. youtube_transcript_api ile doğrudan altyazı / transkript çekimi
+    try:
+        from youtube_transcript_api import YouTubeTranscriptApi
+        api = YouTubeTranscriptApi()
+        transcripts = api.list(video_id)
+        target_t = None
+        # Önce Türkçe transkript ara
+        for t in transcripts:
+            if t.language_code.startswith("tr"):
+                target_t = t
+                break
+        # Bulunamazsa mevcut herhangi bir transkripti al
+        if not target_t:
+            for t in transcripts:
+                target_t = t
+                break
+        
+        if target_t:
+            items = target_t.fetch()
+            transcript_text = " ".join([item.text for item in items if item.text])
+    except Exception:
+        pass
+
+    # 3. Transkript yoksa yt-dlp dene (eğer sistemde yüklüyse)
+    if not transcript_text:
+        try:
+            meta_res = subprocess.run(
+                ["yt-dlp", "--skip-download", "--print", "%(title)s", "--print", "%(description)s", url],
+                capture_output=True, text=True, timeout=15
+            )
+            if meta_res.returncode == 0:
+                lines = meta_res.stdout.splitlines()
+                if lines:
+                    title = lines[0]
+                    transcript_text = "\n".join(lines[1:])
+        except Exception:
+            pass
+
+    # 4. Fallback web scraping
+    if not transcript_text:
         try:
             web_title, web_text = fetch_url_content(url)
-            title = web_title
-            clean_text = web_text[:2000]
-        except Exception as e:
-            clean_text = f"YouTube URL yakalandı: {url} (Transkript için yt-dlp önerilir)"
+            if web_title and web_title.strip() not in ["- YouTube", "YouTube"]:
+                title = web_title
+            transcript_text = web_text[:2000]
+        except Exception:
+            pass
+
+    # Metni biçimlendir
+    header_block = (
+        f"- **Kanal:** [{author}]({author_url})\n"
+        f"- **Video ID:** `{video_id}`\n"
+        f"- **Video URL:** {url}\n\n"
+        f"![Kapak Resmi](https://i.ytimg.com/vi/{video_id}/hqdefault.jpg)\n\n"
+    )
+
+    if transcript_text:
+        word_count = len(transcript_text.split())
+        clean_text = header_block + f"### 🎙️ Video Transkripti & Konuşma Metni ({word_count:,} Kelime)\n\n{transcript_text}"
+    else:
+        clean_text = header_block + "\n*(Bu video için altyazı veya konuşma metni bulunamadı.)*"
 
     return title, clean_text
 
