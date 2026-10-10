@@ -1,14 +1,18 @@
 ---
 name: beyin-doktor
 description: >-
-  Antigravity İkinci Beyin sisteminin sağlık durumunu denetler, eksik kanca veya dosyaları tespit eder ve tek tabloda tanı sunar. "beyin doktor", "hafıza kontrol", "doktor" denildiğinde kullanın.
+  Antigravity İkinci Beyin sisteminin sağlık durumunu denetler; eksik kancaları, gelen kutusu (Inbox) yaşlanmasını, Git çakışma işaretlerini ve supersedes durumlarını tespit eder. "beyin doktor", "hafıza kontrol", "doktor", "inbox raporu" denildiğinde kullanın.
 ---
 
-# Beyin Doktoru Yeteneği
+# Beyin Doktoru Pro Yeteneği
 
-Bu yetenek, Antigravity İkinci Beyin kurulumunun doğruluğunu ve kancaların çalışma durumunu test eder.
+Antigravity İkinci Beyin kurulumunun doğruluğunu, kancaların çalışma durumunu, inbox sağlığını ve hafıza kirliliklerini test eder.
 
 ## Adımlar:
-1. `python .agents/scripts/doctor.py` komutunu çalıştırın.
-2. Çıktıdaki tanı tablosunu inceleyin.
-3. Eksik veya kırmızı bir durum varsa kullanıcıya çözüm önerin.
+1. Genel kontrol için:
+   `python .agents/scripts/doctor.py`
+2. Detaylı gelen kutusu (Inbox) yaşlanma analizi için:
+   `python .agents/scripts/doctor.py --inbox-report`
+3. Tüm gelişmiş denetimler için:
+   `python .agents/scripts/doctor.py --full`
+4. Çıktıdaki tanı tablosunu kullanıcıya özetleyin ve varsa aksiyon önerin.

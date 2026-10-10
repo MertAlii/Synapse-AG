@@ -30,11 +30,14 @@
 
 **Synapse-AG**, **Google Antigravity 2.0** ve **Obsidian** üzerinde çalışan, oturumlar arası hafızası **kendi kendine yazılan ve asla kaybolmayan** yerel bir "İkinci Beyin" ekosistemidir.
 
-* **🧠 Oturumlar Arası Kalıcı Hafıza:** Yaşam döngüsü kancaları (`PreInvocation`, `Stop`) oturum açılışında önceki hafızayı otomatik bağlama aktarır, oturum bittiğinde ise konuşmayı `daily/YYYY-MM-DD.md` içine işler.
+* **🧠 Oturumlar Arası Kalıcı Hafıza & Context Shield:** Yaşam döngüsü kancaları (`PreInvocation`, `Stop`) oturum açılışında önceki hafızayı 9.500 karakterlik bütçe kalkanı ve akıllı kural budamasıyla güvenle aktarır, oturum bittiğinde konuşmayı `daily/YYYY-MM-DD.md` içine işler.
+* **📥 Akıllı Yakalama Motoru (Yakala):** YouTube transkriptleri, web makaleleri, yerel dosyalar veya panodaki metinleri tek tıkla `📥 000-Inbox/Yakala/` içine aktarır (`.ham/` izolasyonu ile arama kirliliğini önler). Windows Gezgini sağ tık `Gönder > Beyne At` entegrasyonuna sahiptir.
+* **🔍 Okapi BM25 & Türkçe Morfolojik Arama:** Türkçe ünsüz yumuşaması (kitap/kitabı, örnek/örneği) normalizasyonu ve Obsidian `[[Wikilinks]]` ağırlıklı bilgi yoğunluğu sıralaması.
+* **🩺 Doctor 2.0 Sağlık Denetimi:** Gelen kutusu (Inbox) yaşlanma raporu, Git çakışma (conflict marker) denetimi ve `supersedes`/emekli not süzgeci ile hafıza hijyeni.
 * **📚 Otonom Bilgi Derleyicisi:** Günlük ham notlar, Andrej Karpathy'nin LLM Bilgi Tabanı desenine göre `knowledge/concepts/` ve `knowledge/connections/` altında kalıcı makalelere dönüştürülür.
 * **💎 Doğrudan Obsidian Entegrasyonu:** Renk kodlu kategorilere sahip Graph View (`Ctrl+G`), Günlük Notlar, Şablonlar, Canvas ve çift yönlü `[[Wikilinks]]` bağlantıları hazır gelir.
 * **🛡️ Sıfır Veri Kayıplı Güncelleme:** Semantik sürüm takibi (`.beyin-version`) ve `scripts/upgrade.ps1` betiği ile notlarınıza ve hafızanıza dokunmadan sistem dosyalarını tek komutla güncelleyebilirsiniz.
-* **🔒 Eşzamanlılık & Güvenlik:** `portalocker` dosya kilitleme mekanizması sayesinde çoklu alt ajanlar ve arka plan cron görevleri güvenle çalışır.
+* **🔒 Eşzamanlılık & Sıkıştırma Kilidi:** `.beyin-compact.lock` ve `portalocker` mekanizması sayesinde çoklu alt ajanlar ve arka plan cron görevleri hafızayı bozmadan güvenle çalışır, geçmişi aylık arşivler.
 
 ---
 

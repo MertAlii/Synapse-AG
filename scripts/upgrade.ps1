@@ -28,7 +28,12 @@ $SYSTEM_FILES = @(
     ".agents/scripts/flush_daily.py",
     ".agents/scripts/inject_context.py",
     ".agents/scripts/compile_knowledge.py",
+    ".agents/scripts/companion_compact.py",
     ".agents/scripts/doctor.py",
+    ".agents/scripts/yakala.py",
+    ".agents/scripts/search_bm25.py",
+    ".agents/skills/yakala/SKILL.md",
+    ".agents/skills/beyin-doktor/SKILL.md",
     ".agents/hooks.json",
     ".agents/rules/memory-protocol.md",
     ".obsidian/app.json",
@@ -40,7 +45,9 @@ $SYSTEM_FILES = @(
     "beyin-antigravity.md",
     "GEMINI.md",
     ".beyin-version",
-    "requirements.txt"
+    "requirements.txt",
+    "docs/YAKALA.md",
+    "scripts/kur_yakala_windows.ps1"
 )
 
 function Get-SynapseRoot {

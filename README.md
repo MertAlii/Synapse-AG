@@ -30,11 +30,14 @@
 
 **Synapse-AG** is an autonomous AI second brain engine built natively for **Google Antigravity 2.0** and **Obsidian**. It solves the AI amnesia problem by automatically capturing sessions, adapting to learned rules, and compiling daily logs into evergreen knowledge articles without manual overhead.
 
-* **🧠 Persistent Memory:** Lifecycle hooks (`PreInvocation`, `Stop`) automatically inject past session context and save structured logs into `daily/YYYY-MM-DD.md`.
+* **🧠 Persistent Memory & Context Shield:** Lifecycle hooks (`PreInvocation`, `Stop`) safely inject past session context with a 9,500-character budget shield and smart rule pruning, and automatically save structured logs into `daily/YYYY-MM-DD.md`.
+* **📥 Smart Capture Engine (Yakala):** Capture YouTube transcripts, web articles, local files, or clipboard text into `📥 000-Inbox/Yakala/` in one click (`.ham/` isolation keeps search clean). Features Windows Explorer right-click `Send to > Beyne At` integration.
+* **🔍 Okapi BM25 & Turkish Morphological Search:** Turkish consonant softening normalization (kitap/kitabı, örnek/örneği) and Obsidian `[[Wikilinks]]`-weighted information density ranking.
+* **🩺 Doctor 2.0 Diagnostics & Memory Hygiene:** Inbox aging reports, Git conflict marker detection, and `supersedes`/retired note filtering for a clean memory vault.
 * **📚 Autonomous Knowledge Compilation:** Background compilers synthesize raw daily logs into connected knowledge concepts (`knowledge/concepts/`, `knowledge/connections/`) following Andrej Karpathy's LLM Knowledge Base pattern.
 * **💎 Obsidian Native & Pre-Configured:** Ready-to-use `.obsidian/` configuration with color-coded Graph View (`Ctrl+G`), Daily Notes, Templates, Canvas, and bi-directional `[[Wikilinks]]`.
 * **🛡️ Zero Data Loss Upgrades:** Built-in semantic version tracking (`.beyin-version`) and `scripts/upgrade.ps1` allows upgrading core scripts while preserving 100% of your notes and data.
-* **🔒 Concurrency & Safety:** Cross-platform file locking (`portalocker`) guarantees safe concurrent operations between subagents and background tasks.
+* **🔒 Concurrency & Compaction Lock:** `.beyin-compact.lock` and `portalocker` guarantee safe concurrent operations between subagents and background tasks, with automated monthly archiving.
 
 ---
 

@@ -41,4 +41,33 @@ tmp/
 capture_assets.py
 .agents/scripts/migrate_brain.py
 Beyin-Yedekle.bat
+parse_gh.py
+scratch_github_data.json
+
+# Concurrency Locks & Private Ham Cache
+**/.beyin-compact.lock
+**/.ham/
+
+# User Private Data & Notes (Kullanici Ozel Verileri - Asla disariya gitmez, yerelde korunur)
+daily/*.md
+!daily/.gitkeep
+000-Inbox/*
+!000-Inbox/Dump/.gitkeep
+!000-Inbox/Yakala/.gitkeep
+300-Projects/*.md
+!300-Projects/.gitkeep
+500-Knowledge/*.md
+!500-Knowledge/.gitkeep
+!500-Knowledge/Lessons.md
+knowledge/concepts/*.md
+!knowledge/concepts/.gitkeep
+knowledge/connections/*.md
+!knowledge/connections/.gitkeep
+
+# Obsidian Emoji Vault Klasorleri
+🏰*
+📥*
+🔮*
+🎯*
+🧠*
 

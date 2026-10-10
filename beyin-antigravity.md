@@ -4,7 +4,7 @@
 > Bu dosya senin eksiksiz, kendi kendine yeten kurulum şartnamendir (build spec). Baştan sona oku ve faz faz icra et.
 >
 > **Kaynak:** Avenox (avenox.lol / github.com/avenoxai/avenoxbeyin) & Andrej Karpathy LLM Knowledge Base mimarisi.
-> **Sürüm:** 2.2.0 (Antigravity 2.0 & Obsidian Native)
+> **Sürüm:** 3.0.0 (Antigravity 2.0 & Obsidian Native — Yakala, BM25 Türkçe Arama, Doctor Pro 2.0, Context Shield)
 
 ---
 
@@ -77,17 +77,19 @@ Seçilen hedef dizinde şu klasör hiyerarşisini oluştur:
 
 ```
 C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/
-├── 000-Inbox/Dump/          # Hızlı yakalama, ham fikirler
-├── 100-Command-Center/      # Dashboard ve aktif hedefler
-├── 300-Projects/            # Aktif projeler
-├── 500-Knowledge/           # Kullanıcının kendi yazdığı kalıcı notlar
-├── 850-Companion/           # Ortağın kalıcı hafızası
+├── 000-Inbox/
+│   ├── Dump/                   # Hızlı yakalama, ham fikirler
+│   └── Yakala/                 # Akıllı kaynak yakalama (.ham/ korumalı)
+├── 100-Command-Center/         # Dashboard ve aktif hedefler
+├── 300-Projects/               # Aktif projeler
+├── 500-Knowledge/              # İnsan eliyle oluşturulmuş bilgi ve Lessons.md
+├── 850-Companion/              # AI düşünme ortağının kalıcı hafızası
 ├── daily/                      # [Makine Yazar] Günlük oturum logları
 ├── knowledge/                  # [Makine Yazar] Derlenmiş bilgi tabanı
 │   ├── concepts/               # Kavram makaleleri
 │   └── connections/            # Bağlantı ve sentez makaleleri
-├── 900-Archive/             # Arşiv
-├── Templates/               # Not ve proje şablonları
+├── 900-Archive/                # Arşiv
+├── Templates/                  # Not ve proje şablonları
 ├── .obsidian/                  # Obsidian yerel ayarları ve Graph View
 │   ├── app.json
 │   ├── appearance.json
@@ -95,19 +97,28 @@ C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/
 │   ├── daily-notes.json
 │   ├── graph.json              # Renk kodlu kategorik ilişki grafiği
 │   └── templates.json
-├── scripts/                    # Güncelleme ve yönetim araçları
-├── tests/                      # Birim testleri
-├── .beyin-version              # Semantik sürüm dosyası
+├── scripts/                    # Güncelleme, kurulum ve yönetim araçları
+│   ├── upgrade.ps1             # Otomatik sürüm güncelleme
+│   └── kur_yakala_windows.ps1  # Windows Gezgini 'Beyne At' entegrasyonu
+├── tests/                      # Birim testleri (pytest)
+├── docs/                       # Sistem ve özellik dökümantasyonu
+│   └── YAKALA.md               # Yakala motoru rehberi
+├── .beyin-version              # Semantik sürüm dosyası (3.0.0)
 └── .agents/                    # Antigravity kontrol düzlemi
     ├── hooks.json
     ├── rules/
     ├── skills/
+    │   ├── beyin-doktor/       # Sistem sağlık teşhisi
+    │   └── yakala/             # Akıllı kaynak yakalama
     └── scripts/
         ├── _resolve_root.py    # Merkezi dizin çözücü
         ├── flush_daily.py      # Oturum loglayıcı
-        ├── inject_context.py   # Bağlam enjektörü
-        ├── compile_knowledge.py # Bilgi derleyici
-        └── doctor.py           # Sistem tanı aracı
+        ├── inject_context.py   # Context Shield (9.500 karakter bütçe kalkanı)
+        ├── companion_compact.py# Hafıza sıkıştırıcı & aylık arşiv kilidi
+        ├── search_bm25.py      # Okapi BM25 & Türkçe ünsüz yumuşaması arama
+        ├── yakala.py           # Akıllı içerik yakalama motoru
+        ├── compile_knowledge.py# Bilgi derleyici
+        └── doctor.py           # Doctor Pro 2.0 sistem tanı ve hijyen aracı
 ```
 
 ---
@@ -132,6 +143,7 @@ Tüm projelerden bağımsız olarak merkezi ve kalıcı İkinci Beyin deposu: `C
 | Görev | Konum |
 | :--- | :--- |
 | Hızlı Not / Ham Fikir | `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/000-Inbox/Dump/` |
+| Akıllı Yakalama (Web, Video, Pano, Dosya) | `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/000-Inbox/Yakala/` (`.ham/` korumalı) |
 | Proje Çalışması & Katalog | `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/300-Projects/` |
 | İnsan Eliyle Kalıcı Bilgi | `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/500-Knowledge/` |
 | Hata Laboratuvarı & Dersler | `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/500-Knowledge/Lessons.md` |
@@ -142,11 +154,13 @@ Tüm projelerden bağımsız olarak merkezi ve kalıcı İkinci Beyin deposu: `C
 | Obsidian Not Grafiği & Görünüm | `Obsidian'da Aç (Ctrl+G / Graph View)` |
 
 ## Hafıza & Öğrenme Protokolü
-1. **Oturum Başlangıcı:** `PreInvocation` kancası son oturumu ve kuralları otomatik enjekte eder.
-2. **Kural Öğrenme:** Kullanıcı seni düzelttiğinde bunu `850-Companion/Kurallar.md` dosyasına işle.
-3. **Devamlılık:** Önemli bir karar alındığında `Threads.md` ve `Last-Session.md` dosyalarını güncelle.
-4. **Hata Analizi:** Bir kriz olduğunda `post-mortem` yeteneğini kullanarak `500-Knowledge/Lessons.md` içine ders kaydet.
-5. **GitHub Onayı:** Değişiklikleri GitHub'a kullanıcının açık onayı olmadan asla gönderme.
+1. **Oturum Başlangıcı & Context Shield:** `PreInvocation` kancası 9.500 karakterlik bütçe kalkanı ve akıllı kural budamasıyla hafızayı bağlama aktarır. Emekli/superseded notlar bağlama alınmaz.
+2. **Akıllı Arama (BM25):** Not sorgularında Okapi BM25 ve Türkçe ünsüz yumuşaması normalizasyonu (`.agents/scripts/search_bm25.py`) kullanılır.
+3. **Akıllı Kaynak Yakalama:** Kullanıcı link veya dosya verdiğinde `yakala` motoru ile `.ham/` altına izole edilerek kart açılır.
+4. **Kural Öğrenme:** Kullanıcı seni düzelttiğinde bunu `850-Companion/Kurallar.md` dosyasına işle.
+5. **Devamlılık:** Önemli bir karar alındığında `Threads.md` ve `Last-Session.md` dosyalarını güncelle.
+6. **Hata Analizi:** Bir kriz olduğunda `post-mortem` yeteneğini kullanarak `500-Knowledge/Lessons.md` içine ders kaydet.
+7. **GitHub Onayı:** Değişiklikleri GitHub'a kullanıcının açık onayı olmadan asla gönderme.
 ```
 
 ### `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/AGENTS.md`
