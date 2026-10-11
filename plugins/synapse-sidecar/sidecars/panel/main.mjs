@@ -150,8 +150,11 @@ app.api('/styles.css', () =>
   'GET'
 );
 
-app.api('/api/status', (data) => getVaultStatus(data));
-app.api('/api/rules', (data) => getRules(data));
-app.api('/api/graph', (data) => getGraphData(data));
+app.api('/api/status', (data) => getVaultStatus(data), 'POST');
+app.api('/api/status', (data) => getVaultStatus(data), 'GET');
+app.api('/api/rules', (data) => getRules(data), 'POST');
+app.api('/api/rules', (data) => getRules(data), 'GET');
+app.api('/api/graph', (data) => getGraphData(data), 'POST');
+app.api('/api/graph', (data) => getGraphData(data), 'GET');
 
 app.run();
