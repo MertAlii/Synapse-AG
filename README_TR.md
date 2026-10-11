@@ -38,7 +38,6 @@
 * **🩺 Doctor 2.0 Sağlık Denetimi:** Gelen kutusu (Inbox) yaşlanma raporu, Git çakışma (conflict marker) denetimi ve `supersedes`/emekli not süzgeci ile hafıza hijyeni.
 * **📚 Otonom Bilgi Derleyicisi:** Günlük ham notlar, Andrej Karpathy'nin LLM Bilgi Tabanı desenine göre `knowledge/concepts/` ve `knowledge/connections/` altında kalıcı makalelere dönüştürülür.
 * **💎 Doğrudan Obsidian Entegrasyonu:** Renk kodlu kategorilere sahip Graph View (`Ctrl+G`), Günlük Notlar, Şablonlar, Canvas ve çift yönlü `[[Wikilinks]]` bağlantıları hazır gelir.
-* **🖥️ Antigravity Canlı Yan Panel (Sidecar Webview):** Antigravity sağ paneline yerleşen interaktif panel: Context Shield (9.500 karakter) sayacı, aktif kurallar ve fareyle döndürülebilir 3D bilgi grafiği.
 * **⚡ Synapse TUI (Terminal Kumanda Merkezi):** ASCII art başlığıyla fütüristik global terminal dashboard (`synapse tui`); doktor telemetrisi, hafıza retansiyonu ve yakala kuyruğunu tek ekranda sunar.
 * **🧠 Çift Katmanlı Bilişsel Hafıza (Hipokampüs ⇄ Neokorteks):** Ebbinghaus unutma eğrisi ($R = e^{-\Delta t / S}$) ve aralıklı pekiştirme (Spaced Reinforcement) ile çalışan bilişsel ağırlık motoru.
 * **🔄 Nedensellik Zinciri & Karar Ağacı RAG:** Geçmiş post-mortem'lerden "Sorun -> Başarısız Denemeler -> Çalışan Çözüm" yörüngesini çeker, generic doküman yerine bizzat çalışan kodu sunar.

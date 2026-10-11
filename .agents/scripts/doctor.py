@@ -152,7 +152,6 @@ def main():
         ("Bilişsel Hafıza (cognitive_memory.py)", root / ".agents" / "scripts" / "cognitive_memory.py"),
         ("Şeytanın Avukatı (adversarial_rag.py)", root / ".agents" / "scripts" / "adversarial_rag.py"),
         ("Synapse TUI (tui.py)", root / ".agents" / "scripts" / "tui.py"),
-        ("Yan Panel Uzantısı (synapse-sidecar)", root / "plugins" / "synapse-sidecar" / "plugin.json"),
         ("Obsidian Yapılandırması (.obsidian/)", root / ".obsidian" / "graph.json"),
         ("Şablon Kasası (Templates/)", root / "Templates"),
     ]

@@ -3,7 +3,7 @@
 ## Oturum: 2026-10-11 (Synapse-AG 3.0 — Bilişsel Hafıza, Causal/Adversarial RAG, TUI & Yan Panel)
 - **Kapsam:** İkinci Beyin Bilişsel Mimarisi, Canlı UI Uzantısı ve Şeytanın Avukatı RAG Entegrasyonu
 - **Tamamlanan Maddeler:**
-  1. **Antigravity Yan Panel Canlı UI Uzantısı (`synapse-sidecar`):** Antigravity 2.0 sağ panelinde çalışan Node.js Sidecar ve Vanilla JS/Canvas tabanlı eklenti. Canlı bellek durumu, Context Shield göstergesi (9.500 karakter bütçesi), aktif kurallar ve etkileşimli 3D dönen bilgi grafiği oluşturuldu. `C:\Users\merta\.gemini\config\plugins\synapse-sidecar` konumuna kuruldu.
+  1. **Obsidian Native Graph & Synapse TUI Odaklı Mimari:** Ağır ve gereksiz webview yan paneli yerine doğrudan Obsidian'ın yerel 3D Graph View (`Ctrl+G`) ve terminal kontrol merkezi (`synapse tui`) tek merkez olarak benimsendi.
   2. **Synapse TUI (Terminal Kumanda Merkezi):** Terminalden tek komutla (`scripts/synapse.bat tui` veya `synapse tui`) çalışan, Rich kütüphanesiyle hazırlanan 4 panelli (Doktor Raporu, Bilişsel Hafıza, Yakala Kuyruğu, Causal Trajectory) fütüristik TUI dashboard geliştirildi (`.agents/scripts/tui.py`).
   3. **Nedensellik Zinciri & Karar Ağacı RAG (`causal_rag.py`):** `Lessons.md`, ADR'ler ve oturum kayıtlarından "Neden -> Karşılaşılan Sorun -> Başarısız Denemeler -> Çalışan Çözüm" zincirini çıkaran nedensel hafıza motoru entegre edildi.
   4. **Çift Katmanlı Bilişsel Hafıza (`cognitive_memory.py`):** Hipokampüs (`daily/`, `000-Inbox/`) ve Neokorteks (`500-Knowledge/`, `Kurallar.md`) katmanları, Ebbinghaus unutma eğrisi ($R = e^{-\Delta t / S}$) ve aralıklı pekiştirme (Spaced Reinforcement) ile çalışan bilişsel ağırlık motoru tamamlandı.

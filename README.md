@@ -38,7 +38,6 @@
 * **🩺 Doctor 2.0 Diagnostics & Memory Hygiene:** Inbox aging reports, Git conflict marker detection, and `supersedes`/retired note filtering for a clean memory vault.
 * **📚 Autonomous Knowledge Compilation:** Background compilers synthesize raw daily logs into connected knowledge concepts (`knowledge/concepts/`, `knowledge/connections/`) following Andrej Karpathy's LLM Knowledge Base pattern.
 * **💎 Obsidian Native & Pre-Configured:** Ready-to-use `.obsidian/` configuration with color-coded Graph View (`Ctrl+G`), Daily Notes, Templates, Canvas, and bi-directional `[[Wikilinks]]`.
-* **🖥️ Antigravity Sidecar Webview (Live Aux Panel):** Interactive sidecar running natively in Antigravity's right panel, displaying live Context Shield gauge, rules, and real-time rotating 3D knowledge graph.
 * **⚡ Synapse TUI (Terminal Command Center):** Global futuristic terminal dashboard (`synapse tui`) with ASCII art banner, real-time health diagnostics, cognitive memory metrics, and yakala queue telemetry.
 * **🧠 Dual-Layer Cognitive Memory (Hippocampus ⇄ Neocortex):** Ebbinghaus forgetting curve retention decay ($R = e^{-\Delta t / S}$) with spaced reinforcement, distinguishing short-term logs from evergreen rules.
 * **🔄 Causal Trajectory & Decision Tree RAG:** Extracts "Problem -> Failures -> Working Solution" from past post-mortems so AI retrieves tested working fixes rather than generic docs.
