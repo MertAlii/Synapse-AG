@@ -65,6 +65,33 @@ python .agents/scripts/doctor.py
 
 ---
 
+## ⚡ Synapse TUI (Terminal Command Center)
+
+Launch the futuristic 4-panel terminal control center from **any directory** on your machine:
+
+<p align="center">
+  <img src="assets/images/synapse-tui.png" alt="Synapse TUI Terminal Dashboard" width="95%" style="border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.85); border: 1px solid rgba(255,255,255,0.1);" />
+</p>
+
+```bash
+# Launch interactive 4-panel dashboard
+synapse tui
+
+# Health diagnostics & memory integrity check
+synapse doctor
+
+# Smart capture pipeline & queue status
+synapse yakala durum
+
+# BM25 Turkish morphological memory search
+synapse search "query"
+
+# Devil's Advocate contrastive decision evaluation
+synapse devil "architectural decision"
+```
+
+---
+
 ## 🔄 Upgrading Synapse-AG
 
 When a new version is released on GitHub, update your system without losing any personal notes or memories:

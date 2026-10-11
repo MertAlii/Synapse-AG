@@ -65,6 +65,33 @@ python .agents/scripts/doctor.py
 
 ---
 
+## ⚡ Synapse TUI (Terminal Kumanda Merkezi)
+
+Bilgisayarınızın **herhangi bir dizininden** tek komutla fütüristik terminal kumanda merkezini başlatın:
+
+<p align="center">
+  <img src="assets/images/synapse-tui.png" alt="Synapse TUI Terminal Kontrol Paneli" width="95%" style="border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.85); border: 1px solid rgba(255,255,255,0.1);" />
+</p>
+
+```bash
+# 4 Panelli interaktif kontrol panelini aç
+synapse tui
+
+# Sistem sağlığı ve hafıza denetimi
+synapse doctor
+
+# Yakalama havuzu ve bekleyen kartlar
+synapse yakala durum
+
+# BM25 Türkçe akıllı hafıza araması
+synapse search "sorgu"
+
+# Şeytanın Avukatı karşıt karar sorgulaması
+synapse devil "mimari karar"
+```
+
+---
+
 ## 🔄 Synapse-AG Güncelleme
 
 Yeni bir sürüm yayınlandığında kişisel notlarınızı veya hafızanızı kaybetmeden güncelleyin:
