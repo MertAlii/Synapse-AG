@@ -78,7 +78,7 @@ def render_rich_dashboard(root):
     shield_ok = (root / ".agents" / "scripts" / "inject_context.py").exists()
     doc_table.add_row("Context Shield (9.5k)", "[green][OK] Hazır[/green]" if shield_ok else "[red][X] Eksik[/red]")
 
-    git_stat, _ = run_git_check()
+    git_stat, _ = run_git_check(root)
     doc_table.add_row("Git Sürüm Kontrolü", f"[green]{git_stat}[/green]")
 
     conflicts = check_git_conflict_markers(root)

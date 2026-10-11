@@ -29,9 +29,9 @@ def check_file(path, label):
         return "[OK] Hazır", True
     return "[X] Eksik", False
 
-def run_git_check():
+def run_git_check(root=None):
     try:
-        res = subprocess.run(["git", "status", "--short"], capture_output=True, text=True)
+        res = subprocess.run(["git", "status", "--short"], capture_output=True, text=True, cwd=str(root) if root else None)
         if res.returncode == 0:
             return "[OK] Git Aktif", True
         return "[!] Git Başlatılmamış", False
@@ -165,7 +165,7 @@ def main():
         if not ok:
             all_ok = False
 
-    git_status, git_ok = run_git_check()
+    git_status, git_ok = run_git_check(root)
     if not git_ok:
         all_ok = False
 
