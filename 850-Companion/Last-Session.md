@@ -1,5 +1,17 @@
 # Son Oturum Özeti (Last Session)
 
+## Oturum: 2026-10-11 (Synapse-AG 3.0 — Bilişsel Hafıza, Causal/Adversarial RAG, TUI & Yan Panel)
+- **Kapsam:** İkinci Beyin Bilişsel Mimarisi, Canlı UI Uzantısı ve Şeytanın Avukatı RAG Entegrasyonu
+- **Tamamlanan Maddeler:**
+  1. **Antigravity Yan Panel Canlı UI Uzantısı (`synapse-sidecar`):** Antigravity 2.0 sağ panelinde çalışan Node.js Sidecar ve Vanilla JS/Canvas tabanlı eklenti. Canlı bellek durumu, Context Shield göstergesi (9.500 karakter bütçesi), aktif kurallar ve etkileşimli 3D dönen bilgi grafiği oluşturuldu. `C:\Users\merta\.gemini\config\plugins\synapse-sidecar` konumuna kuruldu.
+  2. **Synapse TUI (Terminal Kumanda Merkezi):** Terminalden tek komutla (`scripts/synapse.bat tui` veya `synapse tui`) çalışan, Rich kütüphanesiyle hazırlanan 4 panelli (Doktor Raporu, Bilişsel Hafıza, Yakala Kuyruğu, Causal Trajectory) fütüristik TUI dashboard geliştirildi (`.agents/scripts/tui.py`).
+  3. **Nedensellik Zinciri & Karar Ağacı RAG (`causal_rag.py`):** `Lessons.md`, ADR'ler ve oturum kayıtlarından "Neden -> Karşılaşılan Sorun -> Başarısız Denemeler -> Çalışan Çözüm" zincirini çıkaran nedensel hafıza motoru entegre edildi.
+  4. **Çift Katmanlı Bilişsel Hafıza (`cognitive_memory.py`):** Hipokampüs (`daily/`, `000-Inbox/`) ve Neokorteks (`500-Knowledge/`, `Kurallar.md`) katmanları, Ebbinghaus unutma eğrisi ($R = e^{-\Delta t / S}$) ve aralıklı pekiştirme (Spaced Reinforcement) ile çalışan bilişsel ağırlık motoru tamamlandı.
+  5. **Şeytanın Avukatı RAG (`adversarial_rag.py`):** Alınan mimari kararları körü körüne onaylamak yerine kasanın geçmiş hata/post-mortem kayıtlarını ve guardrail'larını karşıt argüman olarak sunan contrastive RAG mekanizması geliştirildi.
+  6. **Beyin Doktoru Pro 2.0 (`doctor.py`):** 17 kontrol noktasının tamamı yeşil [OK].
+  7. **Arka Plan Otomasyonları (Cron):** Her gece 23:00'te günlük logları derleme ve Ebbinghaus taraması (`task-882`), her Pazartesi 09:00'da haftalık sağlık kontrolü (`task-884`) Antigravity zamanlayıcısına işlendi.
+  8. **Test Kapsamı:** Tüm modüller için 37 birim testinin tamamı başarıyla geçti (%100 yeşil).
+
 ## Oturum: 2026-10-02 (React Bits Entegrasyonu & Mert Ali Alkan Demo Portföy Sitesi)
 - **Konu:** React Bits Kütüphanesi (`scratch\react-bits`) ve Demo Portföy Projesi (`scratch\mert-portfolio`)
 - **Tamamlanan Maddeler:**
