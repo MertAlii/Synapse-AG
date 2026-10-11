@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "0.1.0",
+  "name": "Beyne at",
+  "behavior": "create",
+  "noteNameFormat": "{{date|date:\"YYYY-MM-DD-HHmm\"}}-{{title|safe_name|lower|slice:0,48}}",
+  "path": "000-Inbox/Yakala",
+  "noteContentFormat": "# {{title}}\n\n## Neden\n\n\n\n## Kaynak\n\n{{url}}\n\n## Secim\n\n{{selection}}\n\n## Icerik\n\n{{content}}\n",
+  "properties": [
+    {
+      "name": "tur",
+      "value": "yakala",
+      "type": "text"
+    },
+    {
+      "name": "durum",
+      "value": "bekliyor",
+      "type": "text"
+    },
+    {
+      "name": "kaynak_turu",
+      "value": "",
+      "type": "text"
+    },
+    {
+      "name": "baslik",
+      "value": "{{title}}",
+      "type": "text"
+    },
+    {
+      "name": "url",
+      "value": "{{url}}",
+      "type": "text"
+    },
+    {
+      "name": "yakalandi",
+      "value": "{{date|date:\"YYYY-MM-DDTHH:mm:ssZ\"}}",
+      "type": "text"
+    },
+    {
+      "name": "arac",
+      "value": "web-clipper",
+      "type": "text"
+    },
+    {
+      "name": "visibility",
+      "value": "internal",
+      "type": "text"
+    }
+  ],
+  "triggers": []
+}

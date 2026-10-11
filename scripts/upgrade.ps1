@@ -43,11 +43,14 @@ $SYSTEM_FILES = @(
     ".obsidian/templates.json",
     ".obsidian/appearance.json",
     "beyin-antigravity.md",
-    "GEMINI.md",
     ".beyin-version",
     "requirements.txt",
     "docs/YAKALA.md",
-    "scripts/kur_yakala_windows.ps1"
+    "scripts/kur_yakala_windows.ps1",
+    "scripts/kur_yakala_macos.sh",
+    "scripts/kur_yakala_linux.sh",
+    "scripts/upgrade.ps1",
+    "scripts/upgrade.sh"
 )
 
 function Get-SynapseRoot {

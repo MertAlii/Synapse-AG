@@ -38,7 +38,19 @@ $BatContent = $BatLines -join "`r`n"
 
 Write-Host "[OK] Windows 'Gonder > Beyne At' menu girdisi eklendi:" -ForegroundColor Green
 Write-Host "     -> $BatPath" -ForegroundColor DarkGray
+
+# Obsidian Web Clipper sablonunu olustur
+Write-Host "`n[*] Obsidian Web Clipper sablonu hazirlaniyor..." -ForegroundColor Cyan
+try {
+    & py -3 "$YakalaScript" sablon
+} catch {
+    & python "$YakalaScript" sablon
+}
+
 Write-Host "`nKullanim:" -ForegroundColor White
-Write-Host "  1. Masaustunde veya herhangi bir klasorde bir dosyaya sag tiklayin." -ForegroundColor Gray
-Write-Host "  2. 'Gonder (Send to)' -> 'Beyne At' secin." -ForegroundColor Gray
-Write-Host "  3. Dosya aninda 000-Inbox/Yakala/ icine guvenle kaydedilecektir.`n" -ForegroundColor Gray
+Write-Host "  1. Dosyalar icin: Masaustunde veya Explorer'da dosyaya sag tiklayin -> 'Gonder' -> 'Beyne At'." -ForegroundColor Gray
+Write-Host "  2. Tarayici icin: Obsidian Web Clipper (https://obsidian.md/clipper) eklentisini kurun." -ForegroundColor Gray
+Write-Host "     Eklenti Ayarlari > Sablonlar > Ice Aktar ile 000-Inbox/Yakala/beyne-at-web-clipper.json secin." -ForegroundColor Gray
+Write-Host "  3. Panodaki metin veya linki yakalamak icin:" -ForegroundColor Gray
+Write-Host "     py -3 `"$YakalaScript`" --clipboard`n" -ForegroundColor Gray
+

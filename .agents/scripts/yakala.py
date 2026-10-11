@@ -159,15 +159,112 @@ def fetch_youtube_content(url):
     return title, clean_text
 
 def get_clipboard_text():
-    """Windows/Linux/Mac panosundaki metni alır."""
-    # Windows PowerShell Get-Clipboard
+    """Windows/Linux/macOS panosundaki metni alır."""
+    platform = sys.platform
+
+    # 1. macOS (pbpaste)
+    if platform == "darwin":
+        try:
+            res = subprocess.run(["pbpaste"], capture_output=True, text=True, timeout=5)
+            if res.returncode == 0 and res.stdout.strip():
+                return res.stdout.strip()
+        except Exception:
+            pass
+
+    # 2. Linux (Wayland: wl-paste, X11: xclip / xsel)
+    elif platform.startswith("linux"):
+        if os.environ.get("WAYLAND_DISPLAY"):
+            try:
+                res = subprocess.run(["wl-paste"], capture_output=True, text=True, timeout=5)
+                if res.returncode == 0 and res.stdout.strip():
+                    return res.stdout.strip()
+            except Exception:
+                pass
+        try:
+            res = subprocess.run(["xclip", "-selection", "clipboard", "-o"], capture_output=True, text=True, timeout=5)
+            if res.returncode == 0 and res.stdout.strip():
+                return res.stdout.strip()
+        except Exception:
+            pass
+        try:
+            res = subprocess.run(["xsel", "-b", "-o"], capture_output=True, text=True, timeout=5)
+            if res.returncode == 0 and res.stdout.strip():
+                return res.stdout.strip()
+        except Exception:
+            pass
+
+    # 3. Windows (PowerShell Get-Clipboard)
+    elif platform == "win32":
+        try:
+            res = subprocess.run(["powershell", "-NoProfile", "-Command", "Get-Clipboard"], capture_output=True, text=True, timeout=5)
+            if res.returncode == 0 and res.stdout.strip():
+                return res.stdout.strip()
+        except Exception:
+            pass
+
+    # Fallback: Tkinter (Tüm işletim sistemleri)
     try:
-        res = subprocess.run(["powershell", "-NoProfile", "-Command", "Get-Clipboard"], capture_output=True, text=True, timeout=5)
-        if res.returncode == 0 and res.stdout.strip():
-            return res.stdout.strip()
+        import tkinter as tk
+        root = tk.Tk()
+        root.withdraw()
+        text = root.clipboard_get()
+        root.destroy()
+        if text and text.strip():
+            return text.strip()
     except Exception:
         pass
+
     return ""
+
+def clipper_template(inbox_path=None):
+    """
+    Obsidian Web Clipper (https://obsidian.md/clipper) import şablonu üretir.
+    Kullanıcı bu JSON dosyasını Clipper ayarlarına aktardığında tek tıkla web sayfalarını,
+    giriş gerektiren içerikleri ve seçimleri doğrudan kasaya kaydeder.
+    """
+    target_path = inbox_path or "000-Inbox/Yakala"
+    return {
+        "schemaVersion": "0.1.0",
+        "name": "Beyne at",
+        "behavior": "create",
+        "noteNameFormat": '{{date|date:"YYYY-MM-DD-HHmm"}}-{{title|safe_name|lower|slice:0,48}}',
+        "path": target_path,
+        "noteContentFormat": "# {{title}}\n\n## Neden\n\n\n\n## Kaynak\n\n{{url}}\n\n## Secim\n\n{{selection}}\n\n## Icerik\n\n{{content}}\n",
+        "properties": [
+            {"name": "tur", "value": "yakala", "type": "text"},
+            {"name": "durum", "value": "bekliyor", "type": "text"},
+            {"name": "kaynak_turu", "value": "", "type": "text"},
+            {"name": "baslik", "value": "{{title}}", "type": "text"},
+            {"name": "url", "value": "{{url}}", "type": "text"},
+            {"name": "yakalandi", "value": '{{date|date:"YYYY-MM-DDTHH:mm:ssZ"}}', "type": "text"},
+            {"name": "arac", "value": "web-clipper", "type": "text"},
+            {"name": "visibility", "value": "internal", "type": "text"}
+        ],
+        "triggers": []
+    }
+
+def generate_web_clipper_template(root=None):
+    """Web clipper JSON şablonunu inbox klasörüne yazar ve dosya yolunu döner."""
+    if root is None:
+        root = resolve_root()
+    root = Path(root)
+
+    inbox_yakala = root / "000-Inbox" / "Yakala"
+    if not inbox_yakala.parent.exists() and (root / "📥 000-Inbox").exists():
+        inbox_yakala = root / "📥 000-Inbox" / "Yakala"
+
+    inbox_yakala.mkdir(parents=True, exist_ok=True)
+    (inbox_yakala / ".ham").mkdir(parents=True, exist_ok=True)
+
+    try:
+        rel_inbox = str(inbox_yakala.relative_to(root)).replace("\\", "/")
+    except Exception:
+        rel_inbox = "000-Inbox/Yakala"
+
+    data = clipper_template(rel_inbox)
+    target_file = inbox_yakala / "beyne-at-web-clipper.json"
+    safe_write(target_file, json.dumps(data, ensure_ascii=False, indent=2) + "\n", mode="w")
+    return target_file
 
 def capture_source(source_input, note="", source_type=None, root=None):
     """Kaynağı tespit eder, .ham/ altına ham metni yazar ve kart oluşturur."""
@@ -176,9 +273,9 @@ def capture_source(source_input, note="", source_type=None, root=None):
     root = Path(root)
 
     inbox_yakala = root / "000-Inbox" / "Yakala"
-    if not inbox_yakala.parent.exists():
+    if not inbox_yakala.parent.exists() and (root / "📥 000-Inbox").exists():
         inbox_yakala = root / "📥 000-Inbox" / "Yakala"
-    
+
     ham_dir = inbox_yakala / ".ham"
     inbox_yakala.mkdir(parents=True, exist_ok=True)
     ham_dir.mkdir(parents=True, exist_ok=True)
@@ -261,52 +358,176 @@ tags:
 def process_captured_cards(root=None):
     """
     Bekleyen yakalama kartlarını işler:
-    Özet ve dersleri 500-Knowledge/ veya knowledge/concepts/ içine bağlar,
-    kartın durumunu 'status: islendi' olarak günceller.
+    - 'status: islenmeyi_bekliyor' (CLI/otomatik) veya
+    - 'durum: bekliyor' (Obsidian Web Clipper) kartlarını tespit eder.
+    Özet ve dersleri bağlar, ham metni .ham/ altına taşır (yoksa),
+    kart durumunu 'status: islendi' / 'durum: islendi' olarak günceller.
     """
     if root is None:
         root = resolve_root()
     root = Path(root)
 
     inbox_yakala = root / "000-Inbox" / "Yakala"
-    if not inbox_yakala.exists():
+    if not inbox_yakala.exists() and (root / "📥 000-Inbox" / "Yakala").exists():
         inbox_yakala = root / "📥 000-Inbox" / "Yakala"
 
     if not inbox_yakala.exists():
         return []
 
+    ham_dir = inbox_yakala / ".ham"
+    ham_dir.mkdir(parents=True, exist_ok=True)
+
     processed = []
-    cards = list(inbox_yakala.glob("*.md"))
+    cards = sorted(list(inbox_yakala.glob("*.md")))
 
     for card in cards:
         try:
             content = card.read_text(encoding="utf-8")
+            is_pending = False
+            updated = content
+
             if "status: islenmeyi_bekliyor" in content:
-                # Durumu güncelle
                 now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                updated_content = content.replace(
+                updated = updated.replace(
                     "status: islenmeyi_bekliyor",
                     f"status: islendi\nprocessed_at: {now_str}"
                 )
-                safe_write(card, updated_content, mode="w")
+                is_pending = True
+
+            if "durum: bekliyor" in content:
+                now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                updated = updated.replace(
+                    "durum: bekliyor",
+                    f"durum: islendi\nislenme_tarihi: {now_str}"
+                )
+                is_pending = True
+
+            if is_pending:
+                # Web Clipper ile gelmişse ve .ham dosyası yoksa ham yedeği oluştur
+                ham_file = ham_dir / f"{card.stem}.ham.txt"
+                if not ham_file.exists():
+                    safe_write(ham_file, f"Kaynak Kart: {card.name}\n\n{content}\n", mode="w")
+
+                safe_write(card, updated, mode="w")
                 processed.append(card.name)
         except Exception:
             pass
 
     return processed
 
+def get_yakala_status(root=None):
+    """Yakala kuyruğunun durumunu ve sistem araçlarını raporlar."""
+    if root is None:
+        root = resolve_root()
+    root = Path(root)
+
+    inbox_yakala = root / "000-Inbox" / "Yakala"
+    if not inbox_yakala.exists() and (root / "📥 000-Inbox" / "Yakala").exists():
+        inbox_yakala = root / "📥 000-Inbox" / "Yakala"
+
+    pending_count = 0
+    processed_count = 0
+    total_count = 0
+
+    if inbox_yakala.exists():
+        cards = list(inbox_yakala.glob("*.md"))
+        total_count = len(cards)
+        for c in cards:
+            try:
+                txt = c.read_text(encoding="utf-8", errors="ignore")
+                if "status: islenmeyi_bekliyor" in txt or "durum: bekliyor" in txt:
+                    pending_count += 1
+                elif "status: islendi" in txt or "durum: islendi" in txt:
+                    processed_count += 1
+            except Exception:
+                pass
+
+    tools = {}
+    try:
+        import youtube_transcript_api
+        tools["youtube_transcript_api"] = True
+    except ImportError:
+        tools["youtube_transcript_api"] = False
+
+    try:
+        res = subprocess.run(["yt-dlp", "--version"], capture_output=True, text=True, timeout=5)
+        tools["yt-dlp"] = (res.returncode == 0)
+    except Exception:
+        tools["yt-dlp"] = False
+
+    clipper_file = inbox_yakala / "beyne-at-web-clipper.json" if inbox_yakala.exists() else None
+    tools["web_clipper_sablonu"] = clipper_file.exists() if clipper_file else False
+
+    try:
+        rel_path = str(inbox_yakala.relative_to(root)).replace("\\", "/")
+    except Exception:
+        rel_path = "000-Inbox/Yakala"
+
+    return {
+        "inbox_path": rel_path,
+        "pending": pending_count,
+        "processed": processed_count,
+        "total": total_count,
+        "tools": tools
+    }
+
 def main():
     parser = argparse.ArgumentParser(description="Synapse-AG Akıllı Yakalama Motoru (Yakala)")
-    parser.add_argument("source", nargs="?", default=None, help="URL, dosya yolu veya yakalanacak metin")
+    parser.add_argument("source", nargs="?", default=None, help="URL, dosya yolu, metin veya alt komut (process/durum/sablon/kur)")
     parser.add_argument("--note", type=str, default="", help="Neden kaydedildiğine dair kısa not")
     parser.add_argument("--clipboard", action="store_true", help="Panodaki metni yakala")
-    parser.add_argument("action", nargs="?", default=None, help="'process' veya 'durum'")
+    parser.add_argument("--sablon", action="store_true", help="Obsidian Web Clipper şablonunu oluştur / göster")
+    parser.add_argument("action", nargs="?", default=None, help="'process', 'durum', 'sablon' veya 'kur'")
     args = parser.parse_args()
 
     root = resolve_root()
 
-    # Eğer 'process' komutu verildiyse
-    if args.source == "process" or args.action == "process":
+    # Alt komut kontrolü
+    cmd = args.source or args.action
+    if args.sablon or cmd in ["sablon", "clipper"]:
+        target_json = generate_web_clipper_template(root)
+        print("\n[OK] Obsidian Web Clipper Şablonu Hazırlandı:")
+        print(f" -> Dosya: {target_json}")
+        print("\nKurulum Adımları:")
+        print(" 1. https://obsidian.md/clipper adresinden tarayıcı eklentisini kurun.")
+        print(" 2. Eklenti Ayarları > Şablonlar > İçe Aktar (Import) ile yukarıdaki JSON dosyasını seçin.")
+        print(" 3. İstediğiniz web sayfasında 'Beyne at' şablonuna basıp kaydedin.\n")
+        return
+
+    if cmd in ["kur", "setup"]:
+        target_json = generate_web_clipper_template(root)
+        print("\n=======================================================")
+        print("       SYNAPSE-AG YAKALA ENTEGRASYON KURULUMU")
+        print("=======================================================")
+        print(f"[OK] Web Clipper şablonu yazıldı: {target_json.name}")
+        print("\nMasaüstü & Kısayol Entegrasyonu:")
+        if sys.platform == "win32":
+            print(" -> Windows: Sağ tık 'Gönder > Beyne At' için scripts\\kur_yakala_windows.ps1 çalıştırın.")
+        elif sys.platform == "darwin":
+            print(" -> macOS: scripts/kur_yakala_macos.sh çalıştırın (Control+Option+B kısayolu).")
+        else:
+            print(" -> Linux: scripts/kur_yakala_linux.sh çalıştırın (Ctrl+Alt+B kısayolu).")
+        print("=======================================================\n")
+        return
+
+    if cmd in ["durum", "status"]:
+        stat = get_yakala_status(root)
+        print("\n=======================================================")
+        print("             SYNAPSE-AG YAKALA DURUM RAPORU")
+        print("=======================================================")
+        print(f"Klasör        : {stat['inbox_path']}")
+        print(f"Bekleyen Kart : {stat['pending']}")
+        print(f"İşlenen Kart  : {stat['processed']}")
+        print(f"Toplam Kart   : {stat['total']}")
+        print("-------------------------------------------------------")
+        print("Araç Durumu:")
+        for tname, tok in stat["tools"].items():
+            tstatus = "[OK] Yüklü" if tok else "[-] Yok"
+            print(f"  * {tname:<25}: {tstatus}")
+        print("=======================================================\n")
+        return
+
+    if cmd in ["process", "isle"]:
         print("\n[Yakala] Bekleyen kartlar işleniyor...")
         done_list = process_captured_cards(root)
         if done_list:
@@ -328,8 +549,12 @@ def main():
 
     if not target_source:
         print("[!] Lütfen yakalanacak bir URL, dosya yolu veya metin belirtin.")
-        print("    Örnek: python .agents/scripts/yakala.py https://youtube.com/watch?v=... --note 'Ar-Ge için'")
-        print("    Örnek: python .agents/scripts/yakala.py process")
+        print("    Örnekler:")
+        print("      python .agents/scripts/yakala.py https://youtube.com/watch?v=... --note 'Ar-Ge'")
+        print("      python .agents/scripts/yakala.py --clipboard")
+        print("      python .agents/scripts/yakala.py sablon   (Web Clipper JSON şablonu)")
+        print("      python .agents/scripts/yakala.py durum    (Kuyruk ve araç durumu)")
+        print("      python .agents/scripts/yakala.py process  (Bekleyen kartları işle)")
         return
 
     print(f"\n[Yakala] Kaynak taranıyor: {target_source[:60]}...")

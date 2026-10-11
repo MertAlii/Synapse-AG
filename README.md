@@ -31,12 +31,14 @@
 **Synapse-AG** is an autonomous AI second brain engine built natively for **Google Antigravity 2.0** and **Obsidian**. It solves the AI amnesia problem by automatically capturing sessions, adapting to learned rules, and compiling daily logs into evergreen knowledge articles without manual overhead.
 
 * **🧠 Persistent Memory & Context Shield:** Lifecycle hooks (`PreInvocation`, `Stop`) safely inject past session context with a 9,500-character budget shield and smart rule pruning, and automatically save structured logs into `daily/YYYY-MM-DD.md`.
-* **📥 Smart Capture Engine (Yakala):** Capture YouTube transcripts, web articles, local files, or clipboard text into `📥 000-Inbox/Yakala/` in one click (`.ham/` isolation keeps search clean). Features Windows Explorer right-click `Send to > Beyne At` integration.
+* **📥 Smart Capture Engine (Yakala):** Capture YouTube transcripts, web articles, local files, or clipboard text into `000-Inbox/Yakala/` in one click (`.ham/` isolation keeps search clean).
+  * **🌐 Obsidian Web Clipper Full Parity:** Import `beyne-at-web-clipper.json` to capture web pages, articles, and paywalled/logged-in resources directly from Chrome, Firefox, Safari, Arc, and Edge.
+  * **💻 Native Cross-Platform Integration:** Windows Explorer right-click `Send to > Beyne At`, macOS Quick Action & `Control+Option+B` shortcut, and Linux `Ctrl+Alt+B` / `.desktop` launcher.
 * **🔍 Okapi BM25 & Turkish Morphological Search:** Turkish consonant softening normalization (kitap/kitabı, örnek/örneği) and Obsidian `[[Wikilinks]]`-weighted information density ranking.
 * **🩺 Doctor 2.0 Diagnostics & Memory Hygiene:** Inbox aging reports, Git conflict marker detection, and `supersedes`/retired note filtering for a clean memory vault.
 * **📚 Autonomous Knowledge Compilation:** Background compilers synthesize raw daily logs into connected knowledge concepts (`knowledge/concepts/`, `knowledge/connections/`) following Andrej Karpathy's LLM Knowledge Base pattern.
 * **💎 Obsidian Native & Pre-Configured:** Ready-to-use `.obsidian/` configuration with color-coded Graph View (`Ctrl+G`), Daily Notes, Templates, Canvas, and bi-directional `[[Wikilinks]]`.
-* **🛡️ Zero Data Loss Upgrades:** Built-in semantic version tracking (`.beyin-version`) and `scripts/upgrade.ps1` allows upgrading core scripts while preserving 100% of your notes and data.
+* **🛡️ Zero Data Loss Upgrades:** Built-in semantic version tracking (`.beyin-version`) and `scripts/upgrade.ps1` (Windows) / `scripts/upgrade.sh` (macOS/Linux) allows upgrading core scripts while preserving 100% of your notes, rules, and identity.
 * **🔒 Concurrency & Compaction Lock:** `.beyin-compact.lock` and `portalocker` guarantee safe concurrent operations between subagents and background tasks, with automated monthly archiving.
 
 ---
@@ -62,12 +64,18 @@ python .agents/scripts/doctor.py
 
 When a new version is released on GitHub, update your system without losing any personal notes or memories:
 
+**Windows (PowerShell):**
 ```powershell
 .\scripts\upgrade.ps1
 ```
 
-* **Protected Data (Never Touched):** `daily/`, `knowledge/`, `000-Inbox/`, `300-Projects/`, `500-Knowledge/`, `850-Companion/`, `900-Archive/`
-* **Updated Files:** `.agents/scripts/`, `.agents/hooks.json`, `.obsidian/`, `beyin-antigravity.md`, `GEMINI.md`
+**macOS / Linux (Bash):**
+```bash
+./scripts/upgrade.sh
+```
+
+* **Protected Data (Never Touched):** `daily/`, `knowledge/`, `000-Inbox/`, `300-Projects/`, `500-Knowledge/`, `850-Companion/`, `900-Archive/`, `GEMINI.md`
+* **Updated Files:** `.agents/scripts/`, `.agents/hooks.json`, `.obsidian/`, `beyin-antigravity.md`, `scripts/`
 * **Automated Backup:** Automatically creates a `.bak-TIMESTAMP/` archive before applying updates.
 
 ---

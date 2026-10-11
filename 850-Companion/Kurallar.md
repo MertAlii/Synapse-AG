@@ -1,6 +1,6 @@
 ---
 title: Kurallar
-updated: 2026-09-10
+updated: 2026-10-02
 ---
 # 📜 Öğrenilen Kurallar
 
@@ -8,4 +8,15 @@ Mert Ali Alkan beni düzelttiğinde ("bunu böyle yapma", "şöyle istiyorum") b
 
 - **Kural:** Cevaplara doğrudan başla, uzun giriş cümleleri kurma. **Neden:** Mert Ali Alkan vakit kaybetmek istemiyor.
 - **Kural:** Bir dosyayı düzenlemeden önce güncel halini oku. **Neden:** Varsayımla yazmak içeriği bozar.
-- **Kural:** (İlk gerçek kuralınız buraya gelecek) **Neden:** (Sebebi)
+- **Kural:** Her zaman gerçek verilerle çalış; asla sahte (mock), uydurma veri veya taklitçi sunucular kullanma. **Neden:** Mert Ali Alkan'ın kesin talimatı ("herzaman gerçek veriler ile çalış") ve Anti-Mock Protokolü. Tüm pipeline, testler ve içerikler Hugging Face ve veritabanının gerçek verileriyle çalışmalıdır.
+- **Kural:** Profil görselleri / avatarlar yerine doğrudan isim ve atanmış rol rozeti kullan. **Neden:** Mert Ali Alkan avatar sistemini istemiyor; sade ve işlevsel kimlik tercih ediliyor.
+- **Kural:** GitHub'a (git push) kullanıcının açık onayı olmadan asla kod gönderme. **Neden:** Mert Ali Alkan'ın kesin kuralı; dağıtımlar FTP scripti veya onaylı kanallardan yönetilir.
+- **Kural:** Sohbet pencerelerinde global pencereyi aşağı kaydıran `scrollIntoView` veya arkadaki metni bulanıklaştıran `backdrop-blur` kullanma. **Neden:** Okuma akışını bozuyor ve kullanıcı deneyimini zedeliyor.
+- **Kural:** Markdown ve TOC ayrıştırmada kod çiti (```) takibi yap; kod bloklarındaki yorum satırlarını (#) asla başlık yapma. **Neden:** Kod yorumlarının TOC'a başlık olarak sızmasını önlemek.
+- **Kural:** SPA projelerinde sayfa yenilemelerinde rota kaybını önlemek için URL state senkronizasyonu (hash) ve sunucu URL Rewrite kurallarını eksiksiz uygula. **Neden:** Yenileme anında kullanıcının kaldığı sayfayı korumak.
+- **Kural:** React bileşenlerinde form ve aksiyon durumları (sending, loading vb.) kesinlikle state olarak tanımlanmalı ve kök uygulama bir ErrorBoundary ile sarılmalıdır. **Neden:** Tanımsız değişkenlerin tüm React ağacını çökertip ekranı beyaz bırakmasını engellemek.
+- **Kural:** Proje/uygulama/iş modeli önerirken asla piyasada zaten yüzlerce alternatifi olan sıradan fikirleri sunma (bütçe takipçisi, randevu sistemi, ödev çözücü, fiş okuyucu, vs.). Bunlar "yapay zeka wrapper" seviyesinde, portfolyöde sıfır ağırlığı olan projeler. **Neden:** Mert Ali Alkan'ın kesin talimatı — önerilen her proje gerçek bir pazar boşluğunu hedeflemeli, düşük rekabetli olmalı, somut farklılaşma noktası taşımalı ve ticarileşebilir olmalı. Generic fikirler zaman kaybıdır.
+- **Kural:** Pazar araştırması yaparken ham verideki gerçek boşluklara ve anomali nişlere odaklan; veriden çıkmayan hipotezleri asla "araştırma bulgusu" olarak sunma. **Neden:** 555 Meta reklam tarandı ama çıktı "FişMatik" gibi veriyle alakasız sıradan fikirler oldu — veri boşa harcandı.
+- **Kural:** Başvuru, CV veya iletişim metni yazarken kişisel bilgileri (haftalık uygunluk, maaş beklentisi, başlangıç tarihi, staj türü, çalışma şekli vb.) asla varsayma, her zaman kullanıcıya sor. **Neden:** "Haftanın 5 günü tam zamanlı" yazıldı, kullanıcı sormadan onayladı ve yanlış bilgiyle mail gönderdi. Geri dönüşü zor hatalar yaratır.
+- **Kural:** React ve web arayüzü projelerinde sıradan/generic arayüzler yerine yerel depomuzdaki React Bits (`C:\Users\merta\.gemini\antigravity\scratch\react-bits\src\ts-tailwind\`) yaratıcı animasyon, dinamik zemin ve mikro-etkileşim bileşenlerini (SpotlightCard, BlurText, TrueFocus, DecryptedText, Magnet, StarBorder vb.) aktif ve bolca kullan. **Neden:** Mert Ali Alkan'ın kesin talimatı ("bunları beyne ekle proje içinde işe yarıyorsa böyle companetleri bol bol kullan"); projelerin görsel kalitesini, hissiyatını ve etkileşim derinliğini maksimuma çıkarmak.
+- **Kural:** Projelerde ve sitelerde görsel/resim üretimi (`generate_image`), sitenin arayüzünü (UI) toptan sahte bir ekran görüntüsü olarak üretmek/uydurmak için DEĞİL; site içerisinde gerçekten bir fotoğraf veya görsel varlık (bağlamsal fotoğraf, gerçekçi donanım/teknoloji fotoğrafı, editoryal içerik görseli, doğal mimari ortam vb.) gerekiyorsa kullanılmalıdır. Üretilen tüm görseller gerçekçi, doğal, yapay zeka klişelerinden uzak ve sitenin tasarım diline tam uyumlu olmalıdır. **Neden:** Mert Ali Alkan'ın kesin kuralı ("resim üretmek sitenin arayüzünü üret anlamında demedim sen site içinde resim fotoğraf gerekiyorsa resim üret ama resimler gerçekçi ve doğal siteye uyumlu olmalı bunu kural edin"). Arayüzler kodla inşa edilir; görseller ise içeriği doğal ve gerçekçi biçimde desteklemek için vardır.

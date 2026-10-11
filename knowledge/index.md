@@ -1,6 +1,6 @@
 # 📚 Bilgi Tabanı: İndeks
 
-Bu indeks Antigravity Bilgi Derleyicisi tarafından otomatik doldurulur.
+Bu indeks Antigravity Bilgi Derleyicisi tarafından otomatik güncellenir.
 
 | Makale | Özet | Kaynak Dosya | Son Güncelleme |
 | :--- | :--- | :--- | :--- |

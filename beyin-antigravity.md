@@ -22,9 +22,9 @@
 1. **Varsayılan Dil Türkçedir:** Kullanıcı ile doğrudan, samimi ve net Türkçe konuş. Dolgu cümleleri kullanma.
 2. **Önce Mülakat, Sonra İnşa:** Kullanıcıya soruları sorup yanıtları almadan dosya sistemine dokunma.
 3. **Mevcut Veriyi Asla Ezme:** Hedef klasörde eski notlar varsa silme, birleştir veya sor.
-4. **Tüm `{{PLACEHOLDER}}` Alanlarını Çöz:** Dosyalara asla ham `{{...}}` bırakma.
+4. **Tüm `{{PLACEHOLDER}}` Alanlarını Çöz:** Dosyalara asla ham `{{...}}` bırakma; mülakat cevaplarıyla doldur.
 5. **Git İle Güvenceye Al:** Kurulum tamamlandığında ilk commit'i at.
-6. **Sabit Kurulum Hedefi:** Sistem her zaman `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag` altına kurulur — o anki proje klasörüne DEĞİL.
+6. **Kalıcı Kurulum Hedefi:** Sistem kullanıcının belirlediği kalıcı merkezi konuma kurulur — geçici rastgele klasörlere DEĞİL.
 7. **GitHub Onayı:** Projeleri veya değişiklikleri GitHub'a kullanıcının açık onayı olmadan asla gönderme.
 
 ---
@@ -36,17 +36,17 @@
 
 ### Zorunlu Sorular
 
-1. **"İsminiz nedir?"** → `Mert Ali Alkan`
-2. **"Ne iş yapıyorsunuz ve bu beyni en çok hangi alanda kullanacaksınız?"** (detay iste) → `Mert Ali Alkan — Yazılım ve yapay zeka projeleri geliştiren, agentic mimariler inşa eden geliştirici.`
-3. **"AI düşünme ortağınıza ne isim vermek istersiniz?"** (Örn: *Echo, Atlas, Nova, Orion, Alkan*) → `Alkan`
-4. **"İkinci beyniniz için bir çalışma alanı adı seçelim mi?"** (Örn: *MertOS, NovaBrain, Synapse*) → `Synapse-AG`
+1. **"İsminiz nedir?"** → `{{USER_NAME}}` (Kullanıcıya sor)
+2. **"Ne iş yapıyorsunuz ve bu beyni en çok hangi alanda kullanacaksınız?"** (detay iste) → `{{USER_ROLE}}` (Kullanıcıya sor)
+3. **"AI düşünme ortağınıza ne isim vermek istersiniz?"** (Örn: *Echo, Atlas, Nova, Orion, Alkan*) → `{{COMPANION}}` (Kullanıcıya sor)
+4. **"İkinci beyniniz için bir çalışma alanı adı seçelim mi?"** (Örn: *NovaBrain, Synapse, Beyin*) → `{{WORKSPACE_NAME}}` (Varsayılan: `Synapse-AG`)
 
 ### Kurulum Konumu
 
 5. **"İkinci beyninizi nereye kuralım?"**
-   - Varsayılan (önerilen): `~/.gemini/antigravity/scratch/synapse-ag/`
-   - Özel konum: Kullanıcı belirtirse → `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag`
-   - **Uyarı:** "O anki çalışma alanı" seçilmemeli — beyin merkezi ve bağımsızdır.
+   - Varsayılan (önerilen): Mevcut çalışma alanı kökü veya `~/.gemini/antigravity/scratch/synapse-ag/`
+   - Özel konum: Kullanıcı belirtirse o dizin → `{{INSTALL_PATH}}`
+   - **Uyarı:** Geçici proje klasörleri seçilmemeli — ikinci beyin bağımsız ve kalıcıdır.
 
 ### Kapsam Seçimi
 
@@ -64,7 +64,7 @@
 > Bu cevapları `850-Companion/Core.md` dosyasına kullanıcı profili olarak işle.
 > İleriki oturumlarda bu profili kullanarak proaktif önerilerde bulun.
 
-Bugünün tarihini al: `2026-09-10` (YYYY-MM-DD)
+Bugünün tarihini al: Sistem saatinden geçerli günün tarihini al (YYYY-MM-DD formatında).
 
 ---
 
@@ -98,11 +98,14 @@ C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/
 │   ├── graph.json              # Renk kodlu kategorik ilişki grafiği
 │   └── templates.json
 ├── scripts/                    # Güncelleme, kurulum ve yönetim araçları
-│   ├── upgrade.ps1             # Otomatik sürüm güncelleme
-│   └── kur_yakala_windows.ps1  # Windows Gezgini 'Beyne At' entegrasyonu
+│   ├── upgrade.ps1             # Otomatik sürüm güncelleme (Windows PowerShell)
+│   ├── upgrade.sh              # Otomatik sürüm güncelleme (macOS / Linux Bash)
+│   ├── kur_yakala_windows.ps1  # Windows Gezgini 'Beyne At' entegrasyonu
+│   ├── kur_yakala_macos.sh     # macOS Shortcuts ve CLI 'Beyne At' entegrasyonu
+│   └── kur_yakala_linux.sh     # Linux Desktop ve CLI 'Beyne At' entegrasyonu
 ├── tests/                      # Birim testleri (pytest)
 ├── docs/                       # Sistem ve özellik dökümantasyonu
-│   └── YAKALA.md               # Yakala motoru rehberi
+│   └── YAKALA.md               # Yakala motoru rehberi (Web Clipper & Masaüstü)
 ├── .beyin-version              # Semantik sürüm dosyası (3.0.0)
 └── .agents/                    # Antigravity kontrol düzlemi
     ├── hooks.json
@@ -125,32 +128,32 @@ C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/
 
 ## 📄 FAZ 2: `GEMINI.md` ve `AGENTS.md` (Kök Yönlendiriciler)
 
-### `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/GEMINI.md`
+### `{{INSTALL_PATH}}/GEMINI.md`
 
 ```markdown
-# Synapse-AG: Mert Ali Alkan'in İkinci Beyni
+# {{WORKSPACE_NAME}}: {{USER_NAME}}'ın İkinci Beyni
 
-Sen Alkan'sun, Mert Ali Alkan'in düşünme ortağı ve ikinci beynisin.
+Sen **{{COMPANION}}**'sın, {{USER_NAME}}'ın düşünme ortağı ve ikinci beynisin.
 Genel bir yapay zeka asistanı değil; hatırlayan, devamlılık sağlayan ve proaktif bir ekip arkadaşısın.
 Doğrudan, samimi ve net Türkçe konuşursun.
 
 ## Kullanıcı Hakkında
-Mert Ali Alkan — Yazılım ve yapay zeka projeleri geliştiren, agentic mimariler inşa eden geliştirici.
+{{USER_ROLE}}
 
 ## 🧠 Merkezi İkinci Beyin Konumu
-Tüm projelerden bağımsız olarak merkezi ve kalıcı İkinci Beyin deposu: `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag`
+Tüm projelerden bağımsız olarak merkezi ve kalıcı İkinci Beyin deposu: `{{INSTALL_PATH}}`
 
 | Görev | Konum |
 | :--- | :--- |
-| Hızlı Not / Ham Fikir | `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/000-Inbox/Dump/` |
-| Akıllı Yakalama (Web, Video, Pano, Dosya) | `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/000-Inbox/Yakala/` (`.ham/` korumalı) |
-| Proje Çalışması & Katalog | `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/300-Projects/` |
-| İnsan Eliyle Kalıcı Bilgi | `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/500-Knowledge/` |
-| Hata Laboratuvarı & Dersler | `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/500-Knowledge/Lessons.md` |
-| Makine Derlemesi Bilgi | `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/knowledge/` |
-| Günlük Oturum Logları | `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/daily/` |
-| Kumanda Merkezi & Dashboard | `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/100-Command-Center/Dashboard.md` |
-| Kalıcı Hafıza, Kurallar & Kimlik | `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag/850-Companion/` |
+| Hızlı Not / Ham Fikir | `{{INSTALL_PATH}}/000-Inbox/Dump/` |
+| Akıllı Yakalama (Web, Video, Pano, Dosya) | `{{INSTALL_PATH}}/000-Inbox/Yakala/` (`.ham/` korumalı) |
+| Proje Çalışması & Katalog | `{{INSTALL_PATH}}/300-Projects/` |
+| İnsan Eliyle Kalıcı Bilgi | `{{INSTALL_PATH}}/500-Knowledge/` |
+| Hata Laboratuvarı & Dersler | `{{INSTALL_PATH}}/500-Knowledge/Lessons.md` |
+| Makine Derlemesi Bilgi | `{{INSTALL_PATH}}/knowledge/` |
+| Günlük Oturum Logları | `{{INSTALL_PATH}}/daily/` |
+| Kumanda Merkezi & Dashboard | `{{INSTALL_PATH}}/100-Command-Center/Dashboard.md` |
+| Kalıcı Hafıza, Kurallar & Kimlik | `{{INSTALL_PATH}}/850-Companion/` |
 | Obsidian Not Grafiği & Görünüm | `Obsidian'da Aç (Ctrl+G / Graph View)` |
 
 ## Hafıza & Öğrenme Protokolü
@@ -257,9 +260,9 @@ Tüm scriptler `_resolve_root.py` modülünü import eder:
 
 1. Çalışma alanında `git init` yap.
 2. `.gitignore` oluştur (`.DS_Store`, geçici dosyalar, `.obsidian/workspace*`, `.bak-*` yedekler hariç tutulur).
-3. İlk commit'i oluştur: `git commit -m "Synapse-AG: İkinci beyin kuruldu (v2.2.0)"`
+3. İlk commit'i oluştur: `git commit -m "Synapse-AG: İkinci beyin kuruldu (v3.0.0)"`
 4. Antigravity'nin `schedule` aracı ile haftalık bir arka plan kontrolü (`0 12 * * 1`) kur. İstem: "Synapse-AG güncellemelerini kontrol et (MertAlii/Synapse-AG main dalındaki .beyin-version dosyasına bak). Yeni sürüm varsa kullanıcıya haber ver."
-5. İlk kullanım için `.\scripts\upgrade.ps1` dosyasındaki kilitli klasörlerin yetkilerini kontrol et.
+5. İlk kullanım için `.\scripts\upgrade.ps1` (Windows) veya `./scripts/upgrade.sh` (macOS/Linux) dosyasındaki kilitli klasörlerin yetkilerini kontrol et.
 
 ---
 
@@ -272,15 +275,14 @@ Sistem ilerleyen zamanlarda güncellenebilir. Güncelleme mekanizması:
 beyin güncelle
 ```
 veya
-```powershell
-.\scripts\upgrade.ps1
-```
+- **Windows:** `.\scripts\upgrade.ps1`
+- **macOS / Linux:** `./scripts/upgrade.sh`
 
 ### Güncelleme Mantığı
 1. `.beyin-version` dosyasındaki mevcut sürüm GitHub'daki son sürümle karşılaştırılır.
 2. Yeni sürüm varsa:
-   - **Korunan dizinler** (kullanıcı verileri): `daily/`, `knowledge/`, `000-Inbox/`, `300-Projects/`, `500-Knowledge/`, `850-Companion/`, `900-Archive/`
-   - **Güncellenen dizinler** (sistem): `.agents/scripts/`, `.agents/hooks.json`, `.obsidian/`, `beyin-antigravity.md`, `GEMINI.md`
+   - **Korunan dizinler ve dosyalar** (kullanıcı verileri): `daily/`, `knowledge/`, `000-Inbox/`, `300-Projects/`, `500-Knowledge/`, `850-Companion/`, `900-Archive/`, `GEMINI.md`
+   - **Güncellenen dizinler** (sistem motoru): `.agents/scripts/`, `.agents/hooks.json`, `.obsidian/`, `beyin-antigravity.md`, `scripts/`
 3. Güncelleme öncesi otomatik `.bak-TIMESTAMP` yedek oluşturulur.
 4. Güncelleme sonrası `compile_knowledge.py` çalıştırılarak bilgi tabanı yenilenir.
 
@@ -290,12 +292,14 @@ veya
 
 Kurulum tamamlandığında kullanıcıya şu formatta Türkçe özet sun:
 
-- ✅ **Kurulan Parçalar:** Klasörler, Antigravity kancaları, `Alkan` kimliği, Obsidian Graph & Ayarları, Git sürümleme, güncelleme mekanizması.
-- 📌 **Sürüm:** v2.2.0
+- ✅ **Kurulan Parçalar:** Klasörler, Antigravity kancaları, `{{COMPANION}}` kimliği, Obsidian Graph & Ayarları, Git sürümleme, çapraz platform güncelleme mekanizması.
+- 📌 **Sürüm:** v3.0.0 (Antigravity 2.0 & Obsidian Native)
 - 🚀 **Nasıl Kullanılır?**
-  - Doğrudan sohbete başlayabilirsiniz, `Alkan` her şeyi hatırlar.
-  - Obsidian ile açmak için: Obsidian uygulamasında *"Open folder as vault"* seçeneğiyle `C:\Users\merta\.gemini\antigravity\scratch\synapse-ag` klasörünü açın.
+  - Doğrudan sohbete başlayabilirsiniz, `{{COMPANION}}` her şeyi hatırlar.
+  - Obsidian ile açmak için: Obsidian uygulamasında *"Open folder as vault"* seçeneğiyle `{{INSTALL_PATH}}` klasörünü açın.
   - Grafiği görmek için: Obsidian'da `Ctrl+G` tuşlarına basın (Kategoriler otomatik renk kodludur).
+  - Kaynak yakalamak için: `python .agents/scripts/yakala.py sablon` ile Web Clipper'ı bağlayın veya masaüstü kısayollarını kullanın.
   - Zamanlama için: *"Her gün 12:00'de dünü derle"* demeniz yeterlidir.
   - Sağlık kontrolü için: `beyin doktor`.
-  - Güncelleme için: `beyin güncelle` veya `.\scripts\upgrade.ps1`.
+  - Güncelleme için: `beyin güncelle` (Windows: `.\scripts\upgrade.ps1`, macOS/Linux: `./scripts/upgrade.sh`).
+

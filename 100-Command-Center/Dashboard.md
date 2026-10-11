@@ -8,17 +8,19 @@ type: dashboard
 Hoş geldin Mert Ali Alkan. Bu senin düşünen, hatırlayan ve derleyen ikinci beynin.
 
 ## 🚀 Hızlı Bağlantılar
-- 📥 [[📥 000-Inbox/Dump/|Fikir & Not Yakalama]]
-- 🎯 [[🎯 100-Command-Center/|Hedefler & Dashboard]]
-- 🏰 [[🏰 300-Projects/|Aktif Projeler]]
-- 🧠 [[🧠 500-Knowledge/|Kalıcı Bilgi Notları]]
-- 🔮 [[🔮 850-Companion/Core|Alkan Hafızası]]
+- 🔮 [[850-Companion/Core|Alkan Kimlik & Hafıza]]
+- 📜 [[850-Companion/Kurallar|Öğrenilen Kurallar]]
 - 📚 [[knowledge/index|Derlenmiş Bilgi Tabanı]]
+- 🧪 [[500-Knowledge/Lessons|Hata Laboratuvarı & Dersler]]
+- 🎨 [[500-Knowledge/React_Bits_Bilesen_Katalogu|React Bits Bileşen Kataloğu]]
+- 📅 [[500-Knowledge/Akademik_Takvim_ve_Ders_Programi|Akademik Takvim & Ders Programı]]
+- 🏰 [[300-Projects/NLP_2026_Chapter7_Workspace|NLP 2026 Projesi]]
 
 ## 📌 Aktif Öncelikler
-- [ ] İkinci beyin kurulumunu doğrula (`beyin doktor`)
-- [ ] İlk proje klasörünü oluştur (`🏰 300-Projects/`)
-- [ ] İlk kalıcı notunu ekle (`🧠 500-Knowledge/`)
+- [ ] İkinci beyin sağlığını denetle (`beyin doktor`)
+- [ ] Yeni kaynak yakala (`yakala <url/dosya>`)
+- [ ] Akıllı arama yap (`search_bm25.py <sorgu>`)
+- [ ] NLP Bölüm 7 Ar-Ge platformunu geliştir
 
 ## 💡 Nasıl Kullanılır?
 Antigravity sohbet penceresini açıp doğrudan konuşun. Alkan oturum bittiğinde notları otomatik düşecek, geceleri bilgiyi derleyecektir.

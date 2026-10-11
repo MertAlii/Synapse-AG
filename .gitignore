@@ -51,9 +51,11 @@ scratch_github_data.json
 # User Private Data & Notes (Kullanici Ozel Verileri - Asla disariya gitmez, yerelde korunur)
 daily/*.md
 !daily/.gitkeep
-000-Inbox/*
+000-Inbox/Dump/*
 !000-Inbox/Dump/.gitkeep
+000-Inbox/Yakala/*.md
 !000-Inbox/Yakala/.gitkeep
+!000-Inbox/Yakala/beyne-at-web-clipper.json
 300-Projects/*.md
 !300-Projects/.gitkeep
 500-Knowledge/*.md

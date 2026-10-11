@@ -31,12 +31,14 @@
 **Synapse-AG**, **Google Antigravity 2.0** ve **Obsidian** üzerinde çalışan, oturumlar arası hafızası **kendi kendine yazılan ve asla kaybolmayan** yerel bir "İkinci Beyin" ekosistemidir.
 
 * **🧠 Oturumlar Arası Kalıcı Hafıza & Context Shield:** Yaşam döngüsü kancaları (`PreInvocation`, `Stop`) oturum açılışında önceki hafızayı 9.500 karakterlik bütçe kalkanı ve akıllı kural budamasıyla güvenle aktarır, oturum bittiğinde konuşmayı `daily/YYYY-MM-DD.md` içine işler.
-* **📥 Akıllı Yakalama Motoru (Yakala):** YouTube transkriptleri, web makaleleri, yerel dosyalar veya panodaki metinleri tek tıkla `📥 000-Inbox/Yakala/` içine aktarır (`.ham/` izolasyonu ile arama kirliliğini önler). Windows Gezgini sağ tık `Gönder > Beyne At` entegrasyonuna sahiptir.
+* **📥 Akıllı Yakalama Motoru (Yakala):** YouTube transkriptleri, web makaleleri, yerel dosyalar veya panodaki metinleri tek tıkla `000-Inbox/Yakala/` içine aktarır (`.ham/` izolasyonu ile arama kirliliğini önler).
+  * **🌐 Obsidian Web Clipper Tam Uyumu:** `beyne-at-web-clipper.json` şablonu ile Chrome, Firefox, Safari, Arc ve Edge üzerinden giriş gerektiren sayfaları tek tıkla yakalayın.
+  * **💻 Çapraz Platform Desteği:** Windows (Sağ tık `Gönder > Beyne At`), macOS (`Control+Option+B` Kısayol) ve Linux (`Ctrl+Alt+B` / .desktop) yerel entegrasyonu.
 * **🔍 Okapi BM25 & Türkçe Morfolojik Arama:** Türkçe ünsüz yumuşaması (kitap/kitabı, örnek/örneği) normalizasyonu ve Obsidian `[[Wikilinks]]` ağırlıklı bilgi yoğunluğu sıralaması.
 * **🩺 Doctor 2.0 Sağlık Denetimi:** Gelen kutusu (Inbox) yaşlanma raporu, Git çakışma (conflict marker) denetimi ve `supersedes`/emekli not süzgeci ile hafıza hijyeni.
 * **📚 Otonom Bilgi Derleyicisi:** Günlük ham notlar, Andrej Karpathy'nin LLM Bilgi Tabanı desenine göre `knowledge/concepts/` ve `knowledge/connections/` altında kalıcı makalelere dönüştürülür.
 * **💎 Doğrudan Obsidian Entegrasyonu:** Renk kodlu kategorilere sahip Graph View (`Ctrl+G`), Günlük Notlar, Şablonlar, Canvas ve çift yönlü `[[Wikilinks]]` bağlantıları hazır gelir.
-* **🛡️ Sıfır Veri Kayıplı Güncelleme:** Semantik sürüm takibi (`.beyin-version`) ve `scripts/upgrade.ps1` betiği ile notlarınıza ve hafızanıza dokunmadan sistem dosyalarını tek komutla güncelleyebilirsiniz.
+* **🛡️ Sıfır Veri Kayıplı Güncelleme:** Semantik sürüm takibi (`.beyin-version`) ve `scripts/upgrade.ps1` (Windows) / `scripts/upgrade.sh` (macOS/Linux) betikleri ile kişisel notlarınıza, kurallarınıza ve kimliğinize dokunmadan sistem motorunu güncelleyebilirsiniz.
 * **🔒 Eşzamanlılık & Sıkıştırma Kilidi:** `.beyin-compact.lock` ve `portalocker` mekanizması sayesinde çoklu alt ajanlar ve arka plan cron görevleri hafızayı bozmadan güvenle çalışır, geçmişi aylık arşivler.
 
 ---
@@ -62,12 +64,18 @@ python .agents/scripts/doctor.py
 
 Yeni bir sürüm yayınlandığında kişisel notlarınızı veya hafızanızı kaybetmeden güncelleyin:
 
+**Windows (PowerShell):**
 ```powershell
 .\scripts\upgrade.ps1
 ```
 
-* **Korunan Dizinler (Asla Dokunulmaz):** `daily/`, `knowledge/`, `000-Inbox/`, `300-Projects/`, `500-Knowledge/`, `850-Companion/`, `900-Archive/`
-* **Güncellenen Dosyalar:** `.agents/scripts/`, `.agents/hooks.json`, `.obsidian/`, `beyin-antigravity.md`, `GEMINI.md`
+**macOS / Linux (Bash):**
+```bash
+./scripts/upgrade.sh
+```
+
+* **Korunan Dizinler (Asla Dokunulmaz):** `daily/`, `knowledge/`, `000-Inbox/`, `300-Projects/`, `500-Knowledge/`, `850-Companion/`, `900-Archive/`, `GEMINI.md`
+* **Güncellenen Dosyalar:** `.agents/scripts/`, `.agents/hooks.json`, `.obsidian/`, `beyin-antigravity.md`, `scripts/`
 * **Otomatik Yedekleme:** Güncelleme öncesi otomatik `.bak-TIMESTAMP/` yedeği alınır.
 
 ---
