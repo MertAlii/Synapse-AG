@@ -82,3 +82,24 @@ class TestYakalaPipeline:
         assert "tools" in stat
         assert "inbox_path" in stat
 
+    def test_process_clippings_folder(self, tmp_path):
+        clippings = tmp_path / "Clippings"
+        clippings.mkdir(parents=True, exist_ok=True)
+        clip_file = clippings / "MertAliiSynapse-AG.md"
+        clip_file.write_text(
+            "---\ntitle: 'MertAlii/Synapse-AG'\ntags:\n  - clippings\n---\n# Content",
+            encoding="utf-8"
+        )
+
+        stat_before = get_yakala_status(root=tmp_path)
+        assert stat_before["pending"] >= 1
+
+        processed = process_captured_cards(root=tmp_path)
+        assert len(processed) >= 1
+        assert not clip_file.exists()  # taşındı
+
+        inbox_dest = tmp_path / "000-Inbox" / "Yakala" / "MertAliiSynapse-AG.md"
+        assert inbox_dest.exists()
+        assert "durum: islendi" in inbox_dest.read_text(encoding="utf-8")
+
+

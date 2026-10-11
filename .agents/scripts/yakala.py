@@ -13,6 +13,7 @@ import urllib.request
 import urllib.parse
 import argparse
 import subprocess
+import shutil
 from datetime import datetime
 from pathlib import Path
 
@@ -360,6 +361,7 @@ def process_captured_cards(root=None):
     Bekleyen yakalama kartlarını işler:
     - 'status: islenmeyi_bekliyor' (CLI/otomatik) veya
     - 'durum: bekliyor' (Obsidian Web Clipper) kartlarını tespit eder.
+    - 'Clippings/' varsayılan klasöründen gelen .md dosyalarını otomatik içe aktarır.
     Özet ve dersleri bağlar, ham metni .ham/ altına taşır (yoksa),
     kart durumunu 'status: islendi' / 'durum: islendi' olarak günceller.
     """
@@ -372,15 +374,53 @@ def process_captured_cards(root=None):
         inbox_yakala = root / "📥 000-Inbox" / "Yakala"
 
     if not inbox_yakala.exists():
-        return []
+        inbox_yakala.mkdir(parents=True, exist_ok=True)
 
     ham_dir = inbox_yakala / ".ham"
     ham_dir.mkdir(parents=True, exist_ok=True)
 
     processed = []
+
+    # 1. Clippings/ varsayılan klasöründeki dosyaları otomatik taşı ve içe aktar
+    clippings_dir = root / "Clippings"
+    if clippings_dir.exists():
+        for clip in sorted(list(clippings_dir.glob("*.md"))):
+            try:
+                clip_content = clip.read_text(encoding="utf-8")
+                dest_card = inbox_yakala / clip.name
+                # Ham yedeği oluştur
+                ham_file = ham_dir / f"{clip.stem}.ham.txt"
+                if not ham_file.exists():
+                    safe_write(ham_file, f"Kaynak Clippings: {clip.name}\n\n{clip_content}\n", mode="w")
+
+                # Frontmatter kontrolü
+                if "durum: bekliyor" not in clip_content and "status: islenmeyi_bekliyor" not in clip_content:
+                    if clip_content.startswith("---"):
+                        parts = clip_content.split("---", 2)
+                        if len(parts) >= 3:
+                            fm = parts[1]
+                            body = parts[2]
+                            updated_clip = f"---\n{fm.strip()}\ndurum: bekliyor\n---{body}"
+                        else:
+                            updated_clip = clip_content
+                    else:
+                        updated_clip = f"---\ndurum: bekliyor\n---\n\n{clip_content}"
+                else:
+                    updated_clip = clip_content
+
+                safe_write(dest_card, updated_clip, mode="w")
+                try:
+                    clip.unlink()
+                except Exception:
+                    pass
+            except Exception:
+                pass
+
     cards = sorted(list(inbox_yakala.glob("*.md")))
 
     for card in cards:
+        if card.name.startswith("."):
+            continue
         try:
             content = card.read_text(encoding="utf-8")
             is_pending = False
@@ -428,11 +468,21 @@ def get_yakala_status(root=None):
     pending_count = 0
     processed_count = 0
     total_count = 0
+    clippings_count = 0
+
+    clippings_dir = root / "Clippings"
+    if clippings_dir.exists():
+        clip_cards = list(clippings_dir.glob("*.md"))
+        clippings_count = len(clip_cards)
+        pending_count += clippings_count
+        total_count += clippings_count
 
     if inbox_yakala.exists():
         cards = list(inbox_yakala.glob("*.md"))
-        total_count = len(cards)
+        total_count += len(cards)
         for c in cards:
+            if c.name.startswith("."):
+                continue
             try:
                 txt = c.read_text(encoding="utf-8", errors="ignore")
                 if "status: islenmeyi_bekliyor" in txt or "durum: bekliyor" in txt:
