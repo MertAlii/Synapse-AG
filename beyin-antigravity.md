@@ -4,7 +4,7 @@
 > Bu dosya senin eksiksiz, kendi kendine yeten kurulum şartnamendir (build spec). Baştan sona oku ve faz faz icra et.
 >
 > **Kaynak:** Avenox (avenox.lol / github.com/avenoxai/avenoxbeyin) & Andrej Karpathy LLM Knowledge Base mimarisi.
-> **Sürüm:** 3.0.0 (Antigravity 2.0 & Obsidian Native — Yakala, BM25 Türkçe Arama, Doctor Pro 2.0, Context Shield)
+> **Sürüm:** 3.1.0 (Antigravity 2.0 & Obsidian Native — Yakala, BM25 Türkçe Arama, Doctor Pro 2.0, Context Shield)
 
 ---
 

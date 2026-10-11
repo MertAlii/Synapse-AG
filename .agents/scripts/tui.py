@@ -41,7 +41,7 @@ def render_rich_dashboard(root):
 
     layout = Layout()
     layout.split_column(
-        Layout(name="header", size=3),
+        Layout(name="header", size=10),
         Layout(name="body", ratio=1),
         Layout(name="footer", size=3)
     )
@@ -59,12 +59,21 @@ def render_rich_dashboard(root):
         Layout(name="causal", ratio=1)
     )
 
-    # 1. Header
+    # 1. Header (Büyük Fütüristik Başlık)
+    banner_lines = [
+        "  ███████╗██╗   ██╗███╗   ██╗ █████╗ ██████╗ ███████╗      █████╗  ██████╗ ",
+        "  ██╔════╝╚██╗ ██╔╝████╗  ██║██╔══██╗██╔══██╗██╔════╝     ██╔══██╗██╔════╝ ",
+        "  ███████╗ ╚████╔╝ ██╔██╗ ██║███████║██████╔╝███████╗═════███████║██║  ███╗",
+        "  ╚════██║  ╚██╔╝  ██║╚██╗██║██╔══██║██╔═══╝ ╚════██║═════██╔══██║██║   ██║",
+        "  ███████║   ██║   ██║ ╚████║██║  ██║██║     ███████║     ██║  ██║╚██████╔╝",
+        "  ╚══════╝   ╚═╝   ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝     ╚══════╝     ╚═╝  ╚═╝ ╚═════╝ ",
+    ]
     header_text = Text()
-    header_text.append("🧠 SYNAPSE-AG ", style="bold cyan")
-    header_text.append(f"v{version} ", style="bold green")
-    header_text.append("| Fütüristik İkinci Beyin Terminal Kumanda Merkezi | ", style="white")
-    header_text.append(f"⏱️ {now_str} | OS: {sys.platform}", style="dim yellow")
+    for line in banner_lines:
+        header_text.append(line + "\n", style="bold cyan")
+    header_text.append("  🧠 Fütüristik İkinci Beyin Kumanda Merkezi ", style="bold white")
+    header_text.append(f"• v{version} ", style="bold green")
+    header_text.append(f"• ⏱️ {now_str} • OS: {sys.platform}", style="dim yellow")
     layout["header"].update(Panel(header_text, box=box.ROUNDED, style="cyan"))
 
     # 2. Doctor Panel

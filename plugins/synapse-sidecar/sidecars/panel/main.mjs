@@ -71,7 +71,7 @@ function getVaultStatus(data) {
 
   return {
     root,
-    version: '3.0.0',
+    version: existsSync(join(root, '.beyin-version')) ? readFileSync(join(root, '.beyin-version'), 'utf8').trim() : '3.1.0',
     budgetUsed: Math.min(budgetUsed, budgetLimit),
     budgetLimit,
     budgetPercent: Math.min(100, Math.round((budgetUsed / budgetLimit) * 100)),
