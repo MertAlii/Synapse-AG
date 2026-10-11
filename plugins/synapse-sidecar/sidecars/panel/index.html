@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Synapse Companion</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/preload.js"></script>
+</head>
+<body>
+  <!-- Header Bar -->
+  <header class="header-bar">
+    <div class="brand">
+      <span>🧠 Synapse Live</span>
+      <span class="brand-badge">v3.0.0</span>
+    </div>
+    <button id="refreshBtn" class="refresh-btn" title="Hafızayı Yenile">↻ Yenile</button>
+  </header>
+
+  <!-- 1. Context Shield & Bilişsel Hafıza -->
+  <section class="card">
+    <div class="card-title">
+      <span>🛡️ Context Shield & Bellek Bütçesi</span>
+    </div>
+    <div class="gauge-container">
+      <div class="gauge-header">
+        <span id="budgetLabel">Kullanılan: -- / 9,500 Karakter</span>
+        <span id="budgetPercent" style="font-weight: 700; color: var(--accent-cyan);">--%</span>
+      </div>
+      <div class="gauge-track">
+        <div id="gaugeFill" class="gauge-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric-pill">
+        <div id="hippoCount" class="metric-value">--</div>
+        <div class="metric-label">Hipokampüs (Kısa)</div>
+      </div>
+      <div class="metric-pill">
+        <div id="neoCount" class="metric-value">--</div>
+        <div class="metric-label">Neokorteks (Kalıcı)</div>
+      </div>
+      <div class="metric-pill">
+        <div id="yakalaPending" class="metric-value" style="color: var(--accent-yellow);">--</div>
+        <div class="metric-label">Bekleyen Kaynak</div>
+      </div>
+      <div class="metric-pill">
+        <div id="retentionAvg" class="metric-value" style="color: var(--accent-green);">--%</div>
+        <div class="metric-label">Ort. Retansiyon</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Canlı 3D Bilgi Grafiği -->
+  <section class="card">
+    <div class="card-title">
+      <span>🌐 Canlı 3D Bilgi Grafiği</span>
+      <span style="font-size: 10px; color: var(--text-muted); margin-left: auto;">İnteraktif Ağ</span>
+    </div>
+    <div class="canvas-container">
+      <canvas id="graphCanvas"></canvas>
+    </div>
+  </section>
+
+  <!-- 3. Son Öğrenilen Kurallar -->
+  <section class="card">
+    <div class="card-title">
+      <span>🔮 Son Öğrenilen Kurallar & İlkeler</span>
+    </div>
+    <ul id="rulesList" class="rules-list">
+      <li class="rule-item">Kurallar yükleniyor...</li>
+    </ul>
+  </section>
+
+  <!-- 4. Hızlı Ajan Eylemleri -->
+  <section class="card">
+    <div class="card-title">
+      <span>⚡ Hızlı Tetikleyiciler</span>
+    </div>
+    <div class="action-grid">
+      <button id="actProcessYakala" class="action-btn">📥 Kaynakları İşle</button>
+      <button id="actDevilCheck" class="action-btn">😈 Şeytanın Avukatı</button>
+      <button id="actRunDoctor" class="action-btn">🩺 Beyin Doktoru</button>
+      <button id="actCompile" class="action-btn">📚 Bilgiyi Derle</button>
+    </div>
+  </section>
+
+  <script src="/app.js"></script>
+</body>
+</html>

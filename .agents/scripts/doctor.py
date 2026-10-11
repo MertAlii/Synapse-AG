@@ -148,6 +148,11 @@ def main():
         ("Companion Sıkıştırıcı (companion_compact.py)", root / ".agents" / "scripts" / "companion_compact.py"),
         ("Akıllı Yakalama Motoru (yakala.py)", root / ".agents" / "scripts" / "yakala.py"),
         ("BM25 Türkçe Arama (search_bm25.py)", root / ".agents" / "scripts" / "search_bm25.py"),
+        ("Nedensellik RAG (causal_rag.py)", root / ".agents" / "scripts" / "causal_rag.py"),
+        ("Bilişsel Hafıza (cognitive_memory.py)", root / ".agents" / "scripts" / "cognitive_memory.py"),
+        ("Şeytanın Avukatı (adversarial_rag.py)", root / ".agents" / "scripts" / "adversarial_rag.py"),
+        ("Synapse TUI (tui.py)", root / ".agents" / "scripts" / "tui.py"),
+        ("Yan Panel Uzantısı (synapse-sidecar)", root / "plugins" / "synapse-sidecar" / "plugin.json"),
         ("Obsidian Yapılandırması (.obsidian/)", root / ".obsidian" / "graph.json"),
         ("Şablon Kasası (Templates/)", root / "Templates"),
     ]
